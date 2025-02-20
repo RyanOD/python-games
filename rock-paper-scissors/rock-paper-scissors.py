@@ -1,6 +1,5 @@
 import random
-
-weapons = {'r': 'Rock', 'p': 'Paper', 's': 'Scissors'}
+WEAPONS = {'r': 'Rock', 'p': 'Paper', 's': 'Scissors'}
 game_won = False
 
 def game_loop():
@@ -9,9 +8,9 @@ def game_loop():
     pc_weapon = get_pc_weapon()
     victor = battle(player_weapon, pc_weapon)
     if(victor == 'player'):
-      print(f'{weapons[player_weapon]} beats {weapons[pc_weapon]}. You are victorious!')
+      print(f'{WEAPONS[player_weapon]} beats {WEAPONS[pc_weapon]}. You are victorious!')
     elif(victor == 'pc'):
-      print(f'{weapons[pc_weapon]} beats {weapons[player_weapon]}. You lose.')
+      print(f'{WEAPONS[pc_weapon]} beats {WEAPONS[player_weapon]}. You lose.')
     else:
       print('Draw! Try again...')
       game_loop()
@@ -24,7 +23,7 @@ def get_weapon():
   return player_weapon
 
 def get_pc_weapon():
-  return(random.choice(list(weapons)))
+  return(random.choice(list(WEAPONS)))
   
 def battle(player_weapon, pc_weapon):
   if(player_weapon == pc_weapon):

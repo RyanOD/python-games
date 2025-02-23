@@ -1,10 +1,12 @@
 # Word Guessing Game
 This is a simple word guessing game where the user guesses one letter at a time until all letters have been identified. While a very simple game, this is a classic first step in game development as it introduces the developer to many key programming concepts while not overwhelming them with too much. That being said, don't let the simplicity of the game fool you. For a beginning programmer, there is a lot to consider here.
 
+The game gets all words from the Random Word API on Heroku.
+
 ## Key Concepts
 This following concepts are exposed in this number guess game design.
 - Requests Module
-- API Call
+- APIs
 - Game Loop
 - Functions
 - Variables and Scoping

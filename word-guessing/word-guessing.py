@@ -1,67 +1,52 @@
 import requests
 
-DEBUG = False
-
 API_URL = "https://random-word-api.herokuapp.com/word"
 game_won = False
-guesses = []
 alphabet = list(map(chr, range(ord('a'), ord('z') + 1)))
 
-def game_init():
-  word = get_word()
-  if not word:
-    print("We're sorry, no word can be selected at this time. Please try again later.")
-    raise ValueError("API not responding")
-  else:
-    word_array = ["_"] * len(word)
-  
-  return word, word_array
+def play_game():
+  word = get_word() # ends game if API call fails
+  word_array = ["_"] * len(word)
+  guesses = ""
 
-def game_loop(word, word_array):
-  while not game_won:
-    if DEBUG: debug(word, word_array)
+  while True:
+    show_status(word_array, guesses)
 
-    show_status(word_array)
-    check_win_conditions(word, word_array)
+    # end game if win conditions met
+    if check_win_conditions(word, word_array):
+      print("Congratulations! You win.")
+      break
 
     # get player guess and validate
     guess = get_guess(guesses, alphabet)
+
+    # add valid guess to guesses list
+    guesses += f"{guess} "
     
-    if guess:
-      # check if guess is in word
-      if check_guess(guess, word):
-        word_array = find_all_positions(word, guess, word_array)
-      else:
-        (f"Sorry, {guess} is not in this word. Try again.")
+    # if match, update all matching positions in word array
+    if guess in word:
+      word_array = find_all_positions(word, guess, word_array)
+    else:
+      (f"Sorry, {guess} is not in this word. Try again.")
 
 def get_word():
   response = requests.get(API_URL)
   if response.status_code == 200:
     return response.json()[0]
   else:
-    return False
+    print("We're sorry, no word can be selected at this time. Please try again later.")
+    raise ValueError("API not responding")
 
 def get_guess(guesses, alphabet):
-  guess = input("\nPlease choose a single letter or guess final word: ").lower()
-  if len(guess) != 1:
-    print(f"{guess} is more than one letter. Please enter a single letter.")
-  elif not guess.isalpha():
-    print(f"{guess} is not a valid character from the English alphabet. Please try again.")
-  elif guess in guesses:
-    print(f"You've already guessed {guess}. Please try again.")
-  else:
-    guesses.append(guess)
-    alphabet.remove(guess)
-    return guess
-  return False
-
-def check_guess(guess, word):
-  if guess in word:
-    #print(f"Good guess, {guess} is in the word!")
-    return True
-  else:
-   # print(f"Sorry, {guess} is not in the word.")
-    return False
+  while True:
+    guess = input("\nGuess a letter: ").lower()
+    if guess in guesses:
+      print(f"You've already guessed {guess}. Please try again.")
+    elif len(guess) == 1 and guess.isalpha():
+      alphabet.remove(guess)
+      return guess
+    else:
+      print("Invalid entry. Please try again.")
 
 def find_all_positions(word, guess, word_array):
   for index, character in enumerate(word):
@@ -69,31 +54,15 @@ def find_all_positions(word, guess, word_array):
       word_array[index] = guess
   return word_array
 
-def show_status(word_array):
+def show_status(word_array, guesses):
   print("\n")
   for character in word_array:
     print(character, end=" ")
   print("\n")
+  print(f"Guesses: {guesses}")
 
 def check_win_conditions(word, word_array):
   if word == "".join(word_array):
-    print("Congrats, you win!")
-    global game_won
-    game_won = True
+    return True
 
-def debug(word, word_array):
-  print(f"""\n
-----------------------------------------------------------------
-DEBUG MODE ON
-----------------------------------------------------------------
-- Alphabet = {alphabet}
-- Guesses = {guesses}
-- Word = {word}
-- Word Array = {word_array}
-----------------------------------------------------------------\n""")
-
-word, word_array = game_init()
-game_loop(word, word_array)
-
-if game_won:
-  print("Congratulations! You win.")
+play_game()

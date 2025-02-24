@@ -2,7 +2,7 @@
 This is a simple code-breaking game wherein a player attempts to guess a secret code comprised of integer values (zero repeating). It is similar to MasterMind though predates it.
 
 ## Key Concepts
-This following concepts are exposed in this number guess game design.
+This following concepts are exposed in this Bulls and Cows game design.
 - Random Module
 - Game Loop
 - Functions

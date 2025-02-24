@@ -4,7 +4,7 @@ This is a simple word guessing game where the user guesses one letter at a time 
 The game gets all words from the Random Word API on Heroku.
 
 ## Key Concepts
-This following concepts are exposed in this number guess game design.
+This following concepts are exposed in this word guessing game design.
 - Requests Module
 - APIs
 - Game Loop

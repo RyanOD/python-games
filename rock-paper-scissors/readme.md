@@ -2,7 +2,7 @@
 This is a simple game of rock paper scissors where the user is competing against the computer. While a very simple game, this is a classic first step in game development as it introduces the developer to several key programming concepts while not overwhelming them with too much. While this code is overly verbose, this approach is helpful for less experienced developers.
 
 ## Key Concepts
-This following concepts are exposed in this number guess game design.
+This following concepts are exposed in this Rock Paper Scissors game design.
 - Random Module
 - Game Loop
 - Functions

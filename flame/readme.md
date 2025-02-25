@@ -1,5 +1,5 @@
 # FLAME Game
-A very simple game where two players write down their names. Common letters in both are eliminated and the remainging letters are counted. Next, beginning with "F", players count the number found and eliminate the letter in "FLAME" they land on. This is repeated until only one letter remains. That letter determines the long-term relationship between the two individuals as follows:
+The FLAME game built with Python. In FLAME, two players write down their names. Common letters in both are eliminated and the remaining letters are counted. Next, beginning with "F", players count the number found and eliminate the letter in "FLAME" they land on. This is repeated until only one letter remains. That letter determines the long-term relationship between the two individuals as follows:
 - F = Friends
 - L = Lovers
 - A = Affectionate
@@ -7,7 +7,7 @@ A very simple game where two players write down their names. Common letters in b
 - E = Enemies
 
 ## Key Concepts
-This following concepts are exposed in this FLAME game design.
+The following Python programming concepts are exposed in this FLAME game design.
 - For / While Loops
 - Functions
 - Variables

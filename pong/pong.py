@@ -43,16 +43,14 @@ while running:
         paddle_lt.move("down")
     elif pressed[pygame.K_p]:
         ball.serve()
-    
-    if ball.x <= paddle_lt.x and ball.y > paddle_lt.y and ball.y < paddle_lt.y + paddle_lt.height:
-        ball.speed_x *= -1
-    if ball.x >= paddle_rt.x and ball.y > paddle_rt.y and ball.y < paddle_rt.y + paddle_rt.height:
-        ball.speed_x *= -1
 
     screen.clear(FIELD_COLOR)
     screen.draw_line((255, 0, 0))
     ball.draw(surface)
     ball.move(screen)
+    ball.boundary_check(SCREEN_WIDTH, SCREEN_HEIGHT)
+    ball.collision_check(paddle_lt)
+    ball.collision_check(paddle_rt)
     paddle_lt.draw(surface)
     paddle_rt.draw(surface)
 

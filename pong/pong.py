@@ -35,10 +35,13 @@ while running:
         paddle_lt.move("up")
     elif pressed[pygame.K_s] and paddle_lt.y < SCREEN_HEIGHT - paddle_lt.height / 2 - SCREEN_PADDING:
         paddle_lt.move("down")
+    elif pressed[pygame.K_p]:
+        ball.serve()
 
     screen.clear(FIELD_COLOR)
     screen.draw_line((255, 0, 0))
     ball.draw(surface)
+    ball.move(screen)
     paddle_lt.draw(surface)
     paddle_rt.draw(surface)
 

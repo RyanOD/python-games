@@ -1,18 +1,24 @@
 import pygame
 from paddle import Paddle
+from screen import Screen
+from ball import Ball
 
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 800
 SCREEN_PADDING = 10
 FIELD_COLOR = (0, 0, 0)
 LINE_COLOR = (255, 255, 255)
-BALL_COLOR = (255, 255, 255)
 BALL_RADIUS = 10
+BALL_COLOR = (255, 255, 255)
 
 # pygame setup
 pygame.init()
 
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen = Screen(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_PADDING)
+surface = screen.surface
+
+ball = Ball(BALL_RADIUS, BALL_COLOR, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
 clock = pygame.time.Clock()
 running = True
 
@@ -30,12 +36,11 @@ while running:
     elif pressed[pygame.K_s] and paddle_lt.y < SCREEN_HEIGHT - paddle_lt.height / 2 - SCREEN_PADDING:
         paddle_lt.move("down")
 
-    screen.fill(FIELD_COLOR)
-
-    line = pygame.draw.line(screen, LINE_COLOR, (SCREEN_WIDTH / 2 -  1, 0), (SCREEN_WIDTH / 2 - 1, SCREEN_HEIGHT), 2)
-    ball = pygame.draw.circle(screen, BALL_COLOR, (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), BALL_RADIUS)
-    paddle_lt.render(screen)
-    paddle_rt.render(screen)
+    screen.clear(FIELD_COLOR)
+    screen.draw_line((255, 0, 0))
+    ball.draw(surface)
+    paddle_lt.draw(surface)
+    paddle_rt.draw(surface)
 
     pygame.display.flip()
 pygame.quit()

@@ -14,7 +14,7 @@ class Paddle:
         self.color = PADDLE_COLOR
         self.speed = PADDLE_SPEED
 
-    def render(self, screen):
+    def draw(self, screen):
         paddle = pygame.Rect(self.x, self.y - self.height / 2, self.width, self.height)
         pygame.draw.rect(screen, (255, 255, 208), paddle)
 

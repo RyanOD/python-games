@@ -14,18 +14,24 @@ BALL_COLOR = (255, 255, 255)
 # pygame setup
 pygame.init()
 
+# define screen surface object
 screen = Screen(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_PADDING)
 surface = screen.surface
+pygame.display.set_caption("Pong Clone")
 
+# create instance of ball
 ball = Ball(BALL_RADIUS, BALL_COLOR, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
+# instantiate Clock instance and limit the game loop to 60 FPS
 clock = pygame.time.Clock()
-running = True
+clock.tick(60)
 
+# instantiate two instances of Paddle class
 paddle_lt = Paddle(SCREEN_PADDING, SCREEN_HEIGHT / 2)
 paddle_rt = Paddle(SCREEN_WIDTH - SCREEN_PADDING, SCREEN_HEIGHT / 2)
 
-pygame.display.set_caption("Pong Clone")
+running = True
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -37,6 +43,11 @@ while running:
         paddle_lt.move("down")
     elif pressed[pygame.K_p]:
         ball.serve()
+    
+    if ball.x <= paddle_lt.x and ball.y > paddle_lt.y and ball.y < paddle_lt.y + paddle_lt.height:
+        ball.speed_x *= -1
+    if ball.x >= paddle_rt.x and ball.y > paddle_rt.y and ball.y < paddle_rt.y + paddle_rt.height:
+        ball.speed_x *= -1
 
     screen.clear(FIELD_COLOR)
     screen.draw_line((255, 0, 0))

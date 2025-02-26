@@ -26,6 +26,6 @@ class Ball:
             self.speed_y *= -1
 
     def serve(self):
-        self.speed = random.randint(2, 4)
+        self.speed = random.randint(2, 3)
         self.speed_x = self.speed * math.cos(self.angle)
         self.speed_y = self.speed * math.sin(self.angle)

@@ -48,5 +48,5 @@ class Ball:
                 self.x = paddle_rt.rect.x - self.radius
     
     def passed(self, screen):
-        if not self or self.x < -self.radius or self.x > screen.width + self.radius:
+        if self.x < -self.radius or self.x > screen.width + self.radius:
             self.reset(screen)

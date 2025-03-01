@@ -29,9 +29,6 @@ clock = pygame.time.Clock()
 paddle_lt = Paddle(SCREEN_PADDING, SCREEN_HEIGHT)
 paddle_rt = Paddle(SCREEN_WIDTH - SCREEN_PADDING, SCREEN_HEIGHT)
 
-# set player score to zero
-player_score = 0
-
 running = True
 
 while running:
@@ -53,10 +50,11 @@ while running:
     ball.draw(surface)
     ball.move(screen)
     screen.boundary_check(ball)
-    ball.passed(screen)
+    screen.passed(ball)
     ball.collision_check(paddle_lt, paddle_rt)
     paddle_lt.draw(surface)
     paddle_rt.draw(surface)
+    screen.display_score()
 
     pygame.display.flip()
 pygame.quit()

@@ -20,37 +20,41 @@ surface = screen.surface
 pygame.display.set_caption("Pong Clone")
 
 # create instance of ball
-ball = Ball(BALL_RADIUS, BALL_COLOR, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+ball = Ball(BALL_RADIUS, BALL_COLOR, SCREEN_WIDTH, SCREEN_HEIGHT)
 
 # instantiate Clock instance and limit the game loop to 60 FPS
 clock = pygame.time.Clock()
-clock.tick(60)
 
 # instantiate two instances of Paddle class
-paddle_lt = Paddle(SCREEN_PADDING, SCREEN_HEIGHT / 2)
-paddle_rt = Paddle(SCREEN_WIDTH - SCREEN_PADDING, SCREEN_HEIGHT / 2)
+paddle_lt = Paddle(SCREEN_PADDING, SCREEN_HEIGHT)
+paddle_rt = Paddle(SCREEN_WIDTH - SCREEN_PADDING, SCREEN_HEIGHT)
+
+# set player score to zero
+player_score = 0
 
 running = True
 
 while running:
+    clock.tick(60)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN and ball.speed == 0:
+            if event.key == pygame.K_p:
+                ball.serve()
     pressed = pygame.key.get_pressed()
-    if pressed[pygame.K_w] and paddle_lt.y > paddle_lt.height / 2 + SCREEN_PADDING:
-        paddle_lt.move("up")
-    elif pressed[pygame.K_s] and paddle_lt.y < SCREEN_HEIGHT - paddle_lt.height / 2 - SCREEN_PADDING:
-        paddle_lt.move("down")
-    elif pressed[pygame.K_p]:
-        ball.serve()
+    if pressed[pygame.K_w]:
+        paddle_lt.move("up", screen)
+    elif pressed[pygame.K_s]:
+        paddle_lt.move("down", screen)
 
     screen.clear(FIELD_COLOR)
     screen.draw_line((255, 0, 0))
     ball.draw(surface)
     ball.move(screen)
-    ball.boundary_check(SCREEN_WIDTH, SCREEN_HEIGHT)
-    ball.collision_check(paddle_lt)
-    ball.collision_check(paddle_rt)
+    screen.boundary_check(ball)
+    ball.passed(screen)
+    ball.collision_check(paddle_lt, paddle_rt)
     paddle_lt.draw(surface)
     paddle_rt.draw(surface)
 

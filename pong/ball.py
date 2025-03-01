@@ -3,11 +3,11 @@ import random
 import math
 
 class Ball:
-    def __init__(self, radius, color, x, y):
+    def __init__(self, radius, color, SCREEN_WIDTH, SCREEN_HEIGHT):
         self.radius = radius
         self.color = color
-        self.x = x
-        self.y = y
+        self.x = SCREEN_WIDTH / 2
+        self.y = SCREEN_HEIGHT / 2
         self.speed = 0
         self.speed_x = 0
         self.speed_y = 0
@@ -18,34 +18,35 @@ class Ball:
         pygame.draw.circle(surface, self.color, (self.x, self.y), self.radius)
     
     def move(self, screen):
-        self.x -= self.speed_x
+        self.x += self.speed_x
         self.y += self.speed_y
 
-        # collision detection with top and bottom walls
-        if self.y + self.radius + screen.padding >= screen.height or self.y - self.radius - screen.padding <= 0:
-            self.speed_y *= -1
-
     def serve(self):
-        self.angle = math.radians(random.choice([30, 45, 60, 120, 135, 150]))
-        self.speed = random.randint(2, 3)
+        self.angle = math.radians(random.randint(0, 50))
+        self.speed = random.randint(6, 10) * random.choice([-1, 1])
         self.speed_x = self.speed * math.cos(self.angle)
         self.speed_y = self.speed * math.sin(self.angle)
     
-    def reset(self, x, y):
+    def reset(self, screen):
+        self.speed = 0
         self.speed_x = 0
         self.speed_y = 0
-        self.x = x
-        self.y = y
+        self.x = screen.width / 2
+        self.y = screen.height / 2
     
-    def collision_check(self, paddle):
-        if(
-            self.x - self.radius <= paddle.x + paddle.width and
-            self.x + self.radius >= paddle.x and
-            self.y >= paddle.y and
-            self.y <= paddle.y + paddle.height
-        ):
-            self.speed_x *= -1
+    def collision_check(self, paddle_lt, paddle_rt):
+        # if ball moving to the left and at same x coordinate as left paddle
+        if self.speed_x < 0 and self.x - self.radius <= paddle_lt.rect.x + paddle_lt.rect.width:
+            # check to see if vertical position of ball center is between top and bottom of paddle, indicating a collision
+            if self.y >= paddle_lt.rect.y and self.y <= paddle_lt.rect.y + paddle_lt.rect.height:
+                # reverse x-direction of ball
+                self.speed_x *= -1
+                self.x = paddle_lt.rect.x + paddle_lt.rect.width + self.radius
+        elif self.speed_x > 0 and self.x + self.radius >= paddle_rt.rect.x:
+            if self.y >= paddle_rt.y and self.y <= paddle_rt.y + paddle_rt.height:
+                self.speed_x *= -1
+                self.x = paddle_rt.rect.x - self.radius
     
-    def boundary_check(self, SCREEN_WIDTH, SCREEN_HEIGHT):
-        if not self or self.x < -self.radius or self.x > SCREEN_WIDTH + self.radius:
-            self.reset(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    def passed(self, screen):
+        if not self or self.x < -self.radius or self.x > screen.width + self.radius:
+            self.reset(screen)

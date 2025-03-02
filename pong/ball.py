@@ -3,9 +3,9 @@ import random
 import math
 
 class Ball:
-    def __init__(self, radius, color, SCREEN_WIDTH, SCREEN_HEIGHT):
-        self.radius = radius
-        self.color = color
+    def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
+        self.radius = 10
+        self.color = (255, 255, 255)
         self.x = SCREEN_WIDTH / 2
         self.y = SCREEN_HEIGHT / 2
         self.speed = 0

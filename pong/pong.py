@@ -1,51 +1,40 @@
 import pygame
-from paddle import Paddle
+from game import Game
 from screen import Screen
 from ball import Ball
+from paddle import Paddle
+from input_handler import InputHandler
 
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 800
-SCREEN_PADDING = 10
-FIELD_COLOR = (0, 0, 0)
-LINE_COLOR = (255, 255, 255)
-BALL_RADIUS = 10
-BALL_COLOR = (255, 255, 255)
+# instantiate instance of Game class
+game = Game()
 
-# pygame setup
-pygame.init()
-
-# define screen surface object
-screen = Screen(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_PADDING)
+# instantiate instance of screen class and attach to surface
+screen = Screen()
 surface = screen.surface
 pygame.display.set_caption("Pong Clone")
 
-# create instance of ball
-ball = Ball(BALL_RADIUS, BALL_COLOR, SCREEN_WIDTH, SCREEN_HEIGHT)
+# instantiate instance of Ball class
+ball = Ball(screen.width, screen.height)
+
+# instantiate two instances of Paddle class
+paddle_lt = Paddle(screen.padding, screen.height)
+paddle_rt = Paddle(screen.width - screen.padding, screen.height)
+
+# instantiate instance of InputHandler class
+input_handler = InputHandler(paddle_lt, screen, ball, game)
 
 # instantiate Clock instance and limit the game loop to 60 FPS
 clock = pygame.time.Clock()
-
-# instantiate two instances of Paddle class
-paddle_lt = Paddle(SCREEN_PADDING, SCREEN_HEIGHT)
-paddle_rt = Paddle(SCREEN_WIDTH - SCREEN_PADDING, SCREEN_HEIGHT)
 
 running = True
 
 while running:
     clock.tick(60)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        if event.type == pygame.KEYDOWN and ball.speed == 0:
-            if event.key == pygame.K_p:
-                ball.serve()
-    pressed = pygame.key.get_pressed()
-    if pressed[pygame.K_w]:
-        paddle_lt.move("up", screen)
-    elif pressed[pygame.K_s]:
-        paddle_lt.move("down", screen)
+    for event in pygame.event.get():                
+        pressed = pygame.key.get_pressed()
+        input_handler.handle_input(pressed)
 
-    screen.clear(FIELD_COLOR)
+    screen.clear(screen.color)
     screen.draw_line((255, 0, 0))
     ball.draw(surface)
     ball.move(screen)

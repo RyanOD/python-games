@@ -27,12 +27,17 @@ input_handler = InputHandler(paddle_lt, screen, ball, game)
 clock = pygame.time.Clock()
 
 running = True
+ball_served = False
 
 while running:
     clock.tick(60)
-    for event in pygame.event.get():                
-        pressed = pygame.key.get_pressed()
-        input_handler.handle_input(pressed)
+    
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    
+    pressed = pygame.key.get_pressed()
+    input_handler.handle_input(pressed)
 
     screen.clear(screen.color)
     screen.draw_line((255, 0, 0))

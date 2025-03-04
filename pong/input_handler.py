@@ -8,15 +8,12 @@ class InputHandler:
             pygame.K_SPACE: ServeBallCommand(ball),
             pygame.K_w: MoveUpCommand(paddle, screen),
             pygame.K_s: MoveDownCommand(paddle, screen),
-            pygame.K_q: QuitGameCommand()
         }
     
     def handle_input(self, pressed_keys):
-        print(pressed_keys)
         for key, command in self.commands.items():
             if pressed_keys[key]:
                 command.execute()
-
 
 '''
         for event in pygame.event.get():

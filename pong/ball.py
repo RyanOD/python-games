@@ -14,6 +14,12 @@ class Ball:
         self.moving = False
         self.angle = 0
     
+    def __repr__(self):
+        return f"ball "
+
+    def __str__(self):
+        return f"ball.x = {self.x}\nball.y = {self.y}\nball.radius = {self.radius}\nball.color = {self.color}\nball.speed = {self.speed}"
+    
     def draw(self, surface):
         pygame.draw.circle(surface, self.color, (self.x, self.y), self.radius)
     
@@ -41,11 +47,11 @@ class Ball:
             if self.y >= paddle_lt.rect.y and self.y <= paddle_lt.rect.y + paddle_lt.rect.height:
                 # reverse x-direction of ball
                 self.speed_x *= -1
-                self.x = paddle_lt.rect.x + paddle_lt.rect.width + self.radius
-        elif self.speed_x > 0 and self.x + self.radius >= paddle_rt.rect.x:
-            if self.y >= paddle_rt.y and self.y <= paddle_rt.y + paddle_rt.height:
+                self.x = paddle_lt.x_position + paddle_lt.width + self.radius
+        elif self.speed_x > 0 and self.x + self.radius >= paddle_rt.x_position:
+            if self.y >= paddle_rt.y_position and self.y <= paddle_rt.y_position + paddle_rt.height:
                 self.speed_x *= -1
-                self.x = paddle_rt.rect.x - self.radius
+                self.x = paddle_rt.x_position - self.radius
     
     def passed(self, screen):
         if self.x < -self.radius or self.x > screen.width + self.radius:

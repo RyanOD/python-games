@@ -21,7 +21,8 @@ class ServeBallCommand(Command):
         self.ball = ball
 
     def execute(self):
-        self.ball.serve()
+        if not self.ball.speed:
+            self.ball.serve()
 
 class MoveUpCommand(Command):
     def __init__(self, paddle, screen):
@@ -42,8 +43,3 @@ class MoveDownCommand(Command):
 class PauseGameCommand(Command):
     def execute(game):
         pass
-
-class QuitGameCommand(Command):
-    def execute():
-        pygame.quit()
-        exit()

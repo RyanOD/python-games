@@ -20,11 +20,8 @@ class Paddle:
             self.rect.y += self.speed
     
     def ai(self, ball):
-        print(self.rect.y)
         if ball.speed_x > 0:
-            target = abs(ball.y - self.rect.y)
-            if target > 6:
-                if ball.y > self.rect.y:
-                    self.rect.y += self.speed
-                elif ball.y < self.rect.y:
-                    self.rect.y -= self.speed
+            target = ball.y - self.height // 2
+            if abs(target - self.rect.y) > 6:
+                direction = 1 if target > self.rect.y else -1
+                self.rect.y += self.speed * direction

@@ -48,6 +48,7 @@ while running:
     ball.collision_check(paddle_lt, paddle_rt)
     paddle_lt.draw(surface)
     paddle_rt.draw(surface)
+    paddle_rt.ai(ball)
     screen.display_score()
 
     pygame.display.flip()

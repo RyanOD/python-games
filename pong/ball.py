@@ -9,6 +9,7 @@ class Ball:
         self.x = SCREEN_WIDTH / 2
         self.y = SCREEN_HEIGHT / 2
         self.speed = 0
+        self.speed_max = 15
         self.speed_x = 0
         self.speed_y = 0
         self.moving = False
@@ -46,12 +47,16 @@ class Ball:
             # check to see if vertical position of ball center is between top and bottom of paddle, indicating a collision
             if self.y >= paddle_lt.rect.y and self.y <= paddle_lt.rect.y + paddle_lt.rect.height:
                 # reverse x-direction of ball
-                self.speed_x *= -1
-                self.x = paddle_lt.x_position + paddle_lt.width + self.radius
-        elif self.speed_x > 0 and self.x + self.radius >= paddle_rt.x_position:
-            if self.y >= paddle_rt.y_position and self.y <= paddle_rt.y_position + paddle_rt.height:
-                self.speed_x *= -1
-                self.x = paddle_rt.x_position - self.radius
+                if self.speed < self.speed_max:
+                    self.speed_x *= -1.2
+                self.speed_y += math.radians(random.randint(-80, 80))
+                self.x = paddle_lt.x + paddle_lt.width + self.radius
+        elif self.speed_x > 0 and self.x + self.radius >= paddle_rt.rect.x:
+            if self.y >= paddle_rt.rect.y and self.y <= paddle_rt.rect.y + paddle_rt.rect.height:
+                if self.speed < self.speed_max:
+                    self.speed_x *= -1.2
+                self.x = paddle_rt.rect.x - self.radius
+                self.speed_y += math.radians(random.randint(-80, 80))
     
     def passed(self, screen):
         if self.x < -self.radius or self.x > screen.width + self.radius:

@@ -18,24 +18,25 @@ class Frog:
         self.x = screen.width / 2 - self.width / 2
         self.y = screen.height / 2 - self.height / 2
         self.speed = 10
-        self.image_original = pygame.image.load('assets/frog.png')
-        self.image = pygame.image.load('assets/frog.png')
+        self.image_original = pygame.transform.scale(pygame.image.load('assets/frog.png'), (80, 80))
+        self.image = self.image_original
         self.orientation = "up"
         self.orientations = {"up": 0, "right": 90, "down": 180, "left": 270}
+        self.movement = 40
     
     def move(self, direction):
         if direction == "up":
             self.image = pygame.transform.rotate(self.image_original, 0)
-            self.y -= 80
+            self.y -= self.movement
         elif direction == "down":
             self.image = pygame.transform.rotate(self.image_original, 180)
-            self.y += 80
+            self.y += self.movement
         elif direction == "left":
             self.image = pygame.transform.rotate(self.image_original, 270)
-            self.x -= 80
+            self.x -= self.movement
         elif direction == "right":
             self.image = pygame.transform.rotate(self.image_original, 90)
-            self.x += 80
+            self.x += self.movement
 
 class Log:
     def __init__(self):

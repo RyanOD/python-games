@@ -2,23 +2,21 @@ import pygame
 from game import Game
 from classes import *
 
-# create instance of Game class
-game = Game()
-
 # instantiate instance of screen class and attach to surface
 screen = Screen()
 surface = screen.surface
-pygame.display.set_caption("Pong Clone")
+pygame.display.set_caption("Frogger Clone")
 
-# create instance of Frog class
-frog = Frog(screen)
+# create instance of Game class
+game = Game(screen)
 
 while not game.game_over():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game.lives = 0
     
-    screen.draw()
-    frog.draw(screen)
+    game.input_handler.handle_input(pygame.key.get_pressed())
+
+    game.draw()
 
 pygame.quit()

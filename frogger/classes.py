@@ -4,35 +4,31 @@ class Screen:
     def __init__(self):
         self.width = 1200
         self.height = 1200
-        self.fill = (255, 255, 255)
+        self.fill = (255, 0, 255)
         self.title = "Frogger Clone by Retro Clone"
         self.surface = pygame.display.set_mode((self.width, self.height))
-
-    def draw(self):
-        pygame.display.set_caption(self.title)
-        pygame.display.flip()
     
     def clear(self):
         self.surface.fill(self.fill)
 
 class Frog:
     def __init__(self, screen):
-        self.x = screen.width / 2
-        self.y = screen.height - 50
+        self.width = 170
+        self.height = 120
+        self.x = screen.width / 2 - self.width / 2
+        self.y = screen.height / 2 - self.height / 2
         self.speed = 10
         self.image = pygame.image.load('assets/frog.png')
         self.orientation = "up"
         self.orientations = {"up": 0, "right": 90, "down": 180, "left": 270}
-
-    def draw(self, screen):
-        screen.surface.blit(self.image, (self.x, self.y))
     
-    def move(self):
-        if self.orientation == "up":
+    def move(self, direction):
+        if direction == "up":
             pass
             # set orientation to frog facing up
-            # switch stationary frog image to extended from image
+            # set frog image to extended version
             # move frog one lane forward in a smooth manner
+            # set frog image to stationary version
         elif self.orientation == "down":
             pass
         elif self.orientation == "left":
@@ -61,9 +57,9 @@ class Turtle:
 class Vehicle:
     def __init__(self):
         pass
-'''
+
 class InputHandler:
-    def __init__(self):
+    def __init__(self, frog):
         self.commands = {
             pygame.K_UP: MoveUpCommand(frog),
             pygame.K_RIGHT: MoveRightCommand(frog),
@@ -77,34 +73,33 @@ class InputHandler:
                command.execute()
 
 class Command:
-    def __init__():
+    def execute(self):
         pass
 
-    def MoveUpCommand(self, frog):
-        def __init__():
-            self.frog = frog
+class MoveUpCommand:
+    def __init__(self, frog):
+        self.frog = frog
 
-        def execute(self):
-            self.frog.move("up")
-    
-    def MoveRightCommand(self, frog):
-        def __init__():
-            self.frog = frog
+    def execute(self):
+        self.frog.move("up")
 
-        def execute(self):
-            self.frog.move("right")
+class MoveRightCommand:
+    def __init__(self, frog):
+        self.frog = frog
 
-    def MoveDownCommand(self, frog):
-        def __init__():
-            self.frog = frog
+    def execute(self):
+        self.frog.move("right")
 
-        def execute(self):
-            self.frog.move("down")
+class MoveDownCommand:
+    def __init__(self, frog):
+        self.frog = frog
 
-    def MoveLeftCommand(self, frog):
-        def __init__():
-            self.frog = frog
+    def execute(self):
+        self.frog.move("down")
 
-        def execute(self):
-            self.frog.move("left")
-            '''
+class MoveLeftCommand:
+    def __init__(self, frog):
+        self.frog = frog
+
+    def execute(self):
+        self.frog.move("left")

@@ -2,8 +2,8 @@ import pygame
 
 class Screen:
     def __init__(self):
-        self.width = 1200
-        self.height = 1200
+        self.width = 800
+        self.height = 800
         self.fill = (255, 0, 255)
         self.title = "Frogger Clone by Retro Clone"
         self.surface = pygame.display.set_mode((self.width, self.height))
@@ -18,23 +18,21 @@ class Frog:
         self.x = screen.width / 2 - self.width / 2
         self.y = screen.height / 2 - self.height / 2
         self.speed = 10
+        self.image_original = pygame.image.load('assets/frog.png')
         self.image = pygame.image.load('assets/frog.png')
         self.orientation = "up"
         self.orientations = {"up": 0, "right": 90, "down": 180, "left": 270}
     
     def move(self, direction):
         if direction == "up":
-            pass
-            # set orientation to frog facing up
-            # set frog image to extended version
-            # move frog one lane forward in a smooth manner
-            # set frog image to stationary version
-        elif self.orientation == "down":
-            pass
-        elif self.orientation == "left":
-            pass
-        elif self.orientation == "right":
-            pass
+            self.image = pygame.transform.rotate(self.image_original, 0)
+            self.x
+        elif direction == "down":
+            self.image = pygame.transform.rotate(self.image_original, 180)
+        elif direction == "left":
+            self.image = pygame.transform.rotate(self.image_original, 270)
+        elif direction == "right":
+            self.image = pygame.transform.rotate(self.image_original, 90)
 
 class Log:
     def __init__(self):
@@ -67,10 +65,9 @@ class InputHandler:
             pygame.K_LEFT: MoveLeftCommand(frog)
         }
 
-    def handle_input(self, pressed_keys):
-        for key, command in self.commands.items():
-            if pressed_keys[key]:
-               command.execute()
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN and event.key in self.commands:
+            self.commands[event.key].execute()
 
 class Command:
     def execute(self):

@@ -26,13 +26,16 @@ class Frog:
     def move(self, direction):
         if direction == "up":
             self.image = pygame.transform.rotate(self.image_original, 0)
-            self.x
+            self.y -= 80
         elif direction == "down":
             self.image = pygame.transform.rotate(self.image_original, 180)
+            self.y += 80
         elif direction == "left":
             self.image = pygame.transform.rotate(self.image_original, 270)
+            self.x -= 80
         elif direction == "right":
             self.image = pygame.transform.rotate(self.image_original, 90)
+            self.x += 80
 
 class Log:
     def __init__(self):

@@ -2,9 +2,9 @@ import pygame
 
 class Screen:
     def __init__(self):
-        self.width = 800
-        self.height = 800
-        self.fill = (255, 0, 255)
+        self.width = 900
+        self.height = 1000
+        self.fill = (0, 0, 0)
         self.title = "Frogger Clone by Retro Clone"
         self.surface = pygame.display.set_mode((self.width, self.height))
     
@@ -16,9 +16,9 @@ class Frog:
         self.width = 170
         self.height = 120
         self.x = screen.width / 2 - self.width / 2
-        self.y = screen.height / 2 - self.height / 2
+        self.y = screen.height - 130
         self.speed = 10
-        self.image_original = pygame.transform.scale(pygame.image.load('assets/frog.png'), (80, 80))
+        self.image_original = pygame.transform.scale(pygame.image.load('assets/frog.png'), (60, 60))
         self.image = self.image_original
         self.orientation = "up"
         self.orientations = {"up": 0, "right": 90, "down": 180, "left": 270}

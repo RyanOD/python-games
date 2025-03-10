@@ -4,12 +4,14 @@ class Screen:
     def __init__(self):
         self.width = 900
         self.height = 1000
-        self.fill = (0, 0, 0)
+        self.fill_road = (0, 0, 0)
+        self.fill_water = (65, 107, 223)
         self.title = "Frogger Clone by Retro Clone"
         self.surface = pygame.display.set_mode((self.width, self.height))
     
     def clear(self):
-        self.surface.fill(self.fill)
+        self.surface.fill(self.fill_water, (0, 0, 900, 450))
+        self.surface.fill(self.fill_road, (0, 450, 900, 1000))
 
 class Frog:
     def __init__(self, screen):

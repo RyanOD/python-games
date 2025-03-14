@@ -2,29 +2,29 @@ import pygame
 
 class Screen:
     def __init__(self):
-        self.width = 900
-        self.height = 1000
+        self.width = 792
+        self.height = 1050
         self.fill_road = (0, 0, 0)
         self.fill_water = (65, 107, 223)
         self.title = "Frogger Clone by Retro Clone"
         self.surface = pygame.display.set_mode((self.width, self.height))
-    
+
     def clear(self):
-        self.surface.fill(self.fill_water, (0, 0, 900, 450))
-        self.surface.fill(self.fill_road, (0, 450, 900, 1000))
+        self.surface.fill(self.fill_water, (0, 0, self.width, 440))
+        self.surface.fill(self.fill_road, (0, 440, self.width, self.height))
 
 class Frog:
     def __init__(self, screen):
         self.width = 170
         self.height = 120
         self.x = screen.width / 2 - self.width / 2
-        self.y = screen.height - 130
+        self.y = screen.height - 160
         self.speed = 10
-        self.image_original = pygame.transform.scale(pygame.image.load('assets/frog.png'), (60, 60))
+        self.image_original = pygame.transform.scale(pygame.image.load('assets/frog_1.png'), (60, 60))
         self.image = self.image_original
         self.orientation = "up"
         self.orientations = {"up": 0, "right": 90, "down": 180, "left": 270}
-        self.movement = 40
+        self.movement = 80
     
     def move(self, direction):
         if direction == "up":
@@ -34,33 +34,53 @@ class Frog:
             self.image = pygame.transform.rotate(self.image_original, 180)
             self.y += self.movement
         elif direction == "left":
-            self.image = pygame.transform.rotate(self.image_original, 270)
+            self.image = pygame.transform.rotate(self.image_original, 90)
             self.x -= self.movement
         elif direction == "right":
-            self.image = pygame.transform.rotate(self.image_original, 90)
+            self.image = pygame.transform.rotate(self.image_original, -90)
             self.x += self.movement
 
-class Log:
-    def __init__(self):
-        self.x = 100 #FIX THIS
-        self.lane = 1 #FIX THIS
-        self.speed = 8
-    
-    def move(self):
-        pass
-
-class Turtle:
-    def __init__(self):
+'''GameObject Class manages all game objects besides frogs (vehicles, logs, hedges, etc)'''
+class GameObject:
+    def __init__(self, type, width, height, speed, x, y, direction, image):
+        self.type = type
+        self.width = width
+        self.height = height
+        self.speed = speed
         self.x = x
-        self.lane = lane
-        self.speed = 8
-    
-    def move(self):
-        pass
+        self.y = y
+        self.direction = direction
+        self.image = pygame.transform.scale(pygame.image.load(image), (self.height, self.width))
 
-class Vehicle:
-    def __init__(self):
-        pass
+    def move(self):
+        if self.direction == "right":
+            self.x += self.speed
+        else:
+            self.x -= self.speed
+        
+        if self.x < -80:
+            self.x = 872
+
+
+class Level:
+    def __init__(self, number):
+        self.number = number
+        self.layout = self.get_layout(self.number)
+        self.time_limits = [41, 51, 61, 71]
+        self.time_limit = self.time_limits[number]
+    
+    def get_layout(number):
+        if number == 1:
+            return [
+                ["G", "G", "G", "G", "G"],  # Goal zone (G)
+                ["L", "L", "T", "L", "L"],  # Water with logs (L) and turtles (T)
+                ["L", "A", "L", "L", "L"],  # Water with an alligator (A)
+                ["S", "S", "S", "S", "S"],  # Safe zone (S)
+                ["C", " ", "T", " ", "C"],  # Road with cars (C) and trucks (T)
+                ["C", "M", " ", "M", "C"],  # Road with cars (C) and motorcycles (M)
+                ["S", "S", "S", "S", "S"],  # Safe zone
+                ["F", "F", "F", "F", "F"],  # Frog start position (F)
+            ]
 
 class InputHandler:
     def __init__(self, frog):

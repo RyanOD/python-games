@@ -1,0 +1,5 @@
+ASSET_DIRECTORY = 'assets'
+CAR_1_IMG = 'car_1.png'
+CAR_2_IMG = 'car_2.png'
+CAR_3_IMG = 'car_3.png'
+DOZER_IMG = 'dozer.png'

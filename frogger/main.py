@@ -2,22 +2,22 @@ import pygame
 from game import Game
 from classes import *
 
-# instantiate instance of screen class and attach to surface
-screen = Screen()
-surface = screen.surface
-pygame.display.set_caption("Frogger Clone")
+def main():
+    game = Game()
+    game.load_level(1)
 
-# create instance of Game class
-game = Game(screen)
+    while not game.game_over():
+        for object in game.objects:
+            object.move()
 
-while not game.game_over():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            game.lives = 0
-        game.input_handler.handle_event(event)
-    
-    #game.input_handler.handle_input(pygame.key.get_pressed())
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game.lives = 0
+            game.input_handler.handle_event(event)
+        
+        #game.input_handler.handle_input(pygame.key.get_pressed())
 
-    game.draw()
+        game.draw()
 
-pygame.quit()
+if __name__ == "__main__":
+    main()

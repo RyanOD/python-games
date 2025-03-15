@@ -2,10 +2,10 @@ import pygame
 
 class Screen:
     def __init__(self):
-        self.width = 792
-        self.height = 1050
+        self.width = 840
+        self.height = 1020
         self.fill_road = (0, 0, 0)
-        self.fill_water = (65, 107, 223)
+        self.fill_water = (0, 51, 153)
         self.title = "Frogger Clone by Retro Clone"
         self.surface = pygame.display.set_mode((self.width, self.height))
 
@@ -18,7 +18,7 @@ class Frog:
         self.width = 170
         self.height = 120
         self.x = screen.width / 2 - self.width / 2
-        self.y = screen.height - 160
+        self.y = screen.height - 130
         self.speed = 10
         self.image_original = pygame.transform.scale(pygame.image.load('assets/frog_1.png'), (60, 60))
         self.image = self.image_original

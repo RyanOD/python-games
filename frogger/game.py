@@ -28,21 +28,21 @@ class Game:
         for i, lane in enumerate(self.objects_data):
             for j, object in enumerate(lane):
                 if object == 'T':
-                    self.objects.append(GameObject('turtle', 60, 60, 1, j * 80, i * 80, 'left', ASSET_DIRECTORY + '/' + CAR_1_IMG))
-                #elif object == 'LL':
-                 #   self.objects.append(GameObject('log_left', 60, 60, 1, j * 40, i * 40, 'left', image))
-                #elif object == 'LR':
-                 #   self.objects.append(GameObject('log_right', 60, 60, 1, j * 40, i * 40, 'left', image))
-                #elif object == 'LM':
-                 #   self.objects.append(GameObject('log_middle', 60, 60, 1, j * 40, i * 40, 'left', image))
+                    self.objects.append(GameObject('turtle', 64, 64, 1, (j + 1) * 64, i * 40 + 88, 'left', ASSET_DIRECTORY + '/' + TURTLE_IMG))
+                elif object == 'LL':
+                    self.objects.append(GameObject('log_lt', 60, 60, 1, (j + 1) * 40, i * 40, 'left', ASSET_DIRECTORY + '/' + LOG_LT_IMG))
+                elif object == 'LR':
+                    self.objects.append(GameObject('log_rt', 60, 60, 1, (j + 1) * 40, i * 40, 'left', ASSET_DIRECTORY + '/' + LOG_RT_IMG))
+                elif object == 'LM':
+                    self.objects.append(GameObject('log_md', 60, 60, 1, (j + 1) * 40, i * 40, 'left', ASSET_DIRECTORY + '/' + LOG_MD_IMG))
                 elif object == 'C1':
-                    self.objects.append(GameObject('car_1', 60, 60, 1, j * 80, i * 80, 'left', ASSET_DIRECTORY + '/' + CAR_1_IMG))
+                    self.objects.append(GameObject('car_1', 64, 64, 1, (j + 1) * 80, i * 40 + 88, 'left', ASSET_DIRECTORY + '/' + CAR_1_IMG))
                 elif object == 'C2':
-                    self.objects.append(GameObject('car_2', 60, 60, 1, j * 80, i * 80, 'left', ASSET_DIRECTORY + '/' + CAR_2_IMG))
+                    self.objects.append(GameObject('car_2', 64, 64, 1, (j + 1) * 80, i * 40 + 88, 'left', ASSET_DIRECTORY + '/' + CAR_2_IMG))
                 elif object == 'C3':
-                    self.objects.append(GameObject('car_3', 60, 60, 1, j * 80, i * 80, 'left', ASSET_DIRECTORY + '/' + CAR_3_IMG))
+                    self.objects.append(GameObject('car_3', 64, 64, 1, (j + 1) * 80, i * 40 + 88, 'right', ASSET_DIRECTORY + '/' + CAR_3_IMG))
                 elif object == 'D':
-                    self.objects.append(GameObject('dozer', 60, 60, 1, j * 80, i * 80, 'left', ASSET_DIRECTORY + '/' + DOZER_IMG))
+                    self.objects.append(GameObject('dozer', 64, 64, 1, (j + 1) * 80, i * 40 + 88, 'right', ASSET_DIRECTORY + '/' + DOZER_IMG))
 
     def draw(self):
         self.screen.clear()
@@ -62,6 +62,8 @@ class Game:
 
         for i in range(0, self.screen.height, 80):
             pygame.draw.line(self.screen.surface, (255, 255, 255), (0, i), (self.screen.width, i))
+
+        pygame.draw.line(self.screen.surface, (255, 0, 255), (0, 280), (self.screen.width, 280))
 
         pygame.display.set_caption(self.screen.title)
         pygame.display.flip()

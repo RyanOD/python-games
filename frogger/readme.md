@@ -20,3 +20,6 @@ The following Python programming concepts are exposed in this Frogger game desig
   - Command Pattern
 
 **Disclaimer:** In no way should this game design be considered optimal and/or error free. Use as an educational tool at your discretion.
+
+## Assets
+All visual game assets were recreated in Photoshop based on original game images found here: https://www.computerarcheology.com/Arcade/Frogger/GFX.html

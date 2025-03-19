@@ -1,15 +1,15 @@
 OBJECT_MAP = {
-    'T': {'name': 'turtle', 'size': {'width': 60, 'height': 60}, 'image': 'assets/turtle_1.png'},
-    'LL': {'name': 'log_lt', 'size': {'width': 60, 'height': 60}, 'image': 'assets/log_lt.png'},
-    'LM': {'name': 'log_md', 'size': {'width': 60, 'height': 60}, 'image': 'assets/log_md.png'},
-    'LR': {'name': 'log_rt', 'size': {'width': 60, 'height': 60}, 'image': 'assets/log_rt.png'},
-    'C1': {'name': 'car_1', 'size': {'width': 60, 'height': 60}, 'image': 'assets/car_1.png'},
-    'C2': {'name': 'car_2', 'size': {'width': 60, 'height': 60}, 'image': 'assets/car_2.png'},
-    'C3': {'name': 'car_3', 'size': {'width': 60, 'height': 60}, 'image': 'assets/car_3.png'},
-    'D': {'name': 'dozer', 'size': {'width': 60, 'height': 60}, 'image': 'assets/dozer.png'},
+    'T': {'type': 'turtle', 'width': 60, 'height': 60, 'speed': 1.1, 'direction': 'left', 'image': 'assets/turtle_1.png'},
+    'LL': {'type': 'log_lt', 'width': 60, 'height': 60, 'speed': 1.4, 'direction': 'right', 'image': 'assets/log_lt.png'},
+    'LM': {'type': 'log_md', 'width': 60, 'height': 60, 'speed': 1.4, 'direction': 'right', 'image': 'assets/log_md.png'},
+    'LR': {'type': 'log_rt', 'width': 60, 'height': 60, 'speed': 1.4, 'direction': 'right', 'image': 'assets/log_rt.png'},
+    'C1': {'type': 'car_1', 'width': 60, 'height': 60, 'speed': 1.1, 'direction': 'left', 'image': 'assets/car_1.png'},
+    'C2': {'type': 'car_2', 'width': 60, 'height': 60, 'speed': 1.5, 'direction': 'left', 'image': 'assets/car_2.png'},
+    'C3': {'type': 'car_3', 'width': 60, 'height': 60, 'speed': 1.3, 'direction': 'right', 'image': 'assets/car_3.png'},
+    'D': {'type': 'dozer', 'width': 60, 'height': 60, 'speed': 1.6, 'direction': 'right', 'image': 'assets/dozer.png'},
 }
 
-LEVELS = [
+LEVEL_MAP = [
     [
         ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
         ['', '', 'T', 'T', '', 'T', 'T', '', '', 'T', 'T', '', 'T', 'T'],
@@ -26,58 +26,3 @@ LEVELS = [
         ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
     ]
 ]
-
-LANE_MAP = [
-    {'y': 88, 'direction': 'RT', 'speed': 1.2, 'collision': False},
-    {'y': 166, 'direction': 'LT', 'speed': 1, 'collision': False},
-    {'y': 254, 'direction': 'RT', 'speed': 1.2, 'collision': False},
-    {'y': 332, 'direction': 'RT', 'speed': 1.1, 'collision': False},
-    {'y': 508, 'direction': 'LT', 'speed': 1.5, 'collision': False},
-    {'y': 608, 'direction': 'RT', 'speed': 1, 'collision': True},
-    {'y': 708, 'direction': 'LT', 'speed': 1.1, 'collision': True},
-    {'y': 800, 'direction': 'RT', 'speed': 1.3, 'collision': True},
-    {'y': 810, 'direction': 'LT', 'speed': 1.1, 'collision': True},
-    {'y': 820, 'direction': 'RT', 'speed': 1.5, 'collision': True},
-    {'y': 830, 'direction': 'LT', 'speed': 1, 'collision': True},
-]
-
-'''{
-    
-    1: {'lane_speed': [1, 2, 1, 1.5, 2, 1, 1, 1, 1, 1, 1],
-        'layout': [
-            ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-            ['', '', 'T', 'T', '', 'T', 'T', '', '', 'T', 'T', '', 'T', 'T'],
-            ['LL', 'LM', 'LM', 'LM', 'LM', 'LR', '', '', 'LL', 'LM', 'LM', 'LM', 'LM', 'LR', ''],
-            ['', 'LL', 'LM', 'LR', '', '', '', 'LL', 'LM', 'LR', '', '', '', 'LL', 'LM', 'LR'],
-            ['T', 'T', 'T', '', 'T', 'T', 'T', '', 'T', 'T', 'T', '', 'T', 'T'],
-            ['H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'],
-            ['C3', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-            ['', '', '', 'C2', '', '', 'C2', '', '', 'C2', '', '', '', ''],
-            ['', 'D', '', '', '', 'D', '', '', '', 'D', '', '', '', ''],
-            ['', '', '', 'C1', '', '', 'C1', '', '', 'C1', '', '', 'C1', ''],
-            ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-            ['H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H', 'H'],]
-        },
-    2: {'lane_speed': [1, 2, 1, 1.5, 2, 1, 1, 1, 1, 1, 1],
-        'layout': [
-            ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-            ['', '', 'T', 'T', '', 'T', 'T', '', '', 'T', 'T', '', 'T', 'T'],
-            ['LL', 'LM', 'LM', 'LM', 'LM', 'LR', '', '', 'LL', 'LM', 'LM', 'LM', 'LM', 'LR', ''],
-            ['', 'LL', 'LM', 'LR', '', '', '', 'LL', 'LM', 'LR', '', '', '', 'LL', 'LM', 'LR'],
-            ['T', 'T', 'T', '', 'T', 'T', 'T', '', 'T', 'T', 'T', '', 'T', 'T'],
-            ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-            ['C3', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-            ['', '', '', 'C2', '', '', 'C2', '', '', 'C2', '', '', '', ''],
-            ['', 'D', '', '', '', 'D', '', '', '', 'D', '', '', '', ''],
-            ['', '', '', 'C1', '', '', 'C1', '', '', 'C1', '', '', 'C1', ''],
-            ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-            ]
-        }
-    }
-'''
-LANE_SPEED = [
-        [1, 1.1, 1.3, 1.5, 1, 1, 1.2, 1, 1, 1, 1.5],
-        [1, 1.4, 1.5, 1.5, 1, 1, 1.4, 1, 1.5, 1, 1.],
-        [1.3, 1.1, 1, 1.2, 1, 1, 1.2, 1.2, 1, 1.4, 1.1],
-    ]

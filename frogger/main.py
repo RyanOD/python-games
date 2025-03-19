@@ -4,10 +4,10 @@ from classes import *
 
 def main():
     game = Game()
-    game.load_level(1)
+    game.level.load_level(1)
 
     while not game.game_over():
-        for object in game.objects:
+        for object in game.level.objects:
             object.move()
 
         for event in pygame.event.get():

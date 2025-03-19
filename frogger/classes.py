@@ -1,4 +1,6 @@
 import pygame
+from levels import *
+from asset_paths import *
 
 class Screen:
     def __init__(self):
@@ -60,27 +62,73 @@ class GameObject:
         
         if self.x < -80:
             self.x = 872
-
+        elif self.x > 872:
+            self.x = -80
 
 class Level:
+    LEVELS = {
+        1: {'lane_speed': [1, 2, 1, 1.5, 2, 1, 1, 1, 1, 1, 1],
+            'layout': [
+                ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                ['W', 'W', 'T', 'T', 'W', 'T', 'T', 'W', 'W', 'T', 'T', 'W', 'T', 'T'],
+                ['LL', 'LM', 'LM', 'LM', 'LM', 'LR', 'W', 'W', 'LL', 'LM', 'LM', 'LM', 'LM', 'LR', 'W'],
+                ['W', 'LL', 'LM', 'LR', 'W', 'W', 'W', 'LL', 'LM', 'LR', 'W', 'W', 'W', 'LL', 'LM', 'LR'],
+                ['T', 'T', 'T', 'W', 'T', 'T', 'T', 'W', 'T', 'T', 'T', 'W', 'T', 'T'],
+                ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                ['C3', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                ['', '', '', 'C2', '', '', 'C2', '', '', 'C2', '', '', '', ''],
+                ['', 'D', '', '', '', 'D', '', '', '', 'D', '', '', '', ''],
+                ['', '', '', 'C1', '', '', 'C1', '', '', 'C1', '', '', 'C1', ''],
+                ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                ]
+            },
+        2: {'lane_speed': [1, 2, 1, 1.5, 2, 1, 1, 1, 1, 1, 1],
+            'layout': [
+                ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                ['W', 'W', 'T', 'T', 'W', 'T', 'T', 'W', 'W', 'T', 'T', 'W', 'T', 'T'],
+                ['LL', 'LM', 'LM', 'LM', 'LM', 'LR', 'W', 'W', 'LL', 'LM', 'LM', 'LM', 'LM', 'LR', 'W'],
+                ['W', 'LL', 'LM', 'LR', 'W', 'W', 'W', 'LL', 'LM', 'LR', 'W', 'W', 'W', 'LL', 'LM', 'LR'],
+                ['T', 'T', 'T', 'W', 'T', 'T', 'T', 'W', 'T', 'T', 'T', 'W', 'T', 'T'],
+                ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                ['C3', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                ['', '', '', 'C2', '', '', 'C2', '', '', 'C2', '', '', '', ''],
+                ['', 'D', '', '', '', 'D', '', '', '', 'D', '', '', '', ''],
+                ['', '', '', 'C1', '', '', 'C1', '', '', 'C1', '', '', 'C1', ''],
+                ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+                ]
+            }
+        }
+    
     def __init__(self, number):
+        self.data = {}
+        self.objects = []
         self.number = number
-        self.layout = self.get_layout(self.number)
+        self.layout = self.load_level(self.number)
         self.time_limits = [41, 51, 61, 71]
         self.time_limit = self.time_limits[number]
     
-    def get_layout(number):
-        if number == 1:
-            return [
-                ["G", "G", "G", "G", "G"],  # Goal zone (G)
-                ["L", "L", "T", "L", "L"],  # Water with logs (L) and turtles (T)
-                ["L", "A", "L", "L", "L"],  # Water with an alligator (A)
-                ["S", "S", "S", "S", "S"],  # Safe zone (S)
-                ["C", " ", "T", " ", "C"],  # Road with cars (C) and trucks (T)
-                ["C", "M", " ", "M", "C"],  # Road with cars (C) and motorcycles (M)
-                ["S", "S", "S", "S", "S"],  # Safe zone
-                ["F", "F", "F", "F", "F"],  # Frog start position (F)
-            ]
+    def load_level(self, number):
+        self.data = LEVELS[number - 1]
+
+        for i, lane in enumerate(self.data):
+            for j, object in enumerate(lane):
+                if object == 'T':
+                    self.objects.append(GameObject('turtle', 60, 60, 1.2, (j + 1) * 60, i * 80 + 8, 'left', ASSET_DIRECTORY + '/' + TURTLE_IMG))
+                elif object == 'LL':
+                    self.objects.append(GameObject('log_lt', 60, 60, 1, (j + 1) * 40, i * 80 + 8, 'right', ASSET_DIRECTORY + '/' + LOG_LT_IMG))
+                elif object == 'LR':
+                    self.objects.append(GameObject('log_rt', 60, 60, 1, (j + 1) * 40, i * 80 + 8, 'right', ASSET_DIRECTORY + '/' + LOG_RT_IMG))
+                elif object == 'LM':
+                    self.objects.append(GameObject('log_md', 60, 60, 1, (j + 1) * 40, i * 80 + 8, 'right', ASSET_DIRECTORY + '/' + LOG_MD_IMG))
+                elif object == 'C1':
+                    self.objects.append(GameObject('car_1', 60, 60, 1, (j + 1) * 80, i * 80 + 8, 'left', ASSET_DIRECTORY + '/' + CAR_1_IMG))
+                elif object == 'C2':
+                    self.objects.append(GameObject('car_2', 60, 60, 2, (j + 1) * 80, i * 80 + 8, 'left', ASSET_DIRECTORY + '/' + CAR_2_IMG))
+                elif object == 'C3':
+                    self.objects.append(GameObject('car_3', 60, 60, 1.5, (j + 1) * 80, i * 80 + 8, 'right', ASSET_DIRECTORY + '/' + CAR_3_IMG))
+                elif object == 'D':
+                    self.objects.append(GameObject('dozer', 60, 60, 1, (j + 1) * 80, i * 80 + 8, 'right', ASSET_DIRECTORY + '/' + DOZER_IMG))
 
 class InputHandler:
     def __init__(self, frog):

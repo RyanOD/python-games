@@ -1,10 +1,10 @@
 import pygame
-from levels import *
+from maps import *
 from asset_paths import *
 
 class Screen:
     def __init__(self):
-        self.width = 840
+        self.width = 900
         self.height = 1020
         self.fill_road = (0, 0, 0)
         self.fill_water = (0, 51, 153)
@@ -17,30 +17,43 @@ class Screen:
 
 class Frog:
     def __init__(self, screen):
-        self.width = 170
-        self.height = 120
+        self.width = 60
+        self.height = 60
         self.x = screen.width / 2 - self.width / 2
         self.y = screen.height - 130
         self.speed = 10
-        self.image_original = pygame.transform.scale(pygame.image.load('assets/frog_1.png'), (60, 60))
-        self.image = self.image_original
+
+        # load and scale frog image
+        self.image_original = pygame.image.load('assets/frog_1.png')
+        self.image = pygame.transform.scale(self.image_original, (self.width, self.height))
+
+        # create a rect for frog image
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (self.x, self.y)
+        
+        # set and track frog sprite orientation
         self.orientation = "up"
         self.orientations = {"up": 0, "right": 90, "down": 180, "left": 270}
-        self.movement = 80
+
+        # set frog x and y movement rates
+        self.movement_x = 60
+        self.movement_y = 80
     
-    def move(self, direction):
+    def update(self, direction):
         if direction == "up":
             self.image = pygame.transform.rotate(self.image_original, 0)
-            self.y -= self.movement
+            self.y -= self.movement_y
         elif direction == "down":
             self.image = pygame.transform.rotate(self.image_original, 180)
-            self.y += self.movement
+            self.y += self.movement_y
         elif direction == "left":
             self.image = pygame.transform.rotate(self.image_original, 90)
-            self.x -= self.movement
+            self.x -= self.movement_x
         elif direction == "right":
             self.image = pygame.transform.rotate(self.image_original, -90)
-            self.x += self.movement
+            self.x += self.movement_x
+
+        self.rect.topleft = (self.x, self.y)
 
 '''GameObject Class manages all game objects besides frogs (vehicles, logs, hedges, etc)'''
 class GameObject:
@@ -50,11 +63,20 @@ class GameObject:
         self.height = height
         self.speed = speed
         self.direction = direction
-        self.image = pygame.transform.scale(pygame.image.load(image), (self.height, self.width))
+
+        # load and scale object image
+        self.image_original = pygame.image.load(image)
+        self.image = pygame.transform.scale(self.image_original, (self.height, self.width))
+
+        # set object initial x and y positions
         self.x = x
         self.y = y
 
-    def move(self):
+        # create a rect for object image
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (self.x, self.y)
+
+    def update(self):
         if self.direction == "right":
             self.x += self.speed
         else:
@@ -64,6 +86,8 @@ class GameObject:
             self.x = 872
         elif self.x > 872:
             self.x = -80
+        
+        self.rect.topleft = (self.x, self.y)
 
 class Level:    
     def __init__(self, number):
@@ -80,7 +104,20 @@ class Level:
         for i, lane in enumerate(self.data):
             for j, object in enumerate(lane):
                 if object:
-                    self.objects.append(GameObject((j + 1) * 60, i * 80 + 8, **OBJECT_MAP[object]))
+                    self.objects.append(GameObject(j * 60, i * 80 + 8, **OBJECT_MAP[object]))
+
+class CollisionHandler:
+    def check_collisions(self, frog, objects):
+        for object in objects:
+            if frog.rect.colliderect(object.rect):
+                self.resolve_collision(frog, object)
+
+    def resolve_collision(self, frog, object):
+        if object.type in ('car', 'dozer'):
+            frog.x = 500
+            frog.rect.topleft = (500, object.rect.y)
+        elif object.type in ('turtle', 'log'):
+            frog.x = object.x
 
 class InputHandler:
     def __init__(self, frog):
@@ -104,25 +141,25 @@ class MoveUpCommand:
         self.frog = frog
 
     def execute(self):
-        self.frog.move("up")
+        self.frog.update("up")
 
 class MoveRightCommand:
     def __init__(self, frog):
         self.frog = frog
 
     def execute(self):
-        self.frog.move("right")
+        self.frog.update("right")
 
 class MoveDownCommand:
     def __init__(self, frog):
         self.frog = frog
 
     def execute(self):
-        self.frog.move("down")
+        self.frog.update("down")
 
 class MoveLeftCommand:
     def __init__(self, frog):
         self.frog = frog
 
     def execute(self):
-        self.frog.move("left")
+        self.frog.update("left")

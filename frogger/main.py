@@ -8,15 +8,14 @@ def main():
 
     while not game.game_over():
         for object in game.level.objects:
-            object.move()
+            object.update()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game.lives = 0
             game.input_handler.handle_event(event)
-        
-        #game.input_handler.handle_input(pygame.key.get_pressed())
 
+        game.update()
         game.draw()
 
 if __name__ == "__main__":

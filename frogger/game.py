@@ -1,6 +1,6 @@
 import pygame
 from classes import *
-from levels import *
+from maps import *
 from asset_paths import *
 
 class Game:
@@ -16,6 +16,10 @@ class Game:
         self.surface = self.screen.surface
         self.frog = Frog(self.screen)
         self.input_handler = InputHandler(self.frog)
+        self.collision_handler = CollisionHandler()
+
+    def update(self):
+        self.collision_handler.check_collisions(self.frog, self.level.objects)
 
     def draw(self):
         self.screen.clear()
@@ -28,15 +32,20 @@ class Game:
         for object in self.level.objects:
             self.screen.surface.blit(object.image, (object.x, object.y))
 
-        for i in range(0, self.screen.height, 80):
-            pygame.draw.line(self.screen.surface, (255, 255, 255), (0, i), (self.screen.width, i))
-
         if self.frog.image:
             self.screen.surface.blit(self.frog.image, (self.frog.x, self.frog.y))
-            #self.screen.surface.blit(self.car_1, (self.car_1.x, self.car_1.y))
+
+        self.draw_grid()
 
         pygame.display.set_caption(self.screen.title)
         pygame.display.flip()
+
+    def draw_grid(self):
+        for i in range(0, self.screen.height, 80):
+            pygame.draw.line(self.screen.surface, (255, 255, 255), (0, i), (self.screen.width, i))
+
+        for i in range(0, self.screen.width, 60):
+            pygame.draw.line(self.screen.surface, (255, 255, 255), (i, 0), (i, self.screen.height))
 
     def game_over(self):
         return self.lives <= 0

@@ -4,44 +4,57 @@ from maps import *
 from asset_paths import *
 
 class Game:
-    def __init__(self):
+    def __init__(self, level):
         pygame.init()  # Initialize Pygame
-        self.current_level = None
-        self.level = Level(1)
+        self.clock = pygame.time.Clock()
+        self.level = level
+        self.lanes = self.get_lanes(LEVEL_MAP[self.level - 1])
         self.running = True
         self.playing = True
-        self.hedge = pygame.transform.scale(pygame.image.load('assets/hedge.png'), (60, 60))
+        self.hedge = pygame.transform.scale(pygame.image.load('assets/hedge.png'), (OBJECT_HEIGHT, OBJECT_WIDTH))
         self.lives = 3
         self.screen = Screen()
         self.surface = self.screen.surface
         self.frog = Frog(self.screen)
         self.input_handler = InputHandler(self.frog)
         self.collision_handler = CollisionHandler()
+        self.sound_handler = SoundHandler()
 
+    def get_lanes(self, level_data):
+        lanes =[]
+        for lane_data in level_data:
+            lanes.append(Lane(lane_data))
+        return lanes
+    
     def update(self):
-        self.collision_handler.check_collisions(self.frog, self.level.objects)
+        for lane in self.lanes:
+            self.collision_handler.check_collisions(self.frog, lane.objects)
 
     def draw(self):
-        self.screen.clear()
-        pygame.display.set_caption("Frogger Clone")
+        self.screen.reset()
+        
         if self.hedge:
-            for i in range(0, self.screen.width, 60):
-                self.screen.surface.blit(self.hedge, (i, 410))
-                self.screen.surface.blit(self.hedge, (i, 890))
+            for i in range(0, self.screen.width, OBJECT_WIDTH):
+                self.screen.surface.blit(self.hedge, (i, 420))
+                self.screen.surface.blit(self.hedge, (i, 900))
 
-        for object in self.level.objects:
-            self.screen.surface.blit(object.image, (object.x, object.y))
+        for lane in self.lanes:
+            for object in lane.objects:
+                if object.image:
+                    self.screen.surface.blit(object.image, (object.rect.x, object.rect.y))
+                    pygame.draw.rect(self.screen.surface, (0, 0, 255), object.rect, 2)
+                    
 
         if self.frog.image:
-            self.screen.surface.blit(self.frog.image, (self.frog.x, self.frog.y))
+            self.screen.surface.blit(self.frog.image, (self.frog.rect.x, self.frog.rect.y))
+            pygame.draw.rect(self.screen.surface, (255, 0, 0), self.frog.rect, 2)
 
         self.draw_grid()
 
-        pygame.display.set_caption(self.screen.title)
         pygame.display.flip()
 
     def draw_grid(self):
-        for i in range(0, self.screen.height, 80):
+        for i in range(0, self.screen.height, 60):
             pygame.draw.line(self.screen.surface, (255, 255, 255), (0, i), (self.screen.width, i))
 
         for i in range(0, self.screen.width, 60):

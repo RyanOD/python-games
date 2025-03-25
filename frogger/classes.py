@@ -4,32 +4,35 @@ from asset_paths import *
 
 class Screen:
     def __init__(self):
-        self.width = 900
-        self.height = 1020
-        self.fill_road = (0, 0, 0)
-        self.fill_water = (0, 51, 153)
-        self.title = "Frogger Clone by Retro Clone"
+        self.width = SCREEN_WIDTH
+        self.height = SCREEN_HEIGHT
+        self.fill_road = BLACK
+        self.fill_water = BLUE
+        self.caption = "Frogger Clone by Retro Clone"
         self.surface = pygame.display.set_mode((self.width, self.height))
 
-    def clear(self):
+    def reset(self):
         self.surface.fill(self.fill_water, (0, 0, self.width, 440))
         self.surface.fill(self.fill_road, (0, 440, self.width, self.height))
+        pygame.display.set_caption(self.caption)
 
 class Frog:
     def __init__(self, screen):
-        self.width = 60
-        self.height = 60
-        self.x = screen.width / 2 - self.width / 2
-        self.y = screen.height - 130
+        self.alive = True
+        self.width = OBJECT_WIDTH
+        self.height = OBJECT_HEIGHT
+        self.x = screen.width // 2 - self.width // 2
+        self.y = 15 * LANE_HEIGHT + LANE_PADDING
         self.speed = 10
 
         # load and scale frog image
-        self.image_original = pygame.image.load('assets/frog_1.png')
-        self.image = pygame.transform.scale(self.image_original, (self.width, self.height))
+        self.image_original = pygame.transform.scale(pygame.image.load('assets/frog_1.png'), (self.width, self.height))
+        self.image = self.image_original
+        self.image_dead = pygame.transform.scale(pygame.image.load('assets/dead_4.png'), (self.width, self.height))
 
         # create a rect for frog image
         self.rect = self.image.get_rect()
-        self.rect.topleft = (self.x, self.y)
+        self.rect.center = (self.x + OBJECT_WIDTH // 2, self.y + OBJECT_HEIGHT // 2)
         
         # set and track frog sprite orientation
         self.orientation = "up"
@@ -37,87 +40,90 @@ class Frog:
 
         # set frog x and y movement rates
         self.movement_x = 60
-        self.movement_y = 80
+        self.movement_y = 60
     
     def update(self, direction):
-        if direction == "up":
-            self.image = pygame.transform.rotate(self.image_original, 0)
-            self.y -= self.movement_y
-        elif direction == "down":
-            self.image = pygame.transform.rotate(self.image_original, 180)
-            self.y += self.movement_y
-        elif direction == "left":
-            self.image = pygame.transform.rotate(self.image_original, 90)
-            self.x -= self.movement_x
-        elif direction == "right":
-            self.image = pygame.transform.rotate(self.image_original, -90)
-            self.x += self.movement_x
+        if self.alive:
+            if direction == "up":
+                self.image = pygame.transform.rotate(self.image_original, 0)
+                self.rect.y -= self.movement_y
+            elif direction == "down":
+                self.image = pygame.transform.rotate(self.image_original, 180)
+                self.rect.y += self.movement_y
+            elif direction == "left":
+                self.image = pygame.transform.rotate(self.image_original, 90)
+                self.rect.x -= self.movement_x
+            elif direction == "right":
+                self.image = pygame.transform.rotate(self.image_original, -90)
+                self.rect.x += self.movement_x
 
-        self.rect.topleft = (self.x, self.y)
-
-'''GameObject Class manages all game objects besides frogs (vehicles, logs, hedges, etc)'''
-class GameObject:
-    def __init__(self, x, y, type, width, height, speed, direction, image):
-        self.type = type
-        self.width = width
-        self.height = height
-        self.speed = speed
-        self.direction = direction
-
-        # load and scale object image
-        self.image_original = pygame.image.load(image)
-        self.image = pygame.transform.scale(self.image_original, (self.height, self.width))
-
-        # set object initial x and y positions
-        self.x = x
-        self.y = y
-
-        # create a rect for object image
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (self.x, self.y)
-
-    def update(self):
-        if self.direction == "right":
-            self.x += self.speed
-        else:
-            self.x -= self.speed
-        
-        if self.x < -80:
-            self.x = 872
-        elif self.x > 872:
-            self.x = -80
-        
-        self.rect.topleft = (self.x, self.y)
-
-class Level:    
-    def __init__(self, number):
-        self.data = {}
-        self.objects = []
-        self.number = number
-        self.layout = self.load_level(self.number)
-        self.time_limits = [41, 51, 61, 71]
-        self.time_limit = self.time_limits[number]
+class Lane:
+    def __init__(self, lane_data):
+        self.number = lane_data['number'] + 1
+        self.speed = lane_data['speed']
+        self.direction = lane_data['direction']
+        self.objects = self.get_objects(self.number, lane_data['objects'])
     
-    def load_level(self, number):
-        self.data = LEVEL_MAP[number - 1]
+    def get_objects(self, lane, objects_data):
+        objects = []
+        for column, object_abbr in enumerate(objects_data):
+            if object_abbr:
+                object = Object(lane, column, object_abbr)
+                objects.append(object)
+        return objects
+    
+    def update(self, delta_time):
+        for object in self.objects:
+            if self.direction == 'left':
+                object.rect.x -= self.speed * delta_time
+            else:
+                object.rect.x += self.speed * delta_time
 
-        for i, lane in enumerate(self.data):
-            for j, object in enumerate(lane):
-                if object:
-                    self.objects.append(GameObject(j * 60, i * 80 + 8, **OBJECT_MAP[object]))
+            if object.rect.right < 0:
+                object.rect.left = SCREEN_WIDTH
+            elif object.rect.left > SCREEN_WIDTH:
+                object.rect.x = 0
+    
+class Object:
+    def __init__(self, lane, column, object_abbr):
+        self.type = OBJECT_MAP[object_abbr]['type']
+        self.width = OBJECT_MAP[object_abbr]['width']
+        self.height = OBJECT_MAP[object_abbr]['height']
+        self.image_original = pygame.image.load(OBJECT_MAP[object_abbr]['image'])
+        self.image = pygame.transform.scale(self.image_original, (self.height, self.width))
+        self.rect = self.image.get_rect()
+        self.rect.x = column * OBJECT_WIDTH
+        self.rect.y = lane * LANE_HEIGHT
+
+class SoundHandler:
+    def __init__(self):
+        self.mixer = pygame.mixer.init()
+        self.sounds = {
+            'hop': pygame.mixer.Sound('assets/hop.mp3')
+        }
+        for sound in self.sounds.values():
+            sound.set_volume(0.5)
+    
+    def play(self, sound):
+        if(sound in self.sounds):
+            self.sounds[sound].play()
 
 class CollisionHandler:
     def check_collisions(self, frog, objects):
         for object in objects:
             if frog.rect.colliderect(object.rect):
                 self.resolve_collision(frog, object)
-
+                return
+            
     def resolve_collision(self, frog, object):
         if object.type in ('car', 'dozer'):
-            frog.x = 500
-            frog.rect.topleft = (500, object.rect.y)
+            frog.alive = False
+            frog.image = frog.image_dead
         elif object.type in ('turtle', 'log'):
-            frog.x = object.x
+            if object.direction == "right":
+                frog.rect.x += object.speed * delta_time  # THIS APPROACH IS BAD. OBJECT speed SHOULD NOT BE APPLIED TO frog...but I have no access to the lane properties...
+            else:
+                frog.rect.x -= object.speed * delta_time
 
 class InputHandler:
     def __init__(self, frog):
@@ -128,8 +134,9 @@ class InputHandler:
             pygame.K_LEFT: MoveLeftCommand(frog)
         }
 
-    def handle_event(self, event):
+    def handle_event(self, event, sound_handler):
         if event.type == pygame.KEYDOWN and event.key in self.commands:
+            sound_handler.play('hop')
             self.commands[event.key].execute()
 
 class Command:

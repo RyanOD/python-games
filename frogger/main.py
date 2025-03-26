@@ -14,7 +14,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game.lives = 0
-            game.input_handler.handle_event(event, game.sound_handler)
+            game.input_handler.handle_event(event)
 
         game.update()
 

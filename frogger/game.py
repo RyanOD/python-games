@@ -17,6 +17,7 @@ class Game:
         self.surface = self.screen.surface
         self.frog = Frog(self.screen)
         self.input_handler = InputHandler(self.frog)
+        self.sound_handler = SoundHandler()
         self.collision_handler = CollisionHandler()
         self.sound_handler = SoundHandler()
 
@@ -28,7 +29,7 @@ class Game:
     
     def update(self):
         for lane in self.lanes:
-            self.collision_handler.check_collisions(self.frog, lane.objects)
+            self.collision_handler.check_collisions(self.frog, lane)
 
     def draw(self):
         self.screen.reset()

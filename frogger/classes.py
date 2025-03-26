@@ -99,31 +99,53 @@ class SoundHandler:
     def __init__(self):
         self.mixer = pygame.mixer.init()
         self.sounds = {
-            'hop': pygame.mixer.Sound('assets/hop.mp3')
+            'hop': pygame.mixer.Sound('assets/hop.mp3'),
+            'die_road': pygame.mixer.Sound('assets/die_road.mp3')
+        }
+        self.sound_commands = {
+            'hop': PlayHopSoundCommand(self.handle_sound),
+            'die_road': PlayRoadDeathSoundCommand(self.handle_sound),
         }
         for sound in self.sounds.values():
             sound.set_volume(0.5)
-    
-    def play(self, sound):
+
+        event_dispatcher.register("play_sound", self.handle_sound)
+
+    def handle_sound(self, sound):
         if(sound in self.sounds):
             self.sounds[sound].play()
 
+class PlayHopSoundCommand:
+    def __init__(self, sound_handler):
+        self.sound_handler = sound_handler
+
+    def execute(self):
+        self.sound_handler.handle_sound('hop')
+
+class PlayRoadDeathSoundCommand:
+    def __init__(self, sound_handler):
+        self.sound_handler = sound_handler
+
+    def execute(self):
+        self.sound_handler.handle_sound('die_road')
+
 class CollisionHandler:
-    def check_collisions(self, frog, objects):
-        for object in objects:
+    def check_collisions(self, frog, lane):
+        for object in lane.objects:
             if frog.rect.colliderect(object.rect):
-                self.resolve_collision(frog, object)
+                self.resolve_collision(frog, lane, object)
                 return
             
-    def resolve_collision(self, frog, object):
+    def resolve_collision(self, frog, lane, object):
         if object.type in ('car', 'dozer'):
+            event_dispatcher.dispatch('play_sound', 'die_road')
             frog.alive = False
             frog.image = frog.image_dead
         elif object.type in ('turtle', 'log'):
-            if object.direction == "right":
-                frog.rect.x += object.speed * delta_time  # THIS APPROACH IS BAD. OBJECT speed SHOULD NOT BE APPLIED TO frog...but I have no access to the lane properties...
+            if lane.direction == "right":
+                frog.rect.x += lane.speed * delta_time  # THIS APPROACH IS BAD. OBJECT speed SHOULD NOT BE APPLIED TO frog...but I have no access to the lane properties...
             else:
-                frog.rect.x -= object.speed * delta_time
+                frog.rect.x -= lane.speed * delta_time
 
 class InputHandler:
     def __init__(self, frog):
@@ -134,10 +156,10 @@ class InputHandler:
             pygame.K_LEFT: MoveLeftCommand(frog)
         }
 
-    def handle_event(self, event, sound_handler):
+    def handle_event(self, event):
         if event.type == pygame.KEYDOWN and event.key in self.commands:
-            sound_handler.play('hop')
             self.commands[event.key].execute()
+            event_dispatcher.dispatch('play_sound', 'hop')
 
 class Command:
     def execute(self):
@@ -170,3 +192,20 @@ class MoveLeftCommand:
 
     def execute(self):
         self.frog.update("left")
+
+class EventDispatcher:
+    def __init__(self):
+        self.listeners = {}
+    
+    def register(self, event_type, listener):
+        if event_type not in self.listeners:
+            self.listeners[event_type] = []
+        self.listeners[event_type].append(listener)
+
+    def dispatch(self, event_type, *args, **kwargs):
+        if event_type in self.listeners:
+            for listener in self.listeners[event_type]:
+                listener(*args, **kwargs)
+
+# Global event dispatcher
+event_dispatcher = EventDispatcher()

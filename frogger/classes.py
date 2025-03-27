@@ -57,43 +57,52 @@ class Frog:
                 self.image = pygame.transform.rotate(self.image_original, -90)
                 self.rect.x += self.movement_x
 
-class Lane:
-    def __init__(self, lane_data):
-        self.number = lane_data['number'] + 1
-        self.speed = lane_data['speed']
-        self.direction = lane_data['direction']
-        self.objects = self.get_objects(self.number, lane_data['objects'])
-    
-    def get_objects(self, lane, objects_data):
+class Level:
+    def __init__(self, level):
+        self.level = level
+        self.objects = self.load_objects(self.level - 1)
+
+    def load_objects(self, level):
         objects = []
-        for column, object_abbr in enumerate(objects_data):
-            if object_abbr:
-                object = Object(lane, column, object_abbr)
-                objects.append(object)
+        for lane_info in LEVEL_MAP[0]:
+            speed = lane_info['speed']
+            direction = lane_info['direction']
+            for obj_info in lane_info['objects']:
+                if obj_info:
+                    obj = Object(obj_info, 80, 60, speed, direction)
+                    objects.append(obj)
         return objects
-    
+
     def update(self, delta_time):
         for object in self.objects:
-            if self.direction == 'left':
-                object.rect.x -= self.speed * delta_time
-            else:
-                object.rect.x += self.speed * delta_time
+            object.update()
 
-            if object.rect.right < 0:
-                object.rect.left = SCREEN_WIDTH
-            elif object.rect.left > SCREEN_WIDTH:
-                object.rect.x = 0
-    
+    def reset(self):
+        self.objects = self.load_objects(self.level)
+
 class Object:
-    def __init__(self, lane, column, object_abbr):
-        self.type = OBJECT_MAP[object_abbr]['type']
-        self.width = OBJECT_MAP[object_abbr]['width']
-        self.height = OBJECT_MAP[object_abbr]['height']
-        self.image_original = pygame.image.load(OBJECT_MAP[object_abbr]['image'])
-        self.image = pygame.transform.scale(self.image_original, (self.height, self.width))
+    def __init__(self, type, x, y, speed, direction):
+        self.type = type
+        self.x = x
+        self.y = y
+        self.image_original = pygame.image.load(OBJECT_MAP[self.type]['image'])
+        self.image = pygame.transform.scale(self.image_original, (OBJECT_HEIGHT, OBJECT_WIDTH))
         self.rect = self.image.get_rect()
-        self.rect.x = column * OBJECT_WIDTH
-        self.rect.y = lane * LANE_HEIGHT
+        self.rect.x = self.x
+        self.rect.y = self.y
+        self.speed = speed
+        self.direction = direction
+    
+    def update(self, delta_time):
+        if self.direction == 'left':
+            self.rect.x -= self.speed * delta_time
+        else:
+            self.rect.x += self.speed * delta_time
+
+        if self.rect.right < 0:
+            self.rect.left = SCREEN_WIDTH
+        elif self.rect.left > SCREEN_WIDTH:
+            self.rect.x = 0
 
 class SoundHandler:
     def __init__(self):
@@ -142,10 +151,7 @@ class CollisionHandler:
             frog.alive = False
             frog.image = frog.image_dead
         elif object.type in ('turtle', 'log'):
-            if lane.direction == "right":
-                frog.rect.x += lane.speed * delta_time  # THIS APPROACH IS BAD. OBJECT speed SHOULD NOT BE APPLIED TO frog...but I have no access to the lane properties...
-            else:
-                frog.rect.x -= lane.speed * delta_time
+            frog.x(lane.direction)
 
 class InputHandler:
     def __init__(self, frog):
@@ -209,3 +215,23 @@ class EventDispatcher:
 
 # Global event dispatcher
 event_dispatcher = EventDispatcher()
+
+# Observable base class
+class Observable:
+    def __init__(self):
+        self.observers = []
+    
+    def add_observer(self, observer):
+        self.observers.append(observer)
+    
+    def remove_observers(self, observer):
+        self.observers.remove(observer)
+    
+    def notify(self, *args, **kwargs):
+        for observer in self.observers:
+            observer.update(*args, **kwargs)
+
+# Observer base class
+class Observer:
+    def update(self, *args, **kwargs):
+        pass

@@ -4,11 +4,10 @@ from maps import *
 from asset_paths import *
 
 class Game:
-    def __init__(self, level):
+    def __init__(self):
         pygame.init()  # Initialize Pygame
-        self.clock = pygame.time.Clock()
-        self.level = level
-        self.lanes = self.get_lanes(LEVEL_MAP[self.level - 1])
+        #self.clock = pygame.time.Clock()
+        self.level = Level(1)
         self.running = True
         self.playing = True
         self.hedge = pygame.transform.scale(pygame.image.load('assets/hedge.png'), (OBJECT_HEIGHT, OBJECT_WIDTH))
@@ -27,9 +26,9 @@ class Game:
             lanes.append(Lane(lane_data))
         return lanes
     
-    def update(self):
-        for lane in self.lanes:
-            self.collision_handler.check_collisions(self.frog, lane)
+    def update(self, delta_time):
+        for object in self.level.objects:
+            object.update(delta_time)
 
     def draw(self):
         self.screen.reset()
@@ -39,13 +38,11 @@ class Game:
                 self.screen.surface.blit(self.hedge, (i, 420))
                 self.screen.surface.blit(self.hedge, (i, 900))
 
-        for lane in self.lanes:
-            for object in lane.objects:
-                if object.image:
-                    self.screen.surface.blit(object.image, (object.rect.x, object.rect.y))
-                    pygame.draw.rect(self.screen.surface, (0, 0, 255), object.rect, 2)
+        for object in self.level.objects:
+            if object.image:
+                self.screen.surface.blit(object.image, (object.rect.x, object.rect.y))
+                pygame.draw.rect(self.screen.surface, (0, 0, 255), object.rect, 2)
                     
-
         if self.frog.image:
             self.screen.surface.blit(self.frog.image, (self.frog.rect.x, self.frog.rect.y))
             pygame.draw.rect(self.screen.surface, (255, 0, 0), self.frog.rect, 2)

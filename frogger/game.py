@@ -1,12 +1,16 @@
 import pygame
-from classes import *
 from maps import *
 from asset_paths import *
+from frog import Frog
+from level import Level
+from input import InputHandler
+from screen import Screen
+from sound import SoundHandler
+from collision import CollisionHandler
 
 class Game:
     def __init__(self):
         pygame.init()  # Initialize Pygame
-        #self.clock = pygame.time.Clock()
         self.level = Level(1)
         self.running = True
         self.playing = True
@@ -19,12 +23,6 @@ class Game:
         self.sound_handler = SoundHandler()
         self.collision_handler = CollisionHandler()
         self.sound_handler = SoundHandler()
-
-    def get_lanes(self, level_data):
-        lanes =[]
-        for lane_data in level_data:
-            lanes.append(Lane(lane_data))
-        return lanes
     
     def update(self, delta_time):
         for object in self.level.objects:

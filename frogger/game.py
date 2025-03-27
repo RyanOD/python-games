@@ -27,6 +27,8 @@ class Game:
     def update(self, delta_time):
         for object in self.level.objects:
             object.update(delta_time)
+        
+        self.collision_handler.check_collisions(self.frog, self.level.objects)
 
     def draw(self):
         self.screen.reset()

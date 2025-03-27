@@ -1,8 +1,8 @@
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 1020
 
-OBJECT_WIDTH = 60
-OBJECT_HEIGHT = 60
+OBJECT_WIDTH = 50
+OBJECT_HEIGHT = 50
 OBJECTS_OFFSET = 240
 
 LANE_PADDING = 4
@@ -57,43 +57,43 @@ LEVEL_MAP = [
         },
         {
             'number': 5,
-            'speed': 100,
+            'speed': 80,
             'direction': 'left',
             'objects': ['T', 'T', 'T', '', '', 'T', 'T', 'T', '', '', 'T', 'T', 'T', ''],
         },
         {
             'number': 6,
-            'speed': 100,
+            'speed': 70,
             'direction': 'right',
             'objects': ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
         },
         {
             'number': 7,
-            'speed': 80,
+            'speed': 60,
             'direction': 'left',
             'objects': ['', 'TL', 'TR', '', '', '', '', '', 'TL', 'TR', '', '', '', ''],
         },
         {
             'number': 8,
-            'speed': 120,
+            'speed': 90,
             'direction': 'left',
             'objects': ['', '', '', 'C2', '', '', '', '', '', '', 'C2', '', '', ''],
         },
         {
             'number': 9,
-            'speed': 100,
+            'speed': 80,
             'direction': 'right',
             'objects': ['', 'D', '', '', '', 'D', '', '', '', 'D', '', '', '', ''],
         },
         {
             'number': 10,
-            'speed': 150,
+            'speed': 110,
             'direction': 'left',
             'objects': ['', '', '', 'C1', '', '', '', '', '', 'C1', '', '', '', ''],
         },
         {
             'number': 11,
-            'speed': 90,
+            'speed': 50,
             'direction': 'right',
             'objects': ['', 'D', '', '', '', 'D', '', '', '', 'D', '', '', '', ''],
         },
@@ -105,7 +105,7 @@ LEVEL_MAP = [
         },
         {
             'number': 13,
-            'speed': 140,
+            'speed': 110,
             'direction': 'right',
             'objects': ['', '', '', 'C3', '', '', '', '', 'C3', '', '', '', '', ''],
         },

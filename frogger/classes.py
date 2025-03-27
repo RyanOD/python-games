@@ -64,12 +64,13 @@ class Level:
 
     def load_objects(self, level):
         objects = []
-        for lane_info in LEVEL_MAP[0]:
+        for lane, lane_info in enumerate(LEVEL_MAP[0]):
+            print(lane)
             speed = lane_info['speed']
             direction = lane_info['direction']
-            for obj_info in lane_info['objects']:
+            for row, obj_info in enumerate(lane_info['objects']):
                 if obj_info:
-                    obj = Object(obj_info, 80, 60, speed, direction)
+                    obj = Object(obj_info, row * 60, (lane + 2) * 60, speed, direction)
                     objects.append(obj)
         return objects
 

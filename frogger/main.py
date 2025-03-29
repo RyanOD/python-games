@@ -13,16 +13,16 @@ from maps import *
 from asset_paths import *
 
 clock = pygame.time.Clock()
-delta_time = clock.tick(60) / 1000
 
 def main():
     game = Game()
-
     while not game.game_over():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game.lives = 0
-            game.input_handler.handle_event(event)
+            elif game.frog.alive:
+                game.input_handler.handle_event(event)
+        delta_time = clock.tick(60) / 1000
         game.update(delta_time)
         game.draw()
 

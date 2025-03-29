@@ -10,8 +10,18 @@ class Screen:
         self.fill_water = BLUE
         self.caption = "Frogger Clone by Retro Clone"
         self.surface = pygame.display.set_mode((self.width, self.height))
+        self.bg = self.get_bg()
 
     def reset(self):
-        self.surface.fill(self.fill_water, (0, 0, self.width, 440))
-        self.surface.fill(self.fill_road, (0, 440, self.width, self.height))
-        pygame.display.set_caption(self.caption)
+        # using a background image here instead of multiple surface.fill() calls
+        self.surface.blit(self.bg, (0, 0))
+        #pygame.display.set_caption(self.caption)
+
+    def get_bg(self):
+        # Load the image
+        bg_image = pygame.image.load("assets/bg.png")
+
+        # Convert the image for faster blitting (optional)
+        bg_image = bg_image.convert()
+
+        return bg_image

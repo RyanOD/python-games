@@ -23,15 +23,15 @@ class SoundHandler:
             self.sounds[sound].play()
 
 class PlayHopSoundCommand:
-    def __init__(self, sound_handler):
-        self.sound_handler = sound_handler
+    def __init__(self, handle_sound):
+        self.sound_handler = handle_sound
 
     def execute(self):
-        self.sound_handler.handle_sound('hop')
+        self.sound_handler('hop')
 
 class PlayRoadDeathSoundCommand:
-    def __init__(self, sound_handler):
-        self.sound_handler = sound_handler
+    def __init__(self, handle_sound):
+        self.sound_handler = handle_sound
 
     def execute(self):
-        self.sound_handler.handle_sound('die_road')
+        self.sound_handler('die_road')

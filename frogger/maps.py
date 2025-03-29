@@ -1,112 +1,93 @@
+import pygame
+
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 1020
 
-OBJECT_WIDTH = 50
-OBJECT_HEIGHT = 50
+OBJECT_WIDTH = 60
+OBJECT_HEIGHT = 60
 OBJECTS_OFFSET = 240
 
-LANE_PADDING = 4
-LANE_HEIGHT = 60
-LANE_WIDTH = 60
+LANE_PADDING = 0
+LANE_HEIGHT = 64
+LANE_WIDTH = 64
 
 BLUE = (0, 51, 153)
 BLACK = (0, 0, 0)
 
 OBJECT_MAP = {
-    'T': {'type': 'turtle', 'width': OBJECT_WIDTH, 'height': OBJECT_HEIGHT, 'image': 'assets/turtle_1.png'},
-    'LL': {'type': 'log', 'width': OBJECT_WIDTH, 'height': OBJECT_HEIGHT, 'image': 'assets/log_lt.png'},
-    'LM': {'type': 'log', 'width': OBJECT_WIDTH, 'height': OBJECT_HEIGHT, 'image': 'assets/log_md.png'},
-    'LR': {'type': 'log', 'width': OBJECT_WIDTH, 'height': OBJECT_HEIGHT, 'image': 'assets/log_rt.png'},
-    'TL': {'type': 'truck', 'width': OBJECT_WIDTH, 'height': OBJECT_HEIGHT, 'image': 'assets/truck_lt.png'},
-    'TR': {'type': 'truck', 'width': OBJECT_WIDTH, 'height': OBJECT_HEIGHT, 'image': 'assets/truck_rt.png'},
-    'C1': {'type': 'car', 'width': OBJECT_WIDTH, 'height': OBJECT_HEIGHT, 'image': 'assets/car_1.png'},
-    'C2': {'type': 'car', 'width': OBJECT_WIDTH, 'height': OBJECT_HEIGHT, 'image': 'assets/car_2.png'},
-    'C3': {'type': 'car', 'width': OBJECT_WIDTH, 'height': OBJECT_HEIGHT, 'image': 'assets/car_3.png'},
-    'D': {'type': 'dozer', 'width': OBJECT_WIDTH, 'height': OBJECT_HEIGHT, 'image': 'assets/dozer.png'},
-    'GTR': {'type': 'grass_top_right', 'width': OBJECT_WIDTH, 'height': OBJECT_HEIGHT, 'image': 'assets/grass_tr.png'},
-    'GBM': {'type': 'grass_top_right', 'width': OBJECT_WIDTH, 'height': OBJECT_HEIGHT, 'image': 'assets/grass_bm.png'},
-    'GTL': {'type': 'grass_top_right', 'width': OBJECT_WIDTH, 'height': OBJECT_HEIGHT, 'image': 'assets/grass_tl.png'},
-    'GMM': {'type': 'grass_top_right', 'width': OBJECT_WIDTH, 'height': OBJECT_HEIGHT, 'image': 'assets/grass_mm.png'},
+    'F': {'type': 'frog', 'image': 'assets/frog_1.png'},
+    'FD': {'type': 'frog', 'image': 'assets/dead_4.png'},
+    'T': {'type': 'turtle', 'image': 'assets/turtle_1.png'},
+    'LL': {'type': 'log', 'image': 'assets/log_lt.png'},
+    'LM': {'type': 'log', 'image': 'assets/log_md.png'},
+    'LR': {'type': 'log', 'image': 'assets/log_rt.png'},
+    'TL': {'type': 'truck', 'image': 'assets/truck_lt.png'},
+    'TR': {'type': 'truck', 'image': 'assets/truck_rt.png'},
+    'C1': {'type': 'car', 'image': 'assets/car_1.png'},
+    'C2': {'type': 'car', 'image': 'assets/car_2.png'},
+    'C3': {'type': 'car', 'image': 'assets/car_3.png'},
+    'D': {'type': 'dozer', 'image': 'assets/dozer.png'},
+    'GTR': {'type': 'grass_top_right', 'image': 'assets/grass_tr.png'},
+    'GBM': {'type': 'grass_top_right', 'image': 'assets/grass_bm.png'},
+    'GTL': {'type': 'grass_top_right', 'image': 'assets/grass_tl.png'},
+    'GMM': {'type': 'grass_top_right', 'image': 'assets/grass_mm.png'},
 }
+
+IMAGES = {obj_type: pygame.transform.scale(pygame.image.load(OBJECT_MAP[obj_type]['image']), (OBJECT_HEIGHT, OBJECT_WIDTH)) for obj_type in OBJECT_MAP}
+
 
 LEVEL_MAP = [
     [
         {
-            'number': 1,
-            'speed': 100,
-            'direction': 'right',
+            'movement': 230,
             'objects': ['LL', 'LM', 'LM', 'LM', 'LR', '', '', 'LL', 'LM', 'LM', 'LM', 'LR', '', '', ''],
         },
         {
-            'number': 2,
-            'speed': 80,
-            'direction': 'left',
+            'movement': -90,
             'objects': ['T', 'T', '', '', '', 'T', 'T', '', '', '', 'T', 'T', '', ''],
         },
         {
-            'number': 3,
-            'speed': 120,
-            'direction': 'right',
+            'movement': 115,
             'objects': ['', 'LL', 'LM', 'LM', 'LM', 'LM', 'LR', '', '', 'LL', 'LM', 'LM', 'LM', 'LM', 'LR', ''],
         },
         {
-            'number': 4,
-            'speed': 110,
-            'direction': 'right',
+            'movement': 80,
             'objects': ['LL', 'LM', 'LR', '', '', 'LL', 'LM', 'LR', '', '', 'LL', 'LM', 'LR', '', ''],
         },
         {
-            'number': 5,
-            'speed': 80,
-            'direction': 'left',
+            'movement': -60,
             'objects': ['T', 'T', 'T', '', '', 'T', 'T', 'T', '', '', 'T', 'T', 'T', ''],
         },
         {
-            'number': 6,
-            'speed': 70,
-            'direction': 'right',
+            'movement': 70,
             'objects': ['', '', '', '', '', '', '', '', '', '', '', '', '', ''],
         },
         {
-            'number': 7,
-            'speed': 60,
-            'direction': 'left',
+            'movement': -60,
             'objects': ['', 'TL', 'TR', '', '', '', '', '', 'TL', 'TR', '', '', '', ''],
         },
         {
-            'number': 8,
-            'speed': 90,
-            'direction': 'left',
+            'movement': -90,
             'objects': ['', '', '', 'C2', '', '', '', '', '', '', 'C2', '', '', ''],
         },
         {
-            'number': 9,
-            'speed': 80,
-            'direction': 'right',
+            'movement': 80,
             'objects': ['', 'D', '', '', '', 'D', '', '', '', 'D', '', '', '', ''],
         },
         {
-            'number': 10,
-            'speed': 110,
-            'direction': 'left',
+            'movement': -110,
             'objects': ['', '', '', 'C1', '', '', '', '', '', 'C1', '', '', '', ''],
         },
         {
-            'number': 11,
-            'speed': 50,
-            'direction': 'right',
+            'movement': 50,
             'objects': ['', 'D', '', '', '', 'D', '', '', '', 'D', '', '', '', ''],
         },
         {
-            'number': 12,
-            'speed': 70,
-            'direction': 'left',
+            'movement': -70,
             'objects': ['', '', 'C2', '', '', '', '', 'C2', '', '', '', '', '', ''],
         },
         {
-            'number': 13,
-            'speed': 110,
-            'direction': 'right',
+            'movement': 110,
             'objects': ['', '', '', 'C3', '', '', '', '', 'C3', '', '', '', '', ''],
         },
     ]

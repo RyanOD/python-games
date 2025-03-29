@@ -8,11 +8,12 @@ class CollisionHandler:
             if frog.rect.colliderect(object.rect):
                 self.resolve_collision(frog, object)
                 return
+            else:
+                frog.carry(0)
             
     def resolve_collision(self, frog, object):
         if object.type in ('C1', 'C2', 'C3', 'D', 'TR', 'TL'):
-            event_dispatcher.dispatch('play_sound', 'die_road')
             frog.alive = False
-            frog.image = frog.image_dead
+            event_dispatcher.dispatch('play_sound', 'die_road')
         elif object.type in ('T', 'LL', 'LM', 'LR'):
-            print('on log or turtle')
+            frog.carry(object.movement)

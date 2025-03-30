@@ -7,6 +7,7 @@ from screen import Screen
 from maps import *
 from sound import SoundHandler
 from collision import CollisionHandler
+from time_manager import TimeManager
 
 class Game:
     def __init__(self):
@@ -23,12 +24,12 @@ class Game:
         self.collision_handler = CollisionHandler()
         self.sound_handler = SoundHandler()
     
-    def update(self, delta_time):
-        for object in self.level.objects:
-            object.update(delta_time)
-        self.frog.update()
+    def update(self):
         if self.frog.alive:
             self.collision_handler.check_collisions(self.frog, self.level.objects)
+        for object in self.level.objects:
+            object.update()
+        self.frog.update()
 
     def draw(self):
         self.screen.reset()

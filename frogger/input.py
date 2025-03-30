@@ -3,6 +3,7 @@
 import pygame
 from commands import MoveUpCommand, MoveRightCommand, MoveDownCommand, MoveLeftCommand
 from events import event_dispatcher
+from time_manager import TimeManager
 
 class InputHandler:
     def __init__(self, frog):

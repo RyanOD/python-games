@@ -2,6 +2,7 @@
 import pygame
 from maps import *
 from observer import Observable
+from time_manager import TimeManager
 
 class Object(Observable):
     def __init__(self, type, x, y, movement):
@@ -16,19 +17,10 @@ class Object(Observable):
         self.rect.y = self.y
         self.movement = movement
     
-    def update(self, delta_time):
-        self.x += round(self.movement * delta_time, 2)
+    def update(self):
+        self.rect.x += round(self.movement * TimeManager.get_delta_time(), 2)
 
-        if self.x < -OBJECT_WIDTH:
-            self.x = SCREEN_WIDTH + OBJECT_WIDTH
-        elif self.x > SCREEN_WIDTH + OBJECT_WIDTH:
-            self.x = -OBJECT_WIDTH
-        
-        self.rect.x = int(self.x)
-
-        '''
-        if self.rect.right < 0:
-            self.rect.left = SCREEN_WIDTH
-        elif self.rect.left > SCREEN_WIDTH:
-            self.rect.x = -OBJECT_WIDTH'
-        '''
+        if self.rect.x < -OBJECT_WIDTH:
+            self.rect.x = SCREEN_WIDTH + OBJECT_WIDTH
+        elif self.rect.x > SCREEN_WIDTH + OBJECT_WIDTH:
+            self.rect.x = -OBJECT_WIDTH

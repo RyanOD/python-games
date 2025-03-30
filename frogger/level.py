@@ -46,7 +46,7 @@ class Level:
     def load_images(self):
         return {obj_type: pygame.transform.scale(pygame.image.load(self.image_map[obj_type]['image']), (OBJECT_HEIGHT, OBJECT_WIDTH)) for obj_type in self.image_map}
     
-    def update(self, delta_time):
+    def update(self):
         for object in self.objects:
             object.update()
 

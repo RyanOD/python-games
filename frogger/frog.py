@@ -1,9 +1,6 @@
 import pygame
 from maps import *
-import time
-
-clock = pygame.time.Clock()
-delta_time = clock.tick(60) / 1000
+from time_manager import TimeManager
 
 class Frog:
     def __init__(self, screen):
@@ -38,7 +35,7 @@ class Frog:
 
     def update(self, direction='none'):
         if self.alive:
-            self.rect.x += round(self.carried_speed * delta_time, 2)
+            self.rect.x += round(self.carried_speed * TimeManager.get_delta_time(), 2)
             if direction:
                 self.handle_movement(direction)
         else:

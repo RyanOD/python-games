@@ -11,6 +11,7 @@ from commands import MoveUpCommand, MoveDownCommand
 from events import event_dispatcher
 from maps import *
 from asset_paths import *
+from time_manager import TimeManager
 
 clock = pygame.time.Clock()
 
@@ -22,9 +23,9 @@ def main():
                 game.lives = 0
             elif game.frog.alive:
                 game.input_handler.handle_event(event)
-        delta_time = clock.tick(60) / 1000
-        game.update(delta_time)
+        game.update()
         game.draw()
+        TimeManager.update(clock)
 
 if __name__ == "__main__":
     main()

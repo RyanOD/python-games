@@ -9,7 +9,7 @@ class Screen:
         self.fill_water = BLUE
         self.caption = self.set_caption(SCREEN_CAPTION)
         self.surface = pygame.display.set_mode((self.width, self.height))
-        self.bg = self.get_bg()
+        self.bg = self.get_bg(SCREEN_BG)
 
     def reset(self):
         # using a background image here instead of multiple surface.fill() calls
@@ -18,11 +18,8 @@ class Screen:
     def set_caption(self, caption):
         pygame.display.set_caption(caption)
 
-    def get_bg(self):
+    def get_bg(self, bg_image):
         # Load the image
-        bg_image = pygame.image.load("assets/bg.png")
-
-        # Convert the image for faster blitting (optional)
-        bg_image = bg_image.convert()
+        bg_image = pygame.image.load(bg_image).convert()
 
         return bg_image

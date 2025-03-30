@@ -14,7 +14,6 @@ class Game:
         self.level: Level = Level(1)
         self.running: bool = 5
         self.playing: bool = True
-        self.hedge = pygame.transform.scale(pygame.image.load('assets/hedge.png'), (OBJECT_HEIGHT, OBJECT_WIDTH))
         self.lives: int = 3
         self.screen = Screen()
         self.surface = self.screen.surface
@@ -27,18 +26,12 @@ class Game:
     def update(self, delta_time):
         for object in self.level.objects:
             object.update(delta_time)
-        
         self.frog.update()
         if self.frog.alive:
             self.collision_handler.check_collisions(self.frog, self.level.objects)
 
     def draw(self):
         self.screen.reset()
-        
-        if self.hedge:
-            for i in range(0, self.screen.width, OBJECT_WIDTH):
-                self.screen.surface.blit(self.hedge, (i, 420))
-                self.screen.surface.blit(self.hedge, (i, 900))
 
         for object in self.level.objects:
             if object.image:

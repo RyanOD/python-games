@@ -8,8 +8,7 @@ class CollisionHandler:
             if frog.rect.colliderect(object.rect):
                 self.resolve_collision(frog, object)
                 return
-            else:
-                frog.carry(0)
+        frog.carry(0)
             
     def resolve_collision(self, frog, object):
         if object.type in ('C1', 'C2', 'C3', 'D', 'TR', 'TL'):

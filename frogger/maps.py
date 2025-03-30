@@ -2,6 +2,7 @@ import pygame
 
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 1020
+SCREEN_CAPTION = "Frogger Clone by Retro Clone"
 
 OBJECT_WIDTH = 60
 OBJECT_HEIGHT = 60

@@ -25,7 +25,8 @@ class Frog:
 
         # create a rect for frog image
         self.rect = self.image.get_rect()
-        self.rect.center = (self.x + OBJECT_WIDTH // 2, self.y + OBJECT_HEIGHT // 2)
+        self.rect.x = self.x
+        self.rect.y = self.y
         
         # set and track frog sprite orientation
         self.orientation = "up"
@@ -37,8 +38,9 @@ class Frog:
 
     def update(self, direction='none'):
         if self.alive:
-            self.rect.x += self.carried_speed
-            self.handle_movement(direction)
+            self.rect.x += round(self.carried_speed * delta_time, 2)
+            if direction:
+                self.handle_movement(direction)
         else:
             self.lives -= 1
             self.image = self.image_dead
@@ -46,8 +48,8 @@ class Frog:
             if self.death_timer <= 0:
                 self.reset()
     
-    def carry(self, delta_time, movement = 0):
-        self.carried_speed = round(movement * delta_time, 2)
+    def carry(self, movement = 0):
+        self.carried_speed = movement
             
     def handle_movement(self, direction):
             if direction == "up":
@@ -58,7 +60,7 @@ class Frog:
                 self.rect.y += self.movement_y
             elif direction == "left":
                 self.image = pygame.transform.rotate(self.image_original, 90)
-                self.rect.x -= self.movement_x
+                self.rect.x -= self.movement_x 
             elif direction == "right":
                 self.image = pygame.transform.rotate(self.image_original, -90)
                 self.rect.x += self.movement_x

@@ -1,5 +1,6 @@
 import pygame
 from config import SHIP_IMAGE, SCREEN_HEIGHT, SCREEN_WIDTH, SHIP_WIDTH
+from time_manager import TimeManager
 
 
 class Ship:
@@ -12,10 +13,11 @@ class Ship:
         self.velocity = 0
         self.acceleration = 0.5
         self.rotation = 10
+        self.gravity = 2
     
     def update(self, movement):
-        self.velocity += self.acceleration
-        self.y -= self.velocity
+        self.velocity += TimeManager.get_delta_time() / 1000 * self.gravity + self.acceleration
+        self.y += self.velocity
         if self.lives > 0:
             self.handle_movement(movement)
     

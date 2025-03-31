@@ -13,11 +13,11 @@ def main():
             if event.type == pygame.QUIT:
                 game.lives = 0
             elif game.ship.alive:
-                #game.input_handler.handle_event(event)
-                print('move')
+                game.input_handler.handle_event(event)
         game.update()
         game.draw()
         TimeManager.update(clock)
+        pygame.display.flip()
 
 if __name__ == "__main__":
     main()

@@ -2,6 +2,7 @@ import pygame
 
 SCREEN_WIDTH = 1600
 SCREEN_HEIGHT = 1000
+SCREEN_PADDING = 20
 SCREEN_CAPTION = "Lunar Lander Clone by Retro Clone"
 
 OBJECT_WIDTH = 60

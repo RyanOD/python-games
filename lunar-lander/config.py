@@ -1,0 +1,27 @@
+import pygame
+
+SCREEN_WIDTH = 1600
+SCREEN_HEIGHT = 1000
+SCREEN_CAPTION = "Lunar Lander Clone by Retro Clone"
+
+OBJECT_WIDTH = 60
+OBJECT_HEIGHT = 60
+OBJECTS_OFFSET = 240
+
+LANE_PADDING = 0
+LANE_HEIGHT = 64
+LANE_WIDTH = 64
+
+FROG_MOVEMENT_X = 60
+FROG_MOVEMENT_Y = 60
+
+BLUE = (0, 51, 153)
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+WHITE1 = (221, 221, 221)
+WHITE2 = (170, 170, 170)
+RED = (25, 0, 0)
+
+SHIP_HEIGHT = 30
+SHIP_WIDTH = 30
+SHIP_IMAGE = pygame.transform.scale(pygame.image.load('images/lander.png'), (SHIP_HEIGHT, SHIP_WIDTH))

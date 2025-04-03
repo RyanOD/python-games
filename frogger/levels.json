@@ -3,54 +3,92 @@
         {
             "lanes": [
                 {
-                    "movement": 230,
+                    "height": 60,
+                    "width": 30,
+                    "movement": 0,
+                    "objects": ["GMT", "GTL", "GMW", "GMW", "GTR", "GMT", "GMT", "GTL", "GMW", "GMW", "GTR", "GMT", "GMT", "GTL", "GMW", "GMW", "GTR", "GMT", "GMT", "GTL", "GMW", "GMW", "GTR", "GMT", "GMT", "GTL", "GMW", "GMW", "GTR", "GMT"]
+                },
+                {
+                    "height": 60,
+                    "width": 30,
+                    "movement": 0,
+                    "objects": ["GMB", "GBL","","", "GBR", "GMB", "GMB", "GBL","","", "GBR", "GMB", "GMB", "GBL","","", "GBR", "GMB", "GMB", "GBL","","", "GBR", "GMB", "GMB", "GBL","","", "GBR", "GMB"]
+                },
+                {
+                    "height": 60,
+                    "width": 60,
+                    "movement": 100,
                     "objects": ["LL", "LM", "LM", "LM", "LR", "", "", "LL", "LM", "LM", "LM", "LR", "", "", ""]
                 },
                 {
+                    "height": 60,
+                    "width": 60,
                     "movement": -90,
-                    "objects": ["T", "T", "", "", "", "T", "T", "", "", "", "T", "T", "", ""]
+                    "objects": ["", "T", "T", "", "", "", "T", "T", "", "", "", "T", "T", "T"]
                 },
                 {
+                    "height": 60,
+                    "width": 60,
                     "movement": 115,
-                    "objects": ["", "LL", "LM", "LM", "LM", "LM", "LR", "", "", "LL", "LM", "LM", "LM", "LM", "LR", ""]
+                    "objects": ["", "LL", "LM", "LM", "LM", "LM", "LR", "", "", "LL", "LM", "LM", "LM", "LM", "LR"]
                 },
                 {
+                    "height": 60,
+                    "width": 60,
                     "movement": 80,
                     "objects": ["LL", "LM", "LR", "", "", "LL", "LM", "LR", "", "", "LL", "LM", "LR", "", ""]
                 },
                 {
+                    "height": 60,
+                    "width": 60,
                     "movement": -60,
                     "objects": ["T", "T", "T", "", "", "T", "T", "T", "", "", "T", "T", "T", ""]
                 },
                 {
+                    "height": 60,
+                    "width": 60,
                     "movement": 70,
                     "objects": ["", "", "", "", "", "", "", "", "", "", "", "", "", ""]
                 },
                 {
+                    "height": 60,
+                    "width": 60,
                     "movement": -60,
                     "objects": ["", "TL", "TR", "", "", "", "", "", "TL", "TR", "", "", "", ""]
                 },
                 {
+                    "height": 60,
+                    "width": 60,
                     "movement": -90,
                     "objects": ["", "", "", "C2", "", "", "", "", "", "", "C2", "", "", ""]
                 },
                 {
-                    "movement": 80,
+                    "height": 60,
+                    "width": 60,
+                    "movement": 90,
                     "objects": ["", "D", "", "", "", "D", "", "", "", "D", "", "", "", ""]
                 },
                 {
+                    "height": 60,
+                    "width": 60,
                     "movement": -110,
                     "objects": ["", "", "", "C1", "", "", "", "", "", "C1", "", "", "", ""]
                 },
                 {
+                    "height": 60,
+                    "width": 60,
                     "movement": 50,
                     "objects": ["", "D", "", "", "", "D", "", "", "", "D", "", "", "", ""]
                 },
                 {
+                    "height": 60,
+                    "width": 60,
                     "movement": -70,
                     "objects": ["", "", "C2", "", "", "", "", "C2", "", "", "", "", "", ""]
                 },
                 {
+                    "height": 60,
+                    "width": 60,
                     "movement": 110,
                     "objects": ["", "", "", "C3", "", "", "", "", "C3", "", "", "", "", ""]
                 }

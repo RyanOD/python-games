@@ -18,6 +18,7 @@ The following Python programming concepts are exposed in this Frogger game desig
 - Game Design Patterns
   - State Pattern
   - Command Pattern
+  - Observer Pattern
 
 **Disclaimer:** In no way should this game design be considered optimal and/or error free. Use as an educational tool at your discretion.
 

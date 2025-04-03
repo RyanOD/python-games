@@ -11,8 +11,8 @@ class CollisionHandler:
         frog.carry(0)
             
     def resolve_collision(self, frog, object):
-        if object.type in ('C1', 'C2', 'C3', 'D', 'TR', 'TL'):
+        if object.type in ('C1', 'C2', 'C3', 'D', 'TR', 'TL', 'GBL', 'GTL', 'GBR', 'GBL', 'GMB'):
             frog.alive = False
-            event_dispatcher.dispatch('play_sound', 'die_road')
+            #event_dispatcher.dispatch('play_sound', 'die_road')
         elif object.type in ('T', 'LL', 'LM', 'LR'):
             frog.carry(object.movement)

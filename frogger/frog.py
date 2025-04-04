@@ -7,7 +7,7 @@ class Frog:
     def __init__(self, screen):
         self.screen = screen
         self.lives = 3
-        self.death_timer = 50
+        self.death_timer = DEATH_TIMER
         self.width = FROG_WIDTH
         self.height = FROG_HEIGHT
         self.x = self.screen.width // 2 - self.width // 2
@@ -57,9 +57,21 @@ class Frog:
                 self.image = pygame.transform.rotate(self.image_original, -90)
                 self.rect.x += self.movement_x
     
+    def die(self):
+        event_dispatcher.dispatch('play_sound', 'die_road')
+        self.image = self.image_dead
+        self.alive = False
+        self.lives -= 1
+
+        # screen boundary check / adjustment
+        if self.rect.left < 0:
+            self.rect.left = 0
+        elif self.rect.right > SCREEN_WIDTH:
+            self.rect.right = SCREEN_WIDTH - 14 # right side padding?
+
     def reset(self):
         self.image = self.image_original
         self.rect.x = self.screen.width // 2 - self.width // 2
         self.rect.y = 15 * LANE_HEIGHT + LANE_PADDING
         self.alive = True
-        self.death_timer = 50
+        self.death_timer = DEATH_TIMER

@@ -26,11 +26,16 @@ class Game:
     
     def update(self):
         if not self.frog.alive:
-            self.frog.death_timer -= 1
-        if self.frog.rect.y:
+            if self.frog.death_timer > 0:
+                self.frog.death_timer -= 1
+            else:
+                self.frog.reset()
+        else:
             self.collision_handler.check_collisions(self.frog, self.level.objects)
+
         for object in self.level.objects:
             object.update()
+            
         self.frog.update()
 
     def draw(self):

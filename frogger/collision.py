@@ -12,17 +12,16 @@ class CollisionHandler:
                 if self.resolve_collision(frog, object):
                     frog_safe = True
 
-        print(frog_safe)
-        if frog_safe and frog.rect.top < 150:
+        if self.frog_in_home(frog):
             frog.carry(0)
 
         elif not frog_safe and self.frog_in_water(frog):
             frog.carry(0)
-            self.kill_frog(frog)
+            frog.die()
     
     def resolve_collision(self, frog, object):
         if object.type in ('C1', 'C2', 'C3', 'D', 'TR', 'TL', 'GBL', 'GTL', 'GBR', 'GTR', 'GBL', 'GMW', 'GMB'):
-            self.kill_frog(frog)
+            frog.die()
             return False
         elif object.type in ('T', 'LL', 'LM', 'LR'):
             if object.rect.left <= frog.rect.centerx <= object.rect.right:
@@ -30,22 +29,8 @@ class CollisionHandler:
                 return True
         return False
     
-    def frog_in_goal(self, frog):
-        return frog.rect.top < 180
+    def frog_in_home(self, frog):
+        return frog.rect.top < 150
     
     def frog_in_water(self, frog):
-        return frog.rect.top < 480
-    
-    def kill_frog(self, frog):
-        event_dispatcher.dispatch('play_sound', 'die_road')
-        frog.lives -= 1
-        if frog.rect.left < 0:
-            frog.rect.left = 0
-
-        if frog.rect.right > SCREEN_WIDTH:
-            frog.rect.right = SCREEN_WIDTH - 14 # right side padding?
-
-        frog.image = frog.image_dead
-        frog.alive = False
-        if frog.death_timer <= 0:
-            frog.reset()
+        return 150 < frog.rect.top < 480

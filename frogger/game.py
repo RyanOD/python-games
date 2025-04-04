@@ -25,7 +25,9 @@ class Game:
         self.sound_handler = SoundHandler()
     
     def update(self):
-        if self.frog.alive:
+        if not self.frog.alive:
+            self.frog.death_timer -= 1
+        if self.frog.rect.y:
             self.collision_handler.check_collisions(self.frog, self.level.objects)
         for object in self.level.objects:
             object.update()

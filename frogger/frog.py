@@ -38,20 +38,10 @@ class Frog:
         self.carried_speed = movement
 
     def update(self, direction='none'):
-        if self.rect.x > SCREEN_WIDTH - self.width or self.rect.x < 0:
-            self.alive = False
-
         if self.alive:
             self.rect.x += round(self.carried_speed * TimeManager.get_delta_time(), 2)
             if direction:
                 self.handle_movement(direction)
-        else:
-            event_dispatcher.dispatch('play_sound', 'die_road')
-            self.lives -= 1
-            self.image = self.image_dead
-            self.death_timer -= 1
-            if self.death_timer <= 0:
-                self.reset()
             
     def handle_movement(self, direction):
             if direction == "up":
@@ -72,4 +62,4 @@ class Frog:
         self.rect.x = self.screen.width // 2 - self.width // 2
         self.rect.y = 15 * LANE_HEIGHT + LANE_PADDING
         self.alive = True
-        self.death_timer = 250
+        self.death_timer = 50

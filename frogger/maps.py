@@ -11,8 +11,8 @@ LANE_WIDTH = 64
 
 ROAD_EDGE = 960
 
-FROG_WIDTH = 24
-FROG_HEIGHT = 24
+FROG_WIDTH = 20
+FROG_HEIGHT = 20
 FROG_MOVEMENT_X = 60
 FROG_MOVEMENT_Y = 60
 DEATH_TIMER = 50
@@ -22,6 +22,7 @@ BLACK = (0, 0, 0)
 
 OBJECT_MAP = {
     'F': {'type': 'frog', 'height': 50, 'width': 50, 'image': 'assets/frog_1.png'},
+    'FH': {'type': 'frog', 'height': 50, 'width': 50, 'image': 'assets/frog_home_1.png'},
     'FD': {'type': 'frog', 'height': 60, 'width': 60, 'image': 'assets/dead_4.png'},
     'T': {'type': 'turtle', 'height': 60, 'width': 60, 'image': 'assets/turtle_1.png'},
     'LL': {'type': 'log', 'height': 60, 'width': 60, 'image': 'assets/log_lt.png'},
@@ -43,4 +44,3 @@ OBJECT_MAP = {
 }
 
 IMAGES = {obj_type: pygame.transform.scale(pygame.image.load(OBJECT_MAP[obj_type]['image']), (OBJECT_MAP[obj_type]['width'], OBJECT_MAP[obj_type]['height'])) for obj_type in OBJECT_MAP}
-print(IMAGES)

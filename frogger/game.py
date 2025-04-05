@@ -16,9 +16,9 @@ class Game:
         self.running: bool = 5
         self.playing: bool = True
         self.lives: int = 3
-        self.screen = Screen()
+        self.frog = Frog()
+        self.screen = Screen(self.frog)
         self.surface = self.screen.surface
-        self.frog = Frog(self.screen)
         self.input_handler = InputHandler(self.frog)
         self.sound_handler = SoundHandler()
         self.collision_handler = CollisionHandler()
@@ -37,6 +37,7 @@ class Game:
             object.update()
             
         self.frog.update()
+        self.screen.update()
 
     def draw(self):
         self.screen.reset()

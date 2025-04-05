@@ -7,30 +7,28 @@ class CollisionHandler:
     def check_collisions(self, frog, objects):
         frog_safe = False
         
+        # check all objects for collision with frog
         for object in objects:
             if frog.rect.colliderect(object.rect):
+                # check to see if frog dies from collision (vehicles kill frog...logs and turtles do not)
                 if self.resolve_collision(frog, object):
+                    # collision did not kill frog
                     frog_safe = True
 
-        if self.frog_in_home(frog):
-            frog.carry(0)
-
-        elif not frog_safe and self.frog_in_water(frog):
+        if not frog_safe and frog.in_water():
             frog.carry(0)
             frog.die()
     
     def resolve_collision(self, frog, object):
+        # return False if frog collides with vehicle or grass
         if object.type in ('C1', 'C2', 'C3', 'D', 'TR', 'TL', 'GBL', 'GTL', 'GBR', 'GTR', 'GBL', 'GMW', 'GMB'):
+            frog.carry(0)
             frog.die()
             return False
+        # return True if frog collides with turtle or log and is more than half on
         elif object.type in ('T', 'LL', 'LM', 'LR'):
             if object.rect.left <= frog.rect.centerx <= object.rect.right:
                 frog.carry(object.movement)
                 return True
+        # return false if frog is more than half off lor or turtle
         return False
-    
-    def frog_in_home(self, frog):
-        return frog.rect.top < 150
-    
-    def frog_in_water(self, frog):
-        return 150 < frog.rect.top < 480

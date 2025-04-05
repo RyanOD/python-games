@@ -1,6 +1,5 @@
 import pygame
 from game import Game
-from screen import Screen
 from frog import Frog
 from level import Level
 from objects import Object

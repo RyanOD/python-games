@@ -38,7 +38,6 @@ class Level:
         objects = []
         for level_data in level_map['levels']:
             for row, lane_data in enumerate(level_data['lanes']):
-                print(lane_data)
                 for col, object_data in enumerate(lane_data['objects']):
                     if object_data:
                         x = col * lane_data['width']

@@ -46,7 +46,7 @@ class Frog:
             else:
                 self.reset()
 
-        if not self.in_water() or self.in_home():
+        if not self.in_water():
             self.carry(0)
 
         self.move(direction)

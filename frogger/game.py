@@ -13,9 +13,7 @@ from time_manager import TimeManager
 class Game:
     def __init__(self):
         pygame.init()  # Initialize Pygame
-        self.level: Level = Level(1)
-        self.running: 5
-        self.playing: True
+        self.level = Level(1)
         self.lives = 3
         self.frog = Frog()
         self.screen = Screen(self.frog)
@@ -23,7 +21,6 @@ class Game:
         self.input_handler = InputHandler(self.frog)
         self.sound_handler = SoundHandler()
         self.collision_handler = CollisionHandler()
-        self.sound_handler = SoundHandler()
         self.homes = [
             Home(60, 120),
             Home(240, 300),
@@ -42,6 +39,7 @@ class Game:
         
         # if frog y-position less than 180 (in row of home slots), check if frog within home boundaries
         if self.frog_in_home_row():
+            self.frog.carry(0)
             self.home_check()
 
         # continually update frog

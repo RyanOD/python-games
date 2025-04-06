@@ -11,7 +11,6 @@ class Frog:
         self.height = FROG_HEIGHT
         self.x = SCREEN_WIDTH // 2 - self.width
         self.y = 15 * LANE_HEIGHT + LANE_PADDING
-        self.speed = 10
         self.carried_speed = 0
         self.alive = True
 
@@ -38,12 +37,21 @@ class Frog:
         self.carried_speed = movement
 
     def update(self, direction='none'):
-        if not self.in_water() or self.in_home():
-            self.carry(0)
-        
         if not self.on_screen():
             self.die()
 
+        if not self.alive:
+            if self.death_timer > 0:
+                self.death_timer -= 1
+            else:
+                self.reset()
+
+        if not self.in_water() or self.in_home():
+            self.carry(0)
+
+        self.move(direction)
+    
+    def move(self, direction):
         if self.alive:
             self.rect.x += round(self.carried_speed * TimeManager.get_delta_time(), 2)
             if direction:
@@ -62,9 +70,6 @@ class Frog:
             elif direction == "right":
                 self.image = pygame.transform.rotate(self.image_original, -90)
                 self.rect.x += self.movement_x
-    
-    def in_home(self):
-        return self.rect.top < 180
     
     def in_water(self):
         return 150 < self.rect.top < 480

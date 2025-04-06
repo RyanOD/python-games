@@ -20,12 +20,12 @@ class CollisionHandler:
             frog.die()
     
     def resolve_collision(self, frog, object):
-        # return False if frog collides with vehicle or grass
+        # set frog carry speed to zero and return False if frog collides with vehicle or grass
         if object.type in ('C1', 'C2', 'C3', 'D', 'TR', 'TL', 'GBL', 'GTL', 'GBR', 'GTR', 'GBL', 'GMW', 'GMB'):
             frog.carry(0)
             frog.die()
             return False
-        # return True if frog collides with turtle or log and is more than half on
+        # update frog carry speed and return True if frog collides with turtle or log and is more than half on
         elif object.type in ('T', 'LL', 'LM', 'LR'):
             if object.rect.left <= frog.rect.centerx <= object.rect.right:
                 frog.carry(object.movement)

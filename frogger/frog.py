@@ -4,15 +4,16 @@ from time_manager import TimeManager
 from events import event_dispatcher
 
 class Frog:
-    def __init__(self):
+    def __init__(self, screen):
         self.lives = 3
-        self.death_timer = DEATH_TIMER
-        self.width = FROG_WIDTH
-        self.height = FROG_HEIGHT
-        self.x = SCREEN_WIDTH // 2 - self.width
-        self.y = 15 * LANE_HEIGHT + LANE_PADDING
+        self.death_timer = 50
+        self.width = 20
+        self.height = 20
+        self.x = screen.width // 2 - self.width
+        self.y = 15 * screen.lane_height + screen.lane_padding
         self.carried_speed = 0
         self.alive = True
+        self.screen = screen
 
         # load and scale frog sprite
         self.image_original = IMAGES['F']
@@ -30,22 +31,13 @@ class Frog:
         self.orientations = {"up": 0, "right": 90, "down": 180, "left": 270}
 
         # set frog x, y movement rates
-        self.movement_x = FROG_MOVEMENT_X
-        self.movement_y = FROG_MOVEMENT_Y
+        self.movement_x = 60
+        self.movement_y = 60
 
     def carry(self, movement = 0):
         self.carried_speed = movement
 
     def update(self, direction='none'):
-        if not self.on_screen():
-            self.die()
-
-        if not self.alive:
-            if self.death_timer > 0:
-                self.death_timer -= 1
-            else:
-                self.reset()
-
         if not self.in_water():
             self.carry(0)
 
@@ -74,26 +66,17 @@ class Frog:
     def in_water(self):
         return 150 < self.rect.top < 480
     
-    def on_screen(self):
-        return 0 < self.rect.centerx < SCREEN_WIDTH and self.rect.y < SCREEN_HEIGHT
-    
+    # the Frog class owns the frog behavior if the frog dies, but not the triggers that kill the frog
     def die(self):
         event_dispatcher.dispatch('play_sound', 'die_road')
         self.image = self.image_dead
         self.alive = False
         self.lives -= 1
-
-        # screen boundary check / adjustment
-        if self.rect.left < 0:
-            self.rect.left = 0
-        elif self.rect.right > SCREEN_WIDTH:
-            self.rect.right = SCREEN_WIDTH - 14 # right side padding?
-        elif self.rect.y > SCREEN_HEIGHT:
-            self.rect.y = SCREEN_HEIGHT - FROG_HEIGHT * 3
-
-    def reset(self):
+    
+    # reset the frog based on specified x, y screen positions
+    def reset(self, x, y):
         self.image = self.image_original
-        self.rect.x = SCREEN_WIDTH // 2 - self.width // 2
-        self.rect.y = 15 * LANE_HEIGHT + LANE_PADDING
+        self.rect.x = x
+        self.rect.y = y
         self.alive = True
-        self.death_timer = DEATH_TIMER
+        self.death_timer = 50

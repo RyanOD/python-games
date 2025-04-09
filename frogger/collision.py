@@ -1,7 +1,7 @@
 # Responsibility: Detect when a collision happens and resolve associated game events
 
 from events import event_dispatcher
-from maps import SCREEN_WIDTH
+from screen import Screen
 
 class CollisionHandler:
     def check_collisions(self, frog, objects):

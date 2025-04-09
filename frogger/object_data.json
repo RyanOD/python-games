@@ -1,10 +1,4 @@
 {
-    "F": {
-        "type": "frog",
-        "height": 50,
-        "width": 50,
-        "image": "assets/frog_1.png"
-    },
     "FH": {
         "type": "frog",
         "height": 50,

@@ -1,21 +1,18 @@
 import json
 from maps import *
 from objects import Object
+from utils import load_data_file
 
 class Level:
     def __init__(self, level):
         self.level = level
 
-        self.level_map = self.load_data_file('level_data.json')
-        self.image_map = self.load_data_file('object_data.json')
+        self.level_map = load_data_file('level_data.json')
+        self.image_map = load_data_file('object_data.json')
 
         self.objects = self.load_objects(self.level_map)
         self.images = self.load_images()
 
-    def load_data_file(self, filename):
-        with open(filename, 'r') as file:
-            return json.load(file)
-    
     def load_objects(self, level_map):
         objects = []
         for level_data in level_map['levels']:

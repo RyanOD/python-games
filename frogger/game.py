@@ -1,5 +1,4 @@
 import pygame
-from asset_paths import *
 from frog import Frog
 from level import Level
 from input import InputHandler
@@ -15,8 +14,8 @@ class Game:
         pygame.init()  # Initialize Pygame
         self.level = Level(1)
         self.lives = 3
-        self.frog = Frog()
-        self.screen = Screen(self.frog)
+        self.screen = Screen()
+        self.frog = Frog(self.screen)
         self.surface = self.screen.surface
         self.input_handler = InputHandler(self.frog)
         self.sound_handler = SoundHandler()
@@ -35,6 +34,8 @@ class Game:
 
         # continual updating position of all game objects (vehicles, logs, turtles, etc.)
         for object in self.level.objects:
+            if not self.screen.on_screen(object):
+                object.reset(self.screen)
             object.update()
         
         # if frog y-position less than 180 (in row of home slots), check if frog within home boundaries
@@ -43,7 +44,16 @@ class Game:
             self.home_check()
 
         # continually update frog
+        if not self.frog.alive:
+            if self.frog.death_timer > 0:
+                self.frog.death_timer -= 1
+            else:
+                self.reset_frog()
         self.frog.update()
+
+        # continually check to see if frog crosses screen boundaries
+        if not self.screen.on_screen(self.frog):
+            self.frog.die()
 
     def draw(self):
         self.screen.reset()
@@ -78,5 +88,8 @@ class Game:
             if self.frog.rect.centerx in range(home.bounds[0], home.bounds[1]):
                 home.occupied = True
 
+    def reset_frog(self):
+        self.frog.reset(self.screen.width // 2 - self.frog.width, 15 * self.screen.lane_height + self.screen.lane_padding)
+    
     def game_over(self):
         return self.lives <= 0

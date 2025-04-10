@@ -7,7 +7,7 @@ from home import Home
 from maps import *
 from sound import SoundHandler
 from collision import CollisionHandler
-from time_manager import TimeManager
+from utils import *
 
 class Game:
     def __init__(self):
@@ -15,7 +15,9 @@ class Game:
         self.level = Level(1)
         self.lives = 3
         self.screen = Screen()
-        self.frog = Frog(self.screen.width // 2, 15 * self.screen.lane_height + self.screen.lane_padding)
+        self.image_data = load_data_file('object_data.json')
+        self.images = load_images(self.image_data)
+        self.frog = Frog(get_image(self.images, "F1"), self.screen.width // 2, 15 * self.screen.lane_height + self.screen.lane_padding)
         self.surface = self.screen.surface
         self.input_handler = InputHandler(self.frog)
         self.sound_handler = SoundHandler()

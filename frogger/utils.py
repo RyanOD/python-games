@@ -10,5 +10,13 @@ def load_data_file(filename):
     with open(filepath, 'r') as file:
         return json.load(file)
 
-def load_image(image, width, height):
-    return pygame.transform.scale(pygame.image.load(image, (width, height)))
+def load_images(image_data):
+    images = {}
+    for obj_type in image_data:
+        image = pygame.image.load(image_data[obj_type]['image'])
+        image_scaled = pygame.transform.scale(image, (image_data[obj_type]['width'], image_data[obj_type]['height']))
+        images.update({obj_type: image_scaled})
+    return images
+
+def get_image(images, image_type):
+    return images[image_type]

@@ -4,11 +4,11 @@ from time_manager import TimeManager
 from events import event_dispatcher
 
 class Frog:
-    def __init__(self, start_x, start_y):
+    def __init__(self, frog_data, start_x, start_y):
         self.lives = 3
         self.death_timer = 50
-        self.width = IMAGES['F1'].get_width()
-        self.height = IMAGES['F1'].get_height()
+        self.width = frog_data.get_width()
+        self.height = frog_data.get_height()
         self.x = start_x - self.width * 0.5
         self.y = start_y
         self.carried_speed = 0
@@ -16,10 +16,10 @@ class Frog:
         self.animated = False
 
         # load and scale frog sprite
-        self.image_original = IMAGES['F1']
+        self.image_original = frog_data
         self.image = self.image_original
-        self.image_dead = IMAGES['FD1']
-        self.image_home = IMAGES['FH']
+        #self.image_dead = frog_data['FD1']
+        #self.image_home = frog_data['FH']
 
         # create rect for frog sprite
         self.rect = self.image.get_rect()

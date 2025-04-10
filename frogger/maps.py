@@ -8,9 +8,14 @@ BLUE = (0, 51, 153)
 BLACK = (0, 0, 0)
 
 OBJECT_MAP = {
-    'F': {'type': 'frog', 'height': 50, 'width': 50, 'image': 'frog_1.png'},
+    'F1': {'type': 'frog', 'height': 50, 'width': 50, 'image': 'frog_1.png'},
+    'F2': {'type': 'frog', 'height': 50, 'width': 50, 'image': 'frog_2.png'},
+    'F3': {'type': 'frog', 'height': 50, 'width': 50, 'image': 'frog_3.png'},
     'FH': {'type': 'frog', 'height': 50, 'width': 50, 'image': 'frog_home_1.png'},
-    'FD': {'type': 'frog', 'height': 60, 'width': 60, 'image': 'dead_4.png'},
+    'FD1': {'type': 'frog', 'height': 60, 'width': 60, 'image': 'frog_dead_1.png'},
+    'FD2': {'type': 'frog', 'height': 60, 'width': 60, 'image': 'frog_dead_2.png'},
+    'FD3': {'type': 'frog', 'height': 60, 'width': 60, 'image': 'frog_dead_3.png'},
+    'FD4': {'type': 'frog', 'height': 60, 'width': 60, 'image': 'frog_dead_4.png'},
     'T': {'type': 'turtle', 'height': 60, 'width': 60, 'image': 'turtle_1.png'},
     'LL': {'type': 'log', 'height': 60, 'width': 60, 'image': 'log_lt.png'},
     'LM': {'type': 'log', 'height': 60, 'width': 60, 'image': 'log_md.png'},

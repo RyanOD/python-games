@@ -3,14 +3,7 @@
 class Command:
     def execute(self):
         pass
-'''
-class QuitCommand:
-    def __init__(self, frog):
-        self.frog = frog
-    
-    def execute(self):
-        self.frog.lives = 0
-'''
+
 class MoveUpCommand:
     def __init__(self, frog):
         self.frog = frog

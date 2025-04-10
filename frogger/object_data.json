@@ -1,15 +1,51 @@
 {
+    "F1": {
+        "type": "frog",
+        "height": 50,
+        "width": 50,
+        "image": "assets/frog_1.png"
+    },
+    "F2": {
+        "type": "frog",
+        "height": 50,
+        "width": 50,
+        "image": "assets/frog_2.png"
+    },
+    "F3": {
+        "type": "frog",
+        "height": 50,
+        "width": 50,
+        "image": "assets/frog_3.png"
+    },
     "FH": {
         "type": "frog",
         "height": 50,
         "width": 50,
         "image": "assets/frog_home_1.png"
     },
-    "FD": {
+    "FD1": {
         "type": "frog",
         "height": 60,
         "width": 60,
-        "image": "assets/dead_4.png"
+        "image": "assets/frog_dead_1.png"
+    },
+    "FD2": {
+        "type": "frog",
+        "height": 60,
+        "width": 60,
+        "image": "assets/frog_dead_2.png"
+    },
+    "FD3": {
+        "type": "frog",
+        "height": 60,
+        "width": 60,
+        "image": "assets/frog_dead_3.png"
+    },
+    "FD4": {
+        "type": "frog",
+        "height": 60,
+        "width": 60,
+        "image": "assets/frog_dead_4.png"
     },
     "T": {
         "type": "turtle",

@@ -4,7 +4,6 @@ from level import Level
 from input import InputHandler
 from screen import Screen
 from home import Home
-from maps import *
 from sound import SoundHandler
 from collision import CollisionHandler
 from utils import *
@@ -12,12 +11,12 @@ from utils import *
 class Game:
     def __init__(self):
         pygame.init()  # Initialize Pygame
-        self.level = Level(1)
         self.lives = 3
         self.screen = Screen()
         self.image_data = load_data_file('object_data.json')
         self.images = load_images(self.image_data)
-        self.frog = Frog(get_image(self.images, "F1"), self.screen.width // 2, 15 * self.screen.lane_height + self.screen.lane_padding)
+        self.level = Level(self.images, 1)
+        self.frog = Frog(self.images, self.screen.width // 2, 15 * self.screen.lane_height + self.screen.lane_padding)
         self.surface = self.screen.surface
         self.input_handler = InputHandler(self.frog)
         self.sound_handler = SoundHandler()

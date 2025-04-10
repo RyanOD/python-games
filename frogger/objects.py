@@ -1,19 +1,14 @@
-
 import pygame
-from maps import *
 from observer import Observable
 from time_manager import TimeManager
 
 class Object(Observable):
-    def __init__(self, type, x, y, height, width, movement):
+    def __init__(self, type, images, x, y, movement):
         super().__init__()
         self.type = type
         self.x = x
         self.y = y
-        self.width = width
-        self.height = height
-        self.image_original = IMAGES[self.type]
-        self.image = self.image_original
+        self.image = images[type]
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y

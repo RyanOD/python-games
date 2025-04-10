@@ -1,25 +1,23 @@
 import pygame
-from maps import *
 from time_manager import TimeManager
 from events import event_dispatcher
 
 class Frog:
-    def __init__(self, frog_data, start_x, start_y):
+    def __init__(self, images, start_x, start_y):
         self.lives = 3
         self.death_timer = 50
-        self.width = frog_data.get_width()
-        self.height = frog_data.get_height()
+        self.width = images["F1"].get_width()
+        self.height = images["F1"].get_height()
         self.x = start_x - self.width * 0.5
         self.y = start_y
         self.carried_speed = 0
         self.alive = True
-        self.animated = False
 
         # load and scale frog sprite
-        self.image_original = frog_data
+        self.image_original = images["F1"]
         self.image = self.image_original
-        #self.image_dead = frog_data['FD1']
-        #self.image_home = frog_data['FH']
+        self.image_dead = images["FD1"]
+        self.image_home = images["FH"]
 
         # create rect for frog sprite
         self.rect = self.image.get_rect()
@@ -27,7 +25,6 @@ class Frog:
         self.rect.y = self.y
         
         # set and track frog sprite orientation
-        self.orientation = "up"
         self.orientations = {
             "up": {"angle":0, "dx": 0, "dy": -1},
             "down": {"angle":180, "dx": 0, "dy": 1},

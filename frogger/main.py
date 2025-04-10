@@ -9,7 +9,8 @@ def main():
     game = Game()
     # create game loop
     while not game.game_over():
-        # capture events and pass to InputHandler
+        TimeManager.update(clock)
+        # capture event keyboard events and either quit game of pass to InputHandler
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game.lives = 0
@@ -17,7 +18,6 @@ def main():
                 game.input_handler.handle_event(event)
         game.update()
         game.draw()
-        TimeManager.update(clock)
 
 if __name__ == "__main__":
     main()

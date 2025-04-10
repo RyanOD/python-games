@@ -10,8 +10,10 @@ class CollisionHandler:
         # check all objects for collision with frog
         for object in objects:
             if frog.rect.colliderect(object.rect):
+
                 # check to see if frog dies from collision (vehicles kill frog...logs and turtles do not)
                 if self.resolve_collision(frog, object):
+
                     # collision did not kill frog
                     frog_safe = True
 
@@ -25,10 +27,12 @@ class CollisionHandler:
             frog.carry(0)
             frog.die()
             return False
+        
         # update frog carry speed and return True if frog collides with turtle or log and is more than half on
         elif object.type in ('T', 'LL', 'LM', 'LR'):
             if object.rect.left <= frog.rect.centerx <= object.rect.right:
                 frog.carry(object.movement)
                 return True
+            
         # return false if frog is more than half off lor or turtle
         return False

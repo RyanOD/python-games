@@ -1,5 +1,4 @@
 import pygame
-from maps import *
 
 class Screen:
     def __init__(self):
@@ -22,19 +21,6 @@ class Screen:
     def get_bg(self, bg_image):
         # Load the image
         return pygame.image.load(bg_image).convert()
-    '''
-    def frog_boundary_check(self, frog):
-        # screen boundary check / adjustment
-        if self.rect.left < 0:
-            self.rect.left = 0
-        elif self.rect.right > self.width:
-            self.rect.right = self.width - 14 # right side padding?
-        elif self.rect.y > self.height:
-            self.rect.y = self.height - frog.height * 3
-    
-    def object_boundary_check(self, object):
-        if object.rect.x < -self.width or object.rect.x > self.width + object.width:
-            object.rect.x = self.width - object.rect.x
-    '''
+
     def on_screen(self, sprite):
         return 0 < sprite.rect.centerx < self.width

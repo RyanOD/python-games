@@ -8,7 +8,6 @@ from time_manager import TimeManager
 class InputHandler:
     def __init__(self, frog):
         self.commands = {
-            #pygame.QUIT: QuitCommand(frog),
             pygame.K_UP: MoveUpCommand(frog),
             pygame.K_RIGHT: MoveRightCommand(frog),
             pygame.K_DOWN: MoveDownCommand(frog),

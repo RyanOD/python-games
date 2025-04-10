@@ -64,7 +64,7 @@ class Frog:
     
     # the Frog class owns the frog behavior if the frog dies, but not the triggers that kill the frog
     def die(self):
-        event_dispatcher.dispatch('play_sound', 'die_road')
+        event_dispatcher.dispatch('play_sound', 'die')
         self.image = self.image_dead
         self.alive = False
         self.lives -= 1

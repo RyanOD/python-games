@@ -8,7 +8,7 @@ class SoundHandler:
         # dict of all game sound files
         self.sounds = {
             'hop': pygame.mixer.Sound('assets/hop.mp3'),
-            'die_road': pygame.mixer.Sound('assets/die_road.mp3')
+            'die': pygame.mixer.Sound('assets/die.mp3')
         }
 
         # set sound volumes

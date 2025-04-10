@@ -4,21 +4,21 @@ from time_manager import TimeManager
 from events import event_dispatcher
 
 class Frog:
-    def __init__(self, screen):
+    def __init__(self, start_x, start_y):
         self.lives = 3
         self.death_timer = 50
-        self.width = 20
-        self.height = 20
-        self.x = screen.width // 2 - self.width
-        self.y = 15 * screen.lane_height + screen.lane_padding
+        self.width = IMAGES['F1'].get_width()
+        self.height = IMAGES['F1'].get_height()
+        self.x = start_x - self.width * 0.5
+        self.y = start_y
         self.carried_speed = 0
         self.alive = True
-        self.screen = screen
+        self.animated = False
 
         # load and scale frog sprite
-        self.image_original = IMAGES['F']
+        self.image_original = IMAGES['F1']
         self.image = self.image_original
-        self.image_dead = IMAGES['FD']
+        self.image_dead = IMAGES['FD1']
         self.image_home = IMAGES['FH']
 
         # create rect for frog sprite
@@ -28,11 +28,15 @@ class Frog:
         
         # set and track frog sprite orientation
         self.orientation = "up"
-        self.orientations = {"up": 0, "right": 90, "down": 180, "left": 270}
+        self.orientations = {
+            "up": {"angle":0, "dx": 0, "dy": -1},
+            "down": {"angle":180, "dx": 0, "dy": 1},
+            "right": {"angle":-90, "dx": 1, "dy": 0},
+            "left": {"angle":90, "dx": -1, "dy": 0},
+        }
 
         # set frog x, y movement rates
-        self.movement_x = 60
-        self.movement_y = 60
+        self.speed = 60
 
     def carry(self, movement = 0):
         self.carried_speed = movement
@@ -48,21 +52,16 @@ class Frog:
             self.rect.x += round(self.carried_speed * TimeManager.get_delta_time(), 2)
             if direction:
                 self.handle_movement(direction)
-            
-    def handle_movement(self, direction):
-            if direction == "up":
-                self.image = pygame.transform.rotate(self.image_original, 0)
-                self.rect.y -= self.movement_y
-            elif direction == "down":
-                self.image = pygame.transform.rotate(self.image_original, 180)
-                self.rect.y += self.movement_y
-            elif direction == "left":
-                self.image = pygame.transform.rotate(self.image_original, 90)
-                self.rect.x -= self.movement_x 
-            elif direction == "right":
-                self.image = pygame.transform.rotate(self.image_original, -90)
-                self.rect.x += self.movement_x
     
+    def rotate_frog(self, degrees):
+        self.image = pygame.transform.rotate(self.image_original, degrees)
+
+    def handle_movement(self, direction):
+            if direction in ("up", "down", "right", "left"):
+                self.image = pygame.transform.rotate(self.image_original, self.orientations[direction]["angle"])
+                self.rect.x += self.speed * self.orientations[direction]["dx"]
+                self.rect.y += self.speed * self.orientations[direction]["dy"]
+
     def in_water(self):
         return 150 < self.rect.top < 480
     
@@ -74,9 +73,9 @@ class Frog:
         self.lives -= 1
     
     # reset the frog based on specified x, y screen positions
-    def reset(self, x, y):
+    def reset(self, start_x, start_y):
         self.image = self.image_original
-        self.rect.x = x
-        self.rect.y = y
+        self.rect.x = start_x - self.width * 0.5
+        self.rect.y = start_y
         self.alive = True
         self.death_timer = 50

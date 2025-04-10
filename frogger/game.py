@@ -15,7 +15,7 @@ class Game:
         self.level = Level(1)
         self.lives = 3
         self.screen = Screen()
-        self.frog = Frog(self.screen)
+        self.frog = Frog(self.screen.width // 2, 15 * self.screen.lane_height + self.screen.lane_padding)
         self.surface = self.screen.surface
         self.input_handler = InputHandler(self.frog)
         self.sound_handler = SoundHandler()
@@ -89,7 +89,7 @@ class Game:
                 home.occupied = True
 
     def reset_frog(self):
-        self.frog.reset(self.screen.width // 2 - self.frog.width, 15 * self.screen.lane_height + self.screen.lane_padding)
+        self.frog.reset(self.screen.width // 2, 15 * self.screen.lane_height + self.screen.lane_padding)
     
     def game_over(self):
         return self.lives <= 0

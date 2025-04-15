@@ -2,7 +2,6 @@ import pygame
 from game import Game
 from time_manager import TimeManager
 
-
 clock = pygame.time.Clock()
 
 def main():
@@ -14,8 +13,9 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game.lives = 0
-            if game.frog.alive:
+            elif game.frog.alive:
                 game.input_handler.handle_event(event)
+                game.points()
         game.update()
         game.draw()
 

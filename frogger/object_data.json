@@ -1,151 +1,151 @@
 {
     "F1": {
         "type": "frog",
-        "height": 50,
-        "width": 50,
+        "height": 40,
+        "width": 40,
         "image": "assets/frog_1.png"
     },
     "F2": {
         "type": "frog",
-        "height": 50,
-        "width": 50,
+        "height": 40,
+        "width": 40,
         "image": "assets/frog_2.png"
     },
     "F3": {
         "type": "frog",
-        "height": 50,
-        "width": 50,
+        "height": 40,
+        "width": 40,
         "image": "assets/frog_3.png"
     },
     "FH": {
         "type": "frog",
-        "height": 50,
-        "width": 50,
+        "height": 40,
+        "width": 40,
         "image": "assets/frog_home_1.png"
     },
     "FD1": {
         "type": "frog",
-        "height": 60,
-        "width": 60,
+        "height": 40,
+        "width": 40,
         "image": "assets/frog_dead_1.png"
     },
     "FD2": {
         "type": "frog",
-        "height": 60,
-        "width": 60,
+        "height": 40,
+        "width": 40,
         "image": "assets/frog_dead_2.png"
     },
     "FD3": {
         "type": "frog",
-        "height": 60,
-        "width": 60,
+        "height": 40,
+        "width": 40,
         "image": "assets/frog_dead_3.png"
     },
     "FD4": {
         "type": "frog",
-        "height": 60,
-        "width": 60,
+        "height": 40,
+        "width": 40,
         "image": "assets/frog_dead_4.png"
     },
     "T": {
         "type": "turtle",
-        "height": 60,
-        "width": 60,
+        "height": 50,
+        "width": 50,
         "image": "assets/turtle_1.png"
     },
     "LL": {
         "type": "log",
-        "height": 60,
-        "width": 60,
+        "height": 50,
+        "width": 50,
         "image": "assets/log_lt.png"
     },
     "LM": {
         "type": "log",
-        "height": 60,
-        "width": 60,
+        "height": 50,
+        "width": 50,
         "image": "assets/log_md.png"
     },
     "LR": {
         "type": "log",
-        "height": 60,
-        "width": 60,
+        "height": 50,
+        "width": 50,
         "image": "assets/log_rt.png"
     },
     "TL": {
         "type": "truck",
-        "height": 60,
-        "width": 60,
+        "height": 50,
+        "width": 50,
         "image": "assets/truck_lt.png"
     },
     "TR": {
         "type": "truck",
-        "height": 60,
-        "width": 60,
+        "height": 50,
+        "width": 50,
         "image": "assets/truck_rt.png"
     },
     "C1": {
         "type": "car",
-        "height": 60,
-        "width": 60,
+        "height": 50,
+        "width": 50,
         "image": "assets/car_1.png"
     },
     "C2": {
         "type": "car",
-        "height": 60,
-        "width": 60,
+        "height": 50,
+        "width": 50,
         "image": "assets/car_2.png"
     },
     "C3": {
         "type": "car",
-        "height": 60,
-        "width": 60,
+        "height": 50,
+        "width": 50,
         "image": "assets/car_3.png"
     },
     "D": {
         "type": "dozer",
-        "height": 60,
-        "width": 60,
+        "height": 50,
+        "width": 50,
         "image": "assets/dozer.png"
     },
     "GTL": {
         "type": "grass",
-        "height": 60,
+        "height": 50,
         "width": 30,
         "image": "assets/grass_tl.png"
     },
     "GTR": {
         "type": "grass",
-        "height": 60,
+        "height": 50,
         "width": 30,
         "image": "assets/grass_tr.png"
     },
     "GBR": {
         "type": "grass",
-        "height": 60,
+        "height": 50,
         "width": 30,
         "image": "assets/grass_br.png"
     },
     "GBL": {
         "type": "grass",
-        "height": 60,
+        "height": 50,
         "width": 30,
         "image": "assets/grass_bl.png"
     },
     "GMW": {
         "type": "grass",
-        "height": 60,
+        "height": 50,
         "width": 30,
         "image": "assets/grass_mw.png"
     },
     "GMT": {
         "type": "grass",
-        "height": 60,
+        "height": 50,
         "width": 30,
         "image": "assets/grass_mt.png"
     },
     "GMB": {
         "type": "grass",
-        "height": 60,
+        "height": 50,
         "width": 30,
         "image": "assets/grass_mb.png"
     }

@@ -3,10 +3,10 @@ from frog import Frog
 from level import Level
 from input import InputHandler
 from screen import Screen
-from home import Home
 from sound import SoundHandler
 from collision import CollisionHandler
 from utils import *
+from events import event_dispatcher
 
 class Game:
     def __init__(self):
@@ -16,17 +16,37 @@ class Game:
         self.image_data = load_data_file('object_data.json')
         self.images = load_images(self.image_data)
         self.level = Level(self.images, 1)
-        self.frog = Frog(self.images, self.screen.width // 2, 15 * self.screen.lane_height + self.screen.lane_padding)
+        self.sound_handler = SoundHandler()
+        self.frog = Frog(self.images, self.screen.width // 2, 16 * self.screen.lane_height + self.screen.lane_padding, lambda sound_name: event_dispatcher.dispatch('play_sound', sound_name))
         self.surface = self.screen.surface
         self.input_handler = InputHandler(self.frog)
-        self.sound_handler = SoundHandler()
         self.collision_handler = CollisionHandler()
+        self.score = 0
         self.homes = [
-            Home(60, 120),
-            Home(240, 300),
-            Home(420, 480),
-            Home(600, 660),
-            Home(780, 840),
+            {'occupied': False, 'xl': 60, 'xr': 120},
+            {'occupied': False, 'xl': 240, 'xr': 300},
+            {'occupied': False, 'xl': 420, 'xr': 480},
+            {'occupied': False, 'xl': 600, 'xr': 660},
+            {'occupied': False, 'xl': 780, 'xr': 840},
+        ]
+        self.scoring = [
+            {"visited": False, "value": 0},
+            {"visited": False, "value": 0},
+            {"visited": False, "value": 0},
+            {"visited": False, "value": 100},
+            {"visited": False, "value": 10},
+            {"visited": False, "value": 10},
+            {"visited": False, "value": 10},
+            {"visited": False, "value": 10},
+            {"visited": False, "value": 10},
+            {"visited": False, "value": 10},
+            {"visited": False, "value": 10},
+            {"visited": False, "value": 10},
+            {"visited": False, "value": 10},
+            {"visited": False, "value": 10},
+            {"visited": False, "value": 10},
+            {"visited": False, "value": 0},
+            {"visited": False, "value": 0},
         ]
     
     def update(self):
@@ -40,9 +60,6 @@ class Game:
             object.update()
         
         # if frog y-position less than 180 (in row of home slots), check if frog within home boundaries
-        if self.frog_in_home_row():
-            self.frog.carry(0)
-            self.home_check()
 
         # continually update frog
         if not self.frog.alive:
@@ -53,8 +70,15 @@ class Game:
         self.frog.update()
 
         # continually check to see if frog crosses screen boundaries
-        if not self.screen.on_screen(self.frog):
+        if self.frog.alive and not self.screen.on_screen(self.frog):
             self.frog.die()
+
+    def points(self):
+        row = self.scoring[self.frog.rect.y // 50 - 1]
+        print(self.frog.rect.y // 50 - 1)
+        if not row["visited"]:
+            self.score += row["value"]
+            row["visited"] = True
 
     def draw(self):
         self.screen.reset()
@@ -66,31 +90,26 @@ class Game:
         if self.frog.image:
             self.screen.surface.blit(self.frog.image, (self.frog.rect.x, self.frog.rect.y))
 
+        for f in range(0, self.frog.lives):
+            self.screen.surface.blit(self.frog.menu_image, (f * 60 + 10, 850 + self.screen.lane_padding))
+
         for home in self.homes:
-            if home.occupied and self.frog.alive:
-                self.screen.surface.blit(self.frog.image_home, (((home.bounds[0] + home.bounds[1]) // 2 - self.frog.image_home.get_width() // 2), 124))
+            if home['occupied'] and self.frog.alive:
+                self.screen.surface.blit(self.frog.image_home, (((home['xl'] + home['xr']) // 2 - self.frog.image_home.get_width() // 2), 124))
 
-        #self.draw_grid()
-
+        self.screen.score(self.score)
         pygame.display.flip()
-
-    def draw_grid(self):
-        for i in range(0, self.screen.height, 60):
-            pygame.draw.line(self.screen.surface, (255, 255, 255), (0, i), (self.screen.width, i))
-
-        for i in range(0, self.screen.width, 60):
-            pygame.draw.line(self.screen.surface, (255, 255, 255), (i, 0), (i, self.screen.height))
 
     def frog_in_home_row(self):
         return self.frog.rect.top < 180
-    
+
     def home_check(self):
         for home in self.homes:
-            if self.frog.rect.centerx in range(home.bounds[0], home.bounds[1]):
-                home.occupied = True
+            if self.frog.rect.centerx in range(home['xl'], home['xr']):
+                home['occupied'] = True
 
     def reset_frog(self):
-        self.frog.reset(self.screen.width // 2, 15 * self.screen.lane_height + self.screen.lane_padding)
+        self.frog.reset(self.screen.width // 2, 16 * self.screen.lane_height + self.screen.lane_padding)
     
     def game_over(self):
         return self.lives <= 0

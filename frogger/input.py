@@ -2,7 +2,6 @@
 
 import pygame
 from commands import MoveUpCommand, MoveRightCommand, MoveDownCommand, MoveLeftCommand
-from events import event_dispatcher
 
 class InputHandler:
     def __init__(self, frog):
@@ -16,4 +15,3 @@ class InputHandler:
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN and event.key in self.commands:
             self.commands[event.key].execute()
-            event_dispatcher.dispatch('play_sound', 'hop')

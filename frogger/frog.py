@@ -1,28 +1,27 @@
 import pygame
 from time_manager import TimeManager
-from events import event_dispatcher
 
 class Frog:
-    def __init__(self, images, start_x, start_y):
+    def __init__(self, images, start_x, start_y, play_sound):
         self.lives = 3
         self.death_timer = 50
         self.width = images["F1"].get_width()
         self.height = images["F1"].get_height()
-        self.x = start_x - self.width * 0.5
-        self.y = start_y
         self.carried_speed = 0
         self.alive = True
+        self.play_sound = play_sound
 
-        # load and scale frog sprite
+        # load and scale frog sprites
         self.image_original = images["F1"]
         self.image = self.image_original
+        self.menu_image = self.image_original
         self.image_dead = images["FD1"]
         self.image_home = images["FH"]
 
         # create rect for frog sprite
         self.rect = self.image.get_rect()
-        self.rect.x = self.x
-        self.rect.y = self.y
+        self.rect.x = start_x - self.width * 0.5
+        self.rect.y = start_y
         
         # set and track frog sprite orientation
         self.orientations = {
@@ -33,7 +32,7 @@ class Frog:
         }
 
         # set frog x, y movement rates
-        self.speed = 60
+        self.speed = 50
 
     def carry(self, movement = 0):
         self.carried_speed = movement
@@ -50,21 +49,20 @@ class Frog:
             if direction:
                 self.handle_movement(direction)
     
-    def rotate_frog(self, degrees):
-        self.image = pygame.transform.rotate(self.image_original, degrees)
-
     def handle_movement(self, direction):
-            if direction in ("up", "down", "right", "left"):
+            if direction in (self.orientations):
                 self.image = pygame.transform.rotate(self.image_original, self.orientations[direction]["angle"])
                 self.rect.x += self.speed * self.orientations[direction]["dx"]
                 self.rect.y += self.speed * self.orientations[direction]["dy"]
+                self.play_sound('hop')
 
     def in_water(self):
-        return 150 < self.rect.top < 480
+        return 100 < self.rect.top < 400
     
     # the Frog class owns the frog behavior if the frog dies, but not the triggers that kill the frog
     def die(self):
-        event_dispatcher.dispatch('play_sound', 'die')
+        self.carry(0)
+        self.play_sound('die')
         self.image = self.image_dead
         self.alive = False
         self.lives -= 1

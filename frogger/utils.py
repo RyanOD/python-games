@@ -39,3 +39,4 @@ def load_objects(level_map, images, object_factory):
                     objects.append(object_factory(object_data, images, x, y, lane_data['movement']))
 
     return objects
+

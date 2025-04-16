@@ -57,7 +57,7 @@ class Frog:
                 self.play_sound('hop')
 
     def in_water(self):
-        return 100 < self.rect.top < 400
+        return 150 < self.rect.top < 400
     
     # the Frog class owns the frog behavior if the frog dies, but not the triggers that kill the frog
     def die(self):

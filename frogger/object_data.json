@@ -110,43 +110,43 @@
     "GTL": {
         "type": "grass",
         "height": 50,
-        "width": 30,
+        "width": 25,
         "image": "assets/grass_tl.png"
     },
     "GTR": {
         "type": "grass",
         "height": 50,
-        "width": 30,
+        "width": 25,
         "image": "assets/grass_tr.png"
     },
     "GBR": {
         "type": "grass",
         "height": 50,
-        "width": 30,
+        "width": 25,
         "image": "assets/grass_br.png"
     },
     "GBL": {
         "type": "grass",
         "height": 50,
-        "width": 30,
+        "width": 25,
         "image": "assets/grass_bl.png"
     },
     "GMW": {
         "type": "grass",
         "height": 50,
-        "width": 30,
+        "width": 25,
         "image": "assets/grass_mw.png"
     },
     "GMT": {
         "type": "grass",
         "height": 50,
-        "width": 30,
+        "width": 25,
         "image": "assets/grass_mt.png"
     },
     "GMB": {
         "type": "grass",
         "height": 50,
-        "width": 30,
+        "width": 25,
         "image": "assets/grass_mb.png"
     }
 }

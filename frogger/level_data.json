@@ -4,13 +4,13 @@
             "lanes": [
                 {
                     "height": 50,
-                    "width": 30,
+                    "width": 25,
                     "movement": 0,
                     "objects": ["GMT", "GTL", "GMW", "GMW", "GTR", "GMT", "GMT", "GTL", "GMW", "GMW", "GTR", "GMT", "GMT", "GTL", "GMW", "GMW", "GTR", "GMT", "GMT", "GTL", "GMW", "GMW", "GTR", "GMT", "GMT", "GTL", "GMW", "GMW", "GTR", "GMT"]
                 },
                 {
                     "height": 50,
-                    "width": 30,
+                    "width": 25,
                     "movement": 0,
                     "objects": ["GMB", "GBL","","", "GBR", "GMB", "GMB", "GBL","","", "GBR", "GMB", "GMB", "GBL","","", "GBR", "GMB", "GMB", "GBL","","", "GBR", "GMB", "GMB", "GBL","","", "GBR", "GMB"]
                 },

@@ -18,7 +18,7 @@
                     "height": 50,
                     "width": 50,
                     "movement": 100,
-                    "objects": ["LL", "LM", "LM", "LM", "LR", "", "", "LL", "LM", "LM", "LM", "LR", "", "", ""]
+                    "objects": ["LL", "LM", "LM", "LM", "LR", "", "", "LL", "LM", "LM", "LM", "LR", "", ""]
                 },
                 {
                     "height": 50,
@@ -30,13 +30,13 @@
                     "height": 50,
                     "width": 50,
                     "movement": 115,
-                    "objects": ["", "LL", "LM", "LM", "LM", "LM", "LR", "", "", "LL", "LM", "LM", "LM", "LM", "LR"]
+                    "objects": ["", "LL", "LM", "LM", "LM", "LM", "LR", "", "", "LL", "LM", "LM", "LM", "LR"]
                 },
                 {
                     "height": 50,
                     "width": 50,
                     "movement": 80,
-                    "objects": ["LL", "LM", "LR", "", "", "LL", "LM", "LR", "", "", "LL", "LM", "LR", "", ""]
+                    "objects": ["LL", "LM", "LR", "", "", "LL", "LM", "LR", "", "", "LL", "LM", "LR", ""]
                 },
                 {
                     "height": 50,

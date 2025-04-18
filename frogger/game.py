@@ -12,25 +12,50 @@ from debug import draw_grid
 
 class Game:
     def __init__(self):
-        pygame.init()  # Initialize Pygame
-        self.lives = 3
+        # initialize Pygame
+        pygame.init()
+
+        # initialize Pygame Screen class and create surface
         self.screen = Screen()
+        self.surface = self.screen.surface
+
+        # load image data and game sprite images
         self.image_data = load_data_file('object_data.json')
         self.images = load_images(self.image_data)
+
+        # pass images to level builder to create level objects (vehicles, logs, turtles)
         self.level = Level(self.images, 1)
+
+        # delegate sound management to SoundHandler class
         self.sound_handler = SoundHandler()
-        self.frog = Frog(self.images, self.screen.width // 2, 16 * self.screen.lane_height + self.screen.lane_padding, lambda sound_name: event_dispatcher.dispatch('play_sound', sound_name))
-        self.surface = self.screen.surface
+
+        # create instance of Frog class
+        self.frog = Frog(
+            self.images,
+            self.screen.width // 2,
+            16 * self.screen.lane_height + self.screen.lane_padding,
+            lambda sound_name: event_dispatcher.dispatch('play_sound', sound_name)
+        )
+
+        # set frog lives
+        self.lives = 3
+
+        # delegate input management to InputHandler class
         self.input_handler = InputHandler(self.frog)
+
+        # delegate object collision management to CollisionHandler class
         self.collision_handler = CollisionHandler()
+
+        # delegate score management to Scoring class
         self.scoring = Scoring(self.frog)
-        self.score = 0
+
+        # set up array to manage state of home goal locations
         self.homes = [
             {'occupied': False, 'xl': 50, 'xr': 100},
             {'occupied': False, 'xl': 200, 'xr': 250},
             {'occupied': False, 'xl': 350, 'xr': 400},
             {'occupied': False, 'xl': 500, 'xr': 550},
-            {'occupied': False, 'xl': 650, 'xr': 750},
+            {'occupied': False, 'xl': 650, 'xr': 700},
         ]
     
     def update(self):
@@ -43,12 +68,13 @@ class Game:
                 object.reset(self.screen)
             object.update()
         
-        # when frog dies, begin death_timer countdown
+        # when frog dies, begin death_timer countdown and rotate frog dying images based on time
         if not self.frog.alive:
             if self.frog.death_timer > 0:
+                self.frog.image = self.frog.image_dying[self.frog.death_timer // 40]
                 self.frog.death_timer -= 1
             else:
-                self.reset_frog()
+                self.reset_level()
 
         # delegate scoring display management to Scoring class
         self.scoring.update()
@@ -59,6 +85,9 @@ class Game:
         # update frog life status based on screen boundary collision
         if self.frog.alive and not self.screen.on_screen(self.frog):
             self.frog.die()
+
+        # check to see if frog makes it to home goal location
+        self.home_check()
 
         # draw all game assets
         self.draw()
@@ -83,29 +112,31 @@ class Game:
         # draw happy frog image in every home position that player has successfully reached
         for home in self.homes:
             if home['occupied']:
-                self.screen.surface.blit(self.frog.image_home, (((home['xl'] + home['xr']) // 2 - self.frog.image_home.get_width() // 2), 124))
-
-        for home in self.homes:
-            print(home['occupied'])
+                self.screen.surface.blit(self.frog.image_home, (((home['xl'] + home['xr']) // 2 - self.frog.image_home.get_width() // 2), 104))
 
         # draw player display
         self.screen.score(self.scoring.score)
 
-        draw_grid(self.screen)
-        
         # flip the screen to display all of the above
         pygame.display.flip()
 
+    # check if frog y position is within home (goal) row
     def frog_in_home_row(self):
-        return self.frog.rect.top < 180
+        return self.frog.rect.top < 150
 
+    # check if frog rect is in the goal home row and if so, update home occupied state to True and reset level
     def home_check(self):
         for home in self.homes:
-            if self.frog.rect.centerx in range(home['xl'], home['xr']):
+            if self.frog.rect.centerx in range(home['xl'], home['xr']) and self.frog_in_home_row():
                 home['occupied'] = True
+                self.reset_level()
 
-    def reset_frog(self):
+    # reset visited state of all rows to False then reset frog
+    def reset_level(self):
+        for row in self.scoring.rows:
+            row['visited'] = False
         self.frog.reset(self.screen.width // 2, 16 * self.screen.lane_height + self.screen.lane_padding)
     
+    # end game if all frog lives lost
     def game_over(self):
-        return self.lives <= 0
+        return self.lives == 0

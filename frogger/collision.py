@@ -33,7 +33,7 @@ class CollisionHandler:
         # update frog carry speed and return True if frog collides with turtle or log and is more than half on (safe objects)
         elif object.type in self.safe_objects:
             if object.rect.left <= frog.rect.centerx <= object.rect.right:
-                frog.carry(object.movement)
+                frog.carried_speed = object.movement
                 return True
             
         # return false if frog is more than half off log or turtle

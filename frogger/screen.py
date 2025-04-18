@@ -20,7 +20,7 @@ class Screen:
         pygame.display.set_caption(caption)
 
     def get_bg(self, bg_image):
-        # Load the image
+        # Load the background image
         return pygame.image.load(bg_image).convert()
 
     def on_screen(self, sprite):

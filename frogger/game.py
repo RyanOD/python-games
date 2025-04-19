@@ -67,14 +67,6 @@ class Game:
             if not self.screen.on_screen(object):
                 object.reset(self.screen)
             object.update()
-        
-        # when frog dies, begin death_timer countdown and rotate frog dying images based on time
-        if not self.frog.alive:
-            if self.frog.death_timer > 0:
-                self.frog.image = self.frog.image_dying[self.frog.death_timer // 40]
-                self.frog.death_timer -= 1
-            else:
-                self.reset_level()
 
         # delegate scoring display management to Scoring class
         self.scoring.update()
@@ -88,6 +80,11 @@ class Game:
 
         # check to see if frog makes it to home goal location
         self.home_check()
+
+        # when frog dies, begin death_timer countdown and rotate frog dying images based on time then reset level
+        if not self.frog.alive:
+            if self.frog.animate():
+                self.reset_level()
 
         # draw all game assets
         self.draw()

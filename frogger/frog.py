@@ -4,7 +4,6 @@ from time_manager import TimeManager
 class Frog:
     def __init__(self, images, start_x, start_y, play_sound):
         self.lives = 3
-        self.death_timer = 159
         self.width = images["F1"].get_width()
         self.height = images["F1"].get_height()
         self.carried_speed = 0
@@ -12,9 +11,10 @@ class Frog:
         self.play_sound = play_sound
 
         # load and scale frog sprites
-        self.image_original = images["F1"]
+        self.image_original = images["F3"]
         self.image = self.image_original
         self.menu_image = self.image_original
+        self.image_moving = [images["F3"], images["F1"]]
         self.image_dying = [images["FD4"], images["FD3"], images["FD2"], images["FD1"]]
         self.image_home = images["FH"]
 
@@ -23,6 +23,10 @@ class Frog:
         self.rect.x = start_x - self.width * 0.5
         self.rect.y = start_y
         
+        # set up dying from image cycling timer data
+        self.death_frame_duration = 40
+        self.death_timer = self.death_frame_duration * len(self.image_dying)
+
         # frog sprite orientations options depending on player movement
         self.orientations = {
             "up": {"angle":0, "dx": 0, "dy": -1},
@@ -65,11 +69,19 @@ class Frog:
         self.play_sound('die')
         self.alive = False
         self.lives -= 1
-    
+
     # reset the frog based on specified x, y screen positions
     def reset(self, start_x, start_y):
         self.image = self.image_original
         self.rect.x = start_x - self.width * 0.5
         self.rect.y = start_y
         self.alive = True
-        self.death_timer = 159
+        self.death_timer = 160
+
+    # when frog dies, begin death_timer countdown and rotate frog dying images based on time
+    def animate(self):
+        if self.death_timer > 0:
+            self.death_timer -= 1
+            self.image = self.image_dying[min(len(self.image_dying) - 1, self.death_timer // self.death_frame_duration)]
+            return False
+        return True

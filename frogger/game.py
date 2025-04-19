@@ -83,7 +83,7 @@ class Game:
 
         # when frog dies, begin death_timer countdown and rotate frog dying images based on time then reset level
         if not self.frog.alive:
-            if self.frog.animate():
+            if self.frog.dying_animation():
                 self.reset_level()
 
         # draw all game assets

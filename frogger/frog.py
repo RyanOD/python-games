@@ -79,7 +79,7 @@ class Frog:
         self.death_timer = 160
 
     # when frog dies, begin death_timer countdown and rotate frog dying images based on time
-    def animate(self):
+    def dying_animation(self):
         if self.death_timer > 0:
             self.death_timer -= 1
             self.image = self.image_dying[min(len(self.image_dying) - 1, self.death_timer // self.death_frame_duration)]

@@ -13,8 +13,8 @@ class Object(Observable):
         self.movement = movement
     
     # move object
-    def update(self):
-        self.rect.x += round(self.movement * TimeManager.get_delta_time(), 2)
+    def update(self, dt):
+        self.rect.x += round(self.movement * dt, 2)
     
     def reset(self, screen):
         if self.rect.left > screen.width:

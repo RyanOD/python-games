@@ -8,6 +8,8 @@ from collision import CollisionHandler
 from scoring import Scoring
 from utils import *
 from events import event_dispatcher
+from state_machine import StateMachine
+from state_title import StateTitle
 from debug import draw_grid
 
 class Game:
@@ -19,15 +21,19 @@ class Game:
         self.screen = Screen()
         self.surface = self.screen.surface
 
+        # delegate sound management to SoundHandler class
+        self.sound_handler = SoundHandler()
+
+        # initialize state machine
+        self.state_machine = StateMachine()
+        self.state_machine.change_state(StateTitle(self))
+
         # load image data and game sprite images
         self.image_data = load_data_file('object_data.json')
         self.images = load_images(self.image_data)
 
         # pass images to level builder to create level objects (vehicles, logs, turtles)
         self.level = Level(self.images, 1)
-
-        # delegate sound management to SoundHandler class
-        self.sound_handler = SoundHandler()
 
         # create instance of Frog class
         self.frog = Frog(
@@ -36,9 +42,6 @@ class Game:
             16 * self.screen.lane_height + self.screen.lane_padding,
             lambda sound_name: event_dispatcher.dispatch('play_sound', sound_name)
         )
-
-        # set frog lives
-        self.lives = 3
 
         # delegate input management to InputHandler class
         self.input_handler = InputHandler(self.frog)
@@ -57,70 +60,23 @@ class Game:
             {'occupied': False, 'xl': 500, 'xr': 550},
             {'occupied': False, 'xl': 650, 'xr': 700},
         ]
-    
-    def update(self):
-        # delegate frog/object collision management to CollisionHandler class
-        self.collision_handler.check_collisions(self.frog, self.level.objects)
 
-        # update x-position of all game objects (vehicles, logs, turtles, etc.)
-        for object in self.level.objects:
-            if not self.screen.on_screen(object):
-                object.reset(self.screen)
-            object.update()
+    def update(self, dt):
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                    self.frog.lives = 0
+            elif self.frog.alive:
+                    self.input_handler.handle_event(event)
+        
+        self.state_machine.update(dt, events)
 
-        # delegate scoring display management to Scoring class
-        self.scoring.update()
-
-        # delegate frog position management to Frog class
-        self.frog.update()
-
-        # update frog life status based on screen boundary collision
-        if self.frog.alive and not self.screen.on_screen(self.frog):
-            self.frog.die()
-
-        # check to see if frog makes it to home goal location
-        self.home_check()
-
-        # when frog dies, begin death_timer countdown and rotate frog dying images based on time then reset level
-        if not self.frog.alive:
-            if self.frog.rect.left < 0:
-                self.frog.rect.left = 0
-            elif self.frog.rect.right > self.screen.width:
-                self.frog.rect.right = self.screen.width
-            if self.frog.dying_animation():
-                self.reset_level()
-
-        # draw all game assets
-        self.draw()
+    def handle_input(self):
+        self.state_machine.handle_input()
 
     def draw(self):
-        # clear the screen
-        self.screen.reset()
-
-        # draw all objects (vehicles, logs, turtles) based on level_map data file
-        for object in self.level.objects:
-            if object.image:
-                self.screen.surface.blit(object.image, (object.rect.x, object.rect.y))
-        
-        # if frog image is valid, draw frog image on the screen at frog.rect x, y position
-        if self.frog.image:
-            self.screen.surface.blit(self.frog.image, (self.frog.rect.x, self.frog.rect.y))
-
-        # draw small frog image below starting row for each frog live left
-        for f in range(0, self.frog.lives):
-            self.screen.surface.blit(self.frog.menu_image, (f * 60 + 10, 850 + self.screen.lane_padding))
-
-        # draw happy frog image in every home position that player has successfully reached
-        for home in self.homes:
-            if home['occupied']:
-                self.screen.surface.blit(self.frog.image_home, (((home['xl'] + home['xr']) // 2 - self.frog.image_home.get_width() // 2), 104))
-
-        # draw player display
-        self.screen.score(self.scoring.score)
-
-        # flip the screen to display all of the above
-        pygame.display.flip()
-
+        self.state_machine.draw()
+    
     # check if frog y position is within home (goal) row
     def frog_in_home_row(self):
         return self.frog.rect.top < 150
@@ -140,4 +96,4 @@ class Game:
     
     # end game if all frog lives lost
     def game_over(self):
-        return self.lives == 0
+        return self.frog.lives == 0

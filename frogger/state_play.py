@@ -1,5 +1,6 @@
 import pygame
 from state_game import StateGame
+from state_clear import StateClear
 from events import event_dispatcher
 
 class StatePlay(StateGame):
@@ -17,17 +18,17 @@ class StatePlay(StateGame):
         # delegate frog/object collision management to CollisionHandler class
         self.game.collision_handler.check_collisions(self.frog, self.game.level.objects)
 
-        # update x-position of all game objects (vehicles, logs, turtles, etc.)
-        for object in self.game.level.objects:
-            if not self.screen.on_screen(object):
-                object.reset(self.screen)
-            object.update(dt)
+        # delegate frog passive management to Frog class
+        self.game.level.update(dt)
 
         # delegate scoring display management to Scoring class
         self.game.scoring.update()
 
-        # delegate frog position management to Frog class
+        # delegate frog passive management to Frog class
         self.frog.update()
+
+        # delegate frog active movement to Frog class 
+        self.frog.move(dt)
 
         # update frog life status based on screen boundary collision
         if self.frog.alive and not self.screen.on_screen(self.frog):
@@ -49,6 +50,8 @@ class StatePlay(StateGame):
         # clear the screen
         self.screen.reset()
 
+        #draw timer
+
         # draw all objects (vehicles, logs, turtles) based on level_map data file
         for object in self.game.level.objects:
             if object.image:
@@ -63,9 +66,15 @@ class StatePlay(StateGame):
             self.screen.surface.blit(self.frog.menu_image, (f * 60 + 10, 850 + self.screen.lane_padding))
 
         # draw happy frog image in every home position that player has successfully reached
+        level_cleared = True
         for home in self.game.homes:
             if home['occupied']:
                 self.screen.surface.blit(self.frog.image_home, (((home['xl'] + home['xr']) // 2 - self.frog.image_home.get_width() // 2), 104))
+            else:
+                level_cleared = False
+
+        if level_cleared:
+            self.game.state_machine.change_state(StateClear)
 
         # draw player display
         self.screen.score(self.game.scoring.score)

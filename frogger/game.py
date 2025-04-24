@@ -33,7 +33,7 @@ class Game:
         self.images = load_images(self.image_data)
 
         # pass images to level builder to create level objects (vehicles, logs, turtles)
-        self.level = Level(self.images, 1)
+        self.level = Level(self, self.images, 1)
 
         # create instance of Frog class
         self.frog = Frog(
@@ -67,7 +67,7 @@ class Game:
             if event.type == pygame.QUIT:
                     self.frog.lives = 0
             elif self.frog.alive:
-                    self.input_handler.handle_event(event)
+                    self.input_handler.handle_event(event, dt)
         
         self.state_machine.update(dt, events)
 

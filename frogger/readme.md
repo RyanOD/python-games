@@ -4,6 +4,8 @@ A clone of Frogger built with Python and the Pygame module library. Frogger is o
 ## Approach
 For this clone, we aimed to produce a version of Frogger that is very close to the original. However, not every aspect of the game was included. Specifically, those features that were redundant such as animating the turtles (we do animate the frog). We also skipped power updates, aligators, and snakes.
 
+## Assets
+
 ## Key Concepts
 The following Python programming concepts are exposed in this Frogger game design.
 - Looping
@@ -27,4 +29,8 @@ The following Python programming concepts are exposed in this Frogger game desig
 **Disclaimer:** In no way should this game design be considered optimal and/or error free. Use as an educational tool at your discretion.
 
 ## Assets
-All visual game assets were recreated in Photoshop based on original game images found here: https://www.computerarcheology.com/Arcade/Frogger/GFX.html
+All visual game assets were recreated in Photoshop based on [original Frogger game sprites](https://www.computerarcheology.com/Arcade/Frogger/GFX.html).
+
+All sound effects were sourced from [Frogger archive on Computer Archeology](https://computerarcheology.com/Arcade/Frogger/).
+
+Title and Menu screen font is [Retro Gaming](https://www.dafont.com/retro-gaming.font).

@@ -1,13 +1,17 @@
 # Frogger Game
 A clone of Frogger built with Python and the Pygame module library. Frogger is one of the all-time classic video games. Created in 1981 by Konami and published by Sega, Frogger challenges the player to guide five frogs safely across a highway crawling with vehicles and a river full of logs and turtles. Though simple by modern video game standards, Frogger is a great way for novice game developers to practice basic coding techniques and introduce themselves to the Pygame module without feeling overwhelmed.
 
+## Approach
+For this clone, we aimed to produce a version of Frogger that is very close to the original. However, not every aspect of the game was included. Specifically, those features that were redundant such as animating the turtles (we do animate the frog). We also skipped power updates, aligators, and snakes.
+
 ## Key Concepts
 The following Python programming concepts are exposed in this Frogger game design.
-- For / While Loops
+- Looping
 - Functions
 - Variables
 - Conditionals
 - Libraries
+- Classes
 - Logical Operators
 - String Formatting
 - Comments

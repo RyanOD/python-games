@@ -4,14 +4,14 @@ import pygame
 from commands import MoveUpCommand, MoveRightCommand, MoveDownCommand, MoveLeftCommand
 
 class InputHandler:
-    def __init__(self, frog):
+    def __init__(self, frog, dt=0):
         self.commands = {
-            pygame.K_UP: MoveUpCommand(frog),
-            pygame.K_RIGHT: MoveRightCommand(frog),
-            pygame.K_DOWN: MoveDownCommand(frog),
-            pygame.K_LEFT: MoveLeftCommand(frog)
+            pygame.K_UP: MoveUpCommand(frog, dt),
+            pygame.K_RIGHT: MoveRightCommand(frog, dt),
+            pygame.K_DOWN: MoveDownCommand(frog, dt),
+            pygame.K_LEFT: MoveLeftCommand(frog, dt)
         }
 
-    def handle_event(self, event):
+    def handle_event(self, event, dt):
         if event.type == pygame.KEYDOWN and event.key in self.commands:
-            self.commands[event.key].execute()
+            self.commands[event.key].execute(dt)

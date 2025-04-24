@@ -1,9 +1,10 @@
 import pygame
 from time_manager import TimeManager
+from config import FROG_SPEED, WATER_BOTTOM, WATER_TOP
 
 class Frog:
     def __init__(self, images, start_x, start_y, play_sound):
-        self.lives = 3
+        self.lives = 7
         self.width = images["F1"].get_width()
         self.height = images["F1"].get_height()
         self.carried_speed = 0
@@ -29,25 +30,24 @@ class Frog:
 
         # frog sprite orientations options depending on player movement
         self.orientations = {
-            "up": {"angle":0, "dx": 0, "dy": -1},
-            "down": {"angle":180, "dx": 0, "dy": 1},
-            "right": {"angle":-90, "dx": 1, "dy": 0},
-            "left": {"angle":90, "dx": -1, "dy": 0},
+            "up": {"angle": 0, "dx": 0, "dy": -1},
+            "down": {"angle": 180, "dx": 0, "dy": 1},
+            "right": {"angle": -90, "dx": 1, "dy": 0},
+            "left": {"angle": 90, "dx": -1, "dy": 0},
         }
 
         # set frog pixel movement rate
-        self.speed = 50
+        self.speed = FROG_SPEED
 
     # check if frog is in water zone and if so, set carry speed to zero then pass direction to move() method
-    def update(self, direction='none'):
+    def update(self):
         if not self.in_water():
             self.carried_speed = 0
-        self.move(direction)
     
     # if frog is alive, first manage carried movement then, if a direction has been passed, call handle_movement() method
-    def move(self, direction):
+    def move(self, dt, direction='none'):
         if self.alive:
-            self.rect.x += round(self.carried_speed * TimeManager.get_delta_time(), 2)
+            self.rect.x += round(self.carried_speed * dt, 2)
             if direction:
                 self.handle_movement(direction)
 
@@ -61,7 +61,7 @@ class Frog:
 
     # check if frog is in water zone
     def in_water(self):
-        return 150 < self.rect.top < 400
+        return WATER_TOP < self.rect.top < WATER_BOTTOM
     
     # the Frog class owns the frog behavior if the frog dies, but not the triggers that kill the frog
     def die(self):
@@ -76,7 +76,7 @@ class Frog:
         self.rect.x = start_x - self.width * 0.5
         self.rect.y = start_y
         self.alive = True
-        self.death_timer = 160
+        self.death_timer = self.death_frame_duration * len(self.image_dying)
 
     # when frog dies, begin death_timer countdown and cylce through frog dying images based on time
     def dying_animation(self):

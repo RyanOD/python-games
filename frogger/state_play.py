@@ -8,6 +8,7 @@ class StatePlay(StateGame):
         self.game = game
         self.frog = game.frog
         self.screen = game.screen
+        self.level_cleared = False
 
         event_dispatcher.dispatch('play_sound', 'main_theme')
 
@@ -16,7 +17,8 @@ class StatePlay(StateGame):
 
     def update(self, dt, events):
         # delegate frog/object collision management to CollisionHandler class
-        self.game.collision_handler.check_collisions(self.frog, self.game.level.objects)
+        if self.frog.alive and not self.game.collision_handler.safe_collision(self.frog, self.game.level.objects):
+            self.frog.die()
 
         # delegate frog passive management to Frog class
         self.game.level.update(dt)
@@ -40,6 +42,9 @@ class StatePlay(StateGame):
         if not self.frog.alive and self.frog.dying_animation():
             self.reset_level()
 
+        if all(home['occupied'] for home in self.game.homes):
+            self.game.state_machine.change_state(StateClear(self.game, dt))
+
     def draw(self):
         # clear the screen
         self.screen.reset()
@@ -60,21 +65,14 @@ class StatePlay(StateGame):
             self.screen.surface.blit(self.frog.menu_image, (f * 60 + 10, 850 + self.screen.lane_padding))
 
         # draw happy frog image in every home position that player has successfully reached
-        level_cleared = True
         for home in self.game.homes:
             if home['occupied']:
                 self.screen.surface.blit(self.frog.image_home, (((home['xl'] + home['xr']) // 2 - self.frog.image_home.get_width() // 2), 104))
-            else:
-                level_cleared = False
-
-        if level_cleared:
-            self.game.state_machine.change_state(StateClear)
 
         # draw player display
         self.screen.score(self.game.scoring.score)
 
-        # flip the screen to display all of the above
-        pygame.display.flip()
+
 
     # check if frog y position is within home (goal) row
     def frog_in_home_row(self):

@@ -71,7 +71,9 @@ class Frog:
     
     # check if frog is in on an object (log or turtle)
     def on_object(self, object):
-        return object.rect.left <= self.rect.centerx <= object.rect.right
+        print(object.rect.left, self.rect.centerx, object.rect.right)
+        overlap = max(0, min(self.rect.right, object.rect.right) - max(self.rect.left, object.rect.left))
+        return overlap >= self.rect.width / 2
     
     # the Frog class owns the frog behavior if the frog dies, but not the triggers that kill the frog
     def die(self):

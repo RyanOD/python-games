@@ -12,7 +12,7 @@ class StatePlay(StateGame):
         event_dispatcher.dispatch('play_sound', 'main_theme')
 
     def enter(self):
-        print('Entering game play state...')
+        pass
 
     def update(self, dt, events):
         # delegate frog/object collision management to CollisionHandler class
@@ -37,14 +37,8 @@ class StatePlay(StateGame):
         # check to see if frog makes it to home goal location
         self.home_check()
 
-        # when frog dies, begin death_timer countdown and rotate frog dying images based on time then reset level
-        if not self.frog.alive:
-            if self.frog.rect.left < 0:
-                self.frog.rect.left = 0
-            elif self.frog.rect.right > self.screen.width:
-                self.frog.rect.right = self.screen.width
-            if self.frog.dying_animation():
-                self.reset_level()
+        if not self.frog.alive and self.frog.dying_animation():
+            self.reset_level()
 
     def draw(self):
         # clear the screen
@@ -97,7 +91,7 @@ class StatePlay(StateGame):
     def reset_level(self):
         for row in self.game.scoring.rows:
             row['visited'] = False
-        self.frog.reset(self.screen.width // 2, 16 * self.screen.lane_height + self.screen.lane_padding)
+        self.frog.reset()
     
     # end game if all frog lives lost
     def game_over(self):

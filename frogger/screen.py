@@ -1,10 +1,11 @@
 import pygame
 from utils import load_data_file
+from config import SCREEN_WIDTH, SCREEN_HEIGHT
 
 class Screen:
     def __init__(self):
-        self.width = 750
-        self.height = 900
+        self.width = SCREEN_WIDTH
+        self.height = SCREEN_HEIGHT
         self.lane_padding = 6
         self.lane_height = 50
         self.lane_width = 50
@@ -22,11 +23,6 @@ class Screen:
     def get_bg(self, bg_image):
         # Load the background image
         return pygame.image.load(bg_image).convert()
-
-    def on_screen(self, sprite):
-        if sprite.rect.bottom > self.height - 50:
-            sprite.rect.bottom = self.height - 50
-        return 0 < sprite.rect.centerx < self.width
     
     def score(self, player_score):
         font = pygame.font.Font("assets/upheavtt.ttf", 34)

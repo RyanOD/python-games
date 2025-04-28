@@ -10,6 +10,7 @@ from utils import *
 from events import event_dispatcher
 from state_machine import StateMachine
 from state_title import StateTitle
+from state_play import StatePlay
 from debug import draw_grid
 
 class Game:
@@ -24,9 +25,6 @@ class Game:
         # delegate sound management to SoundHandler class
         self.sound_handler = SoundHandler()
 
-        # initialize state machine
-        self.state_machine = StateMachine()
-        self.state_machine.change_state(StateTitle(self))
 
         # load image data and game sprite images
         self.image_data = load_data_file('object_data.json')
@@ -38,8 +36,6 @@ class Game:
         # create instance of Frog class
         self.frog = Frog(
             self.images,
-            self.screen.width // 2,
-            16 * self.screen.lane_height + self.screen.lane_padding,
             lambda sound_name: event_dispatcher.dispatch('play_sound', sound_name)
         )
 
@@ -54,12 +50,15 @@ class Game:
 
         # set up array to manage state of home goal locations
         self.homes = [
-            {'occupied': False, 'xl': 50, 'xr': 100},
-            {'occupied': False, 'xl': 200, 'xr': 250},
-            {'occupied': False, 'xl': 350, 'xr': 400},
-            {'occupied': False, 'xl': 500, 'xr': 550},
-            {'occupied': False, 'xl': 650, 'xr': 700},
+            {'occupied': False},
+            {'occupied': False},
+            {'occupied': False},
+            {'occupied': False},
+            {'occupied': False},
         ]
+        # initialize state machine
+        self.state_machine = StateMachine()
+        self.state_machine.change_state(StatePlay(self))
 
     def update(self, dt):
         events = pygame.event.get()

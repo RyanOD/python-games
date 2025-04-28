@@ -2,6 +2,7 @@ import pygame
 from state_game import StateGame
 from state_clear import StateClear
 from events import event_dispatcher
+from debug import draw_grid
 
 class StatePlay(StateGame):
     def __init__(self, game):
@@ -33,7 +34,7 @@ class StatePlay(StateGame):
         self.frog.move(dt)
 
         # update frog life status based on screen boundary collision
-        if self.frog.alive and not self.screen.on_screen(self.frog):
+        if self.frog.alive and not self.frog.on_screen(self.screen):
             self.frog.die()
 
         # check to see if frog makes it to home goal location
@@ -65,14 +66,14 @@ class StatePlay(StateGame):
             self.screen.surface.blit(self.frog.menu_image, (f * 60 + 10, 850 + self.screen.lane_padding))
 
         # draw happy frog image in every home position that player has successfully reached
-        for home in self.game.homes:
+        for col, home in enumerate(self.game.homes):
             if home['occupied']:
-                self.screen.surface.blit(self.frog.image_home, (((home['xl'] + home['xr']) // 2 - self.frog.image_home.get_width() // 2), 104))
+                self.screen.surface.blit(self.frog.image_home, ((((150 * col + 50) + (150 * col + 100)) // 2 - self.frog.image_home.get_width() // 2), 104))
 
         # draw player display
         self.screen.score(self.game.scoring.score)
 
-
+        draw_grid(self.screen)
 
     # check if frog y position is within home (goal) row
     def frog_in_home_row(self):
@@ -80,8 +81,8 @@ class StatePlay(StateGame):
 
     # check if frog rect is in the goal home row and if so, update home occupied state to True and reset level
     def home_check(self):
-        for home in self.game.homes:
-            if self.frog.rect.centerx in range(home['xl'], home['xr']) and self.frog_in_home_row():
+        for col, home in enumerate(self.game.homes):
+            if self.frog.rect.centerx in range(col * 150 + 50, col * 150 + 100) and self.frog_in_home_row():
                 home['occupied'] = True
                 self.reset_level()
 

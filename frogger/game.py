@@ -58,7 +58,7 @@ class Game:
         ]
         # initialize state machine
         self.state_machine = StateMachine()
-        self.state_machine.change_state(StatePlay(self))
+        self.state_machine.change_state(StateTitle(self))
 
     def update(self, dt):
         events = pygame.event.get()

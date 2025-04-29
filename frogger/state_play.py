@@ -24,9 +24,6 @@ class StatePlay(StateGame):
         # delegate frog passive management to Frog class
         self.game.level.update(dt)
 
-        # delegate scoring display management to Scoring class
-        self.game.scoring.update()
-
         # delegate frog passive management to Frog class
         self.frog.update()
 
@@ -37,6 +34,9 @@ class StatePlay(StateGame):
         if self.frog.alive and not self.frog.on_screen(self.screen):
             self.frog.die()
 
+        # delegate scoring display management to Scoring class
+        self.game.scoring.update()
+        
         # check to see if frog makes it to home goal location
         self.home_check()
 
@@ -79,10 +79,11 @@ class StatePlay(StateGame):
     def frog_in_home_row(self):
         return self.frog.rect.top < 150
 
-    # check if frog rect is in the goal home row and if so, update home occupied state to True and reset level
+    # check if frog rect is in the goal home row and if so, update home occupied state to True, play sound effect and reset level
     def home_check(self):
         for col, home in enumerate(self.game.homes):
             if self.frog.rect.centerx in range(col * 150 + 50, col * 150 + 100) and self.frog_in_home_row():
+                event_dispatcher.dispatch('play_sound', 'landing_safe')
                 home['occupied'] = True
                 self.reset_level()
 

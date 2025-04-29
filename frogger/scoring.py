@@ -1,4 +1,5 @@
 import pygame
+from config import FROG_START_Y
 
 class Scoring:
     def __init__(self, frog):

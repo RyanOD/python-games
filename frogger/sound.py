@@ -11,7 +11,8 @@ class SoundHandler:
                 'die': {'mixer': pygame.mixer.Sound('assets/die.mp3'), 'repeat': 0},
                 'title_theme': {'mixer': pygame.mixer.Sound('assets/title_theme.mp3'), 'repeat': 0},
                 'main_theme': {'mixer': pygame.mixer.Sound('assets/main_theme.mp3'), 'repeat': -1},
-                'insert_coin': {'mixer': pygame.mixer.Sound('assets/insert_coin.mp3'), 'repeat': 0}
+                'insert_coin': {'mixer': pygame.mixer.Sound('assets/insert_coin.mp3'), 'repeat': 0},
+                'landing_safe': {'mixer': pygame.mixer.Sound('assets/landing_safe.mp3'), 'repeat': 0},
             }
 
         # set sound volumes

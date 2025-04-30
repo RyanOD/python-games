@@ -23,6 +23,12 @@
         "width": 40,
         "image": "assets/frog_home_1.png"
     },
+    "FL": {
+        "type": "frog",
+        "height": 40,
+        "width": 40,
+        "image": "assets/frog_lives.png"
+    },
     "FD1": {
         "type": "frog",
         "height": 40,

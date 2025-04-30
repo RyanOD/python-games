@@ -4,7 +4,9 @@ from level import Level
 from input import InputHandler
 from screen import Screen
 from sound import SoundHandler
+from countdown import Countdown
 from collision import CollisionHandler
+from frog_manager import *
 from scoring import Scoring
 from utils import *
 from events import event_dispatcher
@@ -19,12 +21,13 @@ class Game:
         pygame.init()
 
         # initialize Pygame Screen class and create surface
-        self.screen = Screen()
+        self.screen = Screen(self)
         self.surface = self.screen.surface
 
         # delegate sound management to SoundHandler class
         self.sound_handler = SoundHandler()
 
+        self.countdown = Countdown()
 
         # load image data and game sprite images
         self.image_data = load_data_file('object_data.json')
@@ -46,7 +49,7 @@ class Game:
         self.collision_handler = CollisionHandler()
 
         # delegate score management to Scoring class
-        self.scoring = Scoring(self.frog)
+        self.scoring = Scoring(self)
 
         # set up array to manage state of home goal locations
         self.homes = [
@@ -80,10 +83,11 @@ class Game:
     def frog_in_home_row(self):
         return self.frog.rect.top < 150
 
-    # check if frog rect is in the goal home row and if so, update home occupied state to True and reset level
-    def home_check(self):
-        for home in self.homes:
-            if self.frog.rect.centerx in range(home['xl'], home['xr']) and self.frog_in_home_row():
+    # check if frog rect is in the goal home row and if so, update home occupied state to True, play sound effect and reset level
+    def frog_reaches_home(self):
+        for col, home in enumerate(self.homes):
+            if self.frog.rect.centerx in range(col * 150 + 50, col * 150 + 100) and frog_in_home_row(self):
+                event_dispatcher.dispatch('play_sound', 'landing_safe')
                 home['occupied'] = True
                 self.reset_level()
 

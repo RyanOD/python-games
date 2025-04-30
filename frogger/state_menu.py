@@ -1,17 +1,21 @@
 import pygame
 from state_play import StatePlay
 from state_game import StateGame
-from utils import get_bg_image
+from utils import get_bg_image, get_image
 from events import event_dispatcher
+from config import SCREEN_WIDTH
 
 class StateMenu(StateGame):
     def __init__(self, game):
-        self.game = game
-        self.frog = game.frog
-        self.screen = game.screen
+        super().__init__(game)
         self.bg_image = get_bg_image("assets/menu_bg.png")
         self.play_buttons_beg = pygame.Rect(60, 540, 218, 70)
         self.play_buttons_adv = pygame.Rect(475, 540, 218, 70)
+        self.rc_link = pygame.Rect(255, 710, 245, 15)
+        self.gh_link = pygame.Rect(260, 745, 234, 15)
+        self.coin_drop_timer = 0
+        self.coin_dropped = False
+        self.frog_img_1 = pygame.image.load('assets/frog_home_1.png')
 
     def enter(self):
         pass
@@ -20,18 +24,27 @@ class StateMenu(StateGame):
         for event in events: #look at all events
             if event.type == pygame.MOUSEMOTION:
                 self.handle_input()
+        
+        if self.coin_dropped:
+            if 0 < self.coin_drop_timer < 200:
+                self.coin_drop_timer += 1
+            else:
+                self.game.state_machine.change_state(StatePlay(self.game))
+
+    def draw(self):
+        self.game.screen.draw(self.bg_image)
+        #self.game.screen.draw(self.frog_img_1, (SCREEN_WIDTH // 2 - 30, 545))
 
     def handle_input(self):
         pos = pygame.mouse.get_pos()
         if pygame.mouse.get_pressed()[0] == 1:
-            if self.play_buttons_beg.collidepoint(pos):
-                self.game.state_machine.change_state(StatePlay(self.game))
+            if self.play_buttons_beg.collidepoint(pos) and self.coin_dropped == False:
+                event_dispatcher.dispatch('play_sound', 'insert_coin')
+                self.frog_img_1 = pygame.image.load('assets/frog_home_2.png')
+                self.coin_dropped = True
+                self.coin_drop_timer += 1
             elif self.play_buttons_adv.collidepoint(pos):
                 print("clicked - advanced")
-
-    def draw(self):
-        self.screen.surface.blit(self.bg_image, (0, 0))
-        pygame.display.flip()
 
     def exit(self):
         pass

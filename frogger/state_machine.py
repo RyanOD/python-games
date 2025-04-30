@@ -6,6 +6,7 @@ class StateMachine():
         if self.current_state:
             self.current_state.exit()
         self.current_state = new_state
+        self.current_state.enter()
 
     def update(self, dt, events):
         if self.current_state:

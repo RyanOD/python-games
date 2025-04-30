@@ -1,8 +1,11 @@
 class StateGame:
+    def __init__(self, game):
+        self.game = game
+        
     def enter(self):
         pass
 
-    def update(self):
+    def update(self, dt):
         pass
 
     def handle_input(self):

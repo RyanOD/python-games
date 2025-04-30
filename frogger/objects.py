@@ -1,6 +1,7 @@
 import pygame
 from observer import Observable
 from time_manager import TimeManager
+from config import SCREEN_WIDTH, SCREEN_HEIGHT
 
 class Object(Observable):
     def __init__(self, type, images, x, y, movement):
@@ -11,13 +12,16 @@ class Object(Observable):
         self.rect.x = x
         self.rect.y = y
         self.movement = movement
-    
-    # move object
+
     def update(self, dt):
         self.rect.x += round(self.movement * dt, 2)
+        self.position_handler()
     
-    def reset(self, screen):
-        if self.rect.left > screen.width:
+    def draw(self, object, screen):
+        screen.surface.blit(object.image, (object.rect.x, object.rect.y))
+
+    def position_handler(self):
+        if self.rect.left > SCREEN_WIDTH:
             self.rect.right = 0
         elif self.rect.right < 0:
-            self.rect.left = screen.width
+            self.rect.left = SCREEN_WIDTH

@@ -20,11 +20,7 @@ class StateMenu(StateGame):
     def enter(self):
         pass
 
-    def update(self, dt, events):
-        for event in events: #look at all events
-            if event.type == pygame.MOUSEMOTION:
-                self.handle_input()
-        
+    def update(self, dt = None, events = None):
         if self.coin_dropped:
             if 0 < self.coin_drop_timer < 200:
                 self.coin_drop_timer += 1
@@ -33,18 +29,20 @@ class StateMenu(StateGame):
 
     def draw(self):
         self.game.screen.draw(self.bg_image)
-        #self.game.screen.draw(self.frog_img_1, (SCREEN_WIDTH // 2 - 30, 545))
+        self.game.screen.surface.blit(self.frog_img_1, (SCREEN_WIDTH // 2 - 30, 545))
 
-    def handle_input(self):
-        pos = pygame.mouse.get_pos()
-        if pygame.mouse.get_pressed()[0] == 1:
-            if self.play_buttons_beg.collidepoint(pos) and self.coin_dropped == False:
-                event_dispatcher.dispatch('play_sound', 'insert_coin')
-                self.frog_img_1 = pygame.image.load('assets/frog_home_2.png')
-                self.coin_dropped = True
-                self.coin_drop_timer += 1
-            elif self.play_buttons_adv.collidepoint(pos):
-                print("clicked - advanced")
+    def handle_input(self, dt, events):
+        for event in events: #look at all events
+            if event.type == pygame.QUIT:
+                self.frog.lives = 0
+            elif pygame.mouse.get_pressed()[0] == 1:
+                if self.play_buttons_beg.collidepoint(pygame.mouse.get_pos()) and self.coin_dropped == False:
+                    event_dispatcher.dispatch('play_sound', 'insert_coin')
+                    self.frog_img_1 = pygame.image.load('assets/frog_home_2.png')
+                    self.coin_dropped = True
+                    self.coin_drop_timer += 1
+                elif self.play_buttons_adv.collidepoint(pygame.mouse.get_pos()) and self.coin_dropped == False:
+                    print("clicked - advanced")
 
     def exit(self):
         pass

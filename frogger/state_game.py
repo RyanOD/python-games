@@ -5,10 +5,10 @@ class StateGame:
     def enter(self):
         pass
 
-    def update(self, dt):
+    def update(self, dt = None, events = None):
         pass
 
-    def handle_input(self):
+    def handle_input(self, dt, events):
         pass
 
     def draw(self):

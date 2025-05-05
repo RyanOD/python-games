@@ -43,12 +43,6 @@ class Frog:
     def update(self):
         if not frog_in_water(self):
             self.carried_speed = 0
-        
-        # when frog dies, begin death_timer countdown and rotate frog dying images based on time then reset level
-        if self.rect.left < 0:
-            self.rect.left = 0
-        elif self.rect.right > SCREEN_WIDTH:
-            self.rect.right = SCREEN_WIDTH
     
     def draw(self, screen):
         screen.surface.blit(self.image, (self.rect.x, self.rect.y))

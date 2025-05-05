@@ -1,3 +1,5 @@
+# Responsibility: Should only run the loop and delegate to Game.update() and Game.draw().
+
 import pygame
 from game import Game
 from time_manager import TimeManager
@@ -10,12 +12,14 @@ def main():
     # create game loop and run as long as player has frog lives remaining
     while game.frog.lives > 0:
         TimeManager.update(clock)
+        
         dt = TimeManager.get_delta_time()
-        # update game
-        game.update(dt)
 
         # draw game assets
-        game.handle_input()
+        game.handle_input(dt)
+
+        # update game
+        game.update(dt)
 
         # draw game assets
         game.draw()

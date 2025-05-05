@@ -1,3 +1,5 @@
+# Responsibility: Manage state transitions and shared systems.
+
 import pygame
 from frog import Frog
 from level import Level
@@ -63,40 +65,17 @@ class Game:
         self.state_machine = StateMachine()
         self.state_machine.change_state(StateTitle(self))
 
-    def update(self, dt):
-        events = pygame.event.get()
-        for event in events:
-            if event.type == pygame.QUIT:
-                    self.frog.lives = 0
-            elif self.frog.alive:
-                    self.input_handler.handle_event(event, dt)
-        
-        self.state_machine.update(dt, events)
+    def update(self, dt):        
+        self.state_machine.update(dt)
 
-    def handle_input(self):
-        self.state_machine.handle_input()
+    def handle_input(self, dt):
+        events = pygame.event.get()
+        self.state_machine.handle_input(dt, events)
 
     def draw(self):
         self.state_machine.draw()
-    
-    # check if frog y position is within home (goal) row
-    def frog_in_home_row(self):
-        return self.frog.rect.top < 150
-
-    # check if frog rect is in the goal home row and if so, update home occupied state to True, play sound effect and reset level
-    def frog_reaches_home(self):
-        for col, home in enumerate(self.homes):
-            if self.frog.rect.centerx in range(col * 150 + 50, col * 150 + 100) and frog_in_home_row(self):
-                event_dispatcher.dispatch('play_sound', 'landing_safe')
-                home['occupied'] = True
-                self.reset_level()
 
     # reset visited state of all rows to False then reset frog
     def reset_level(self):
         for row in self.scoring.rows:
             row['visited'] = False
-        self.frog.reset(self.screen.width // 2, 16 * self.screen.lane_height + self.screen.lane_padding)
-    
-    # end game if all frog lives lost
-    def game_over(self):
-        return self.frog.lives == 0

@@ -4,7 +4,7 @@ from frog_manager import *
 
 class CollisionHandler:
     def __init__(self):
-        self.unsafe_objects = ['C1', 'C2', 'C3', 'D', 'TR', 'TL', 'GBL', 'GTL', 'GBR', 'GTR', 'GBL', 'GMW', 'GMB']
+        self.unsafe_objects = ['C1', 'C2', 'C3', 'D', 'TR', 'TL', 'GBL', 'GTL', 'GBR', 'GTR', 'GBL', 'GMW', 'GMB', 'GMT']
         self.safe_objects = ['T', 'LL', 'LM', 'LR']
 
     def safe_collision(self, frog, objects):

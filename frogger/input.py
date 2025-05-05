@@ -6,10 +6,10 @@ from commands import MoveUpCommand, MoveRightCommand, MoveDownCommand, MoveLeftC
 class InputHandler:
     def __init__(self, frog, dt=0):
         self.commands = {
-            pygame.K_UP: MoveUpCommand(frog, dt),
-            pygame.K_RIGHT: MoveRightCommand(frog, dt),
-            pygame.K_DOWN: MoveDownCommand(frog, dt),
-            pygame.K_LEFT: MoveLeftCommand(frog, dt)
+            pygame.K_UP: MoveUpCommand(frog),
+            pygame.K_RIGHT: MoveRightCommand(frog),
+            pygame.K_DOWN: MoveDownCommand(frog),
+            pygame.K_LEFT: MoveLeftCommand(frog)
         }
 
     def handle_event(self, event, dt):

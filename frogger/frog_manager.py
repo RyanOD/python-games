@@ -2,8 +2,13 @@ from config import *
 from config import FROG_START_X, FROG_START_Y
 
 # check if frog y position is within home (goal) row
-def frog_in_home_row(game):
-    return game.frog.rect.top < 150
+def frog_in_home_row(frog):
+    return frog.rect.top < 150
+
+def frog_in_home(frog):
+    if (frog.rect.left > 50 and frog.rect.right < 100) or (frog.rect.left > 200 and frog.rect.right < 250) or (frog.rect.left > 350 and frog.rect.right < 400) or (frog.rect.left > 500 and frog.rect.right < 550) or (frog.rect.left > 650 and frog.rect.right < 700):
+        return True
+    return False
 
 # check if frog is in water zone
 def frog_in_water(frog):
@@ -14,10 +19,16 @@ def frog_on_object(frog, object):
     overlap = max(0, min(frog.rect.right, object.rect.right) - max(frog.rect.left, object.rect.left))
     return overlap >= frog.rect.width / 2
 
-def frog_on_screen(frog, screen):
+def frog_hits_boundary(frog, screen):
     if frog.rect.bottom > screen.height - 50:
         frog.rect.bottom = screen.height - 50
-    return 0 < frog.rect.centerx < screen.width
+    else:
+        if frog.rect.left < 0:
+            frog.rect.left = 0
+            return True
+        elif frog.rect.right > SCREEN_WIDTH:
+            frog.rect.right = SCREEN_WIDTH
+            return True
 
 # the Frog class owns the frog behavior if the frog dies, but not the triggers that kill the frog
 def frog_dies(frog):

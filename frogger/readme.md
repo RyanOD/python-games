@@ -29,8 +29,6 @@ The following Python programming concepts are exposed in this Frogger game desig
 **Disclaimer:** In no way should this game design be considered optimal and/or error free. Use as an educational tool at your discretion.
 
 ## Assets
-All visual game assets were recreated in Photoshop based on [original Frogger game sprites](https://www.computerarcheology.com/Arcade/Frogger/GFX.html).
-
-All sound effects were sourced from [Frogger archive on Computer Archeology](https://computerarcheology.com/Arcade/Frogger/).
+All sound effects and visual game assets sourced from or based on [original Frogger archive on Computer Archeology](https://computerarcheology.com/Arcade/Frogger/) (all sprites were recreated in Photoshop).
 
 Title and Menu screen font is [Retro Gaming](https://www.dafont.com/retro-gaming.font).

@@ -5,8 +5,8 @@ from config import FROG_START_X, FROG_START_Y
 def frog_in_home_row(frog):
     return frog.rect.top < 150
 
-def frog_in_home(frog):
-    if (frog.rect.left > 50 and frog.rect.right < 100) or (frog.rect.left > 200 and frog.rect.right < 250) or (frog.rect.left > 350 and frog.rect.right < 400) or (frog.rect.left > 500 and frog.rect.right < 550) or (frog.rect.left > 650 and frog.rect.right < 700):
+def frog_in_home_col(frog):
+    if (frog.rect.left >= 43 and frog.rect.right <= 107) or (frog.rect.left >= 193 and frog.rect.right <= 257) or (frog.rect.left >= 343 and frog.rect.right <= 407) or (frog.rect.left >= 493 and frog.rect.right <= 557) or (frog.rect.left >= 643 and frog.rect.right <= 707):
         return True
     return False
 

@@ -40,16 +40,17 @@ class StatePlay(StateGame):
         
         # check to see if frog makes it to home goal location
         home_col = self.game.frog.rect.centerx // 150
-        if frog_in_home_row(self.game.frog):
-            if frog_in_home(self.game.frog) and not self.game.homes[home_col]['occupied']:
+
+        if frog_in_home_row(self.game.frog) and self.game.frog.alive:
+            if not self.game.homes[home_col]['occupied']:
                 event_dispatcher.dispatch('play_sound', 'landing_safe')
                 self.game.homes[home_col]['occupied'] = True
                 self.game.scoring.reset()
                 self.game.reset_level()
                 frog_reset(self.game.frog)
             else:
-                self.game.frog.rect.y = 156
-                
+                self.game.frog.rect.top = 150 # prevent Frog from moving into occupied home slot
+                frog_dies(self.game.frog)
 
         if not self.game.frog.alive and frog_dying_animation(self.game.frog):
             self.game.scoring.reset()

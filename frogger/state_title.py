@@ -12,12 +12,12 @@ class StateTitle(StateGame):
         event_dispatcher.dispatch('play_sound', 'title_theme')
 
     def enter(self):
-        print("Entering title/menu state")
+        pass
 
     def update(self, dt = None, events = None):
         pass
 
-    def handle_input(self, dt, events):
+    def handle_input(self, dt = None, events = None):
         for event in events:
             if event.type == pygame.QUIT:
                     self.frog.lives = 0

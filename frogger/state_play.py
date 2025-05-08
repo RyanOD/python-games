@@ -1,9 +1,9 @@
 import pygame
 from state_game import StateGame
 from state_clear import StateClear
+from state_game_over import StateGameOver
 from events import event_dispatcher
 from frog_manager import *
-from utils import get_bg_image
 from debug import draw_grid
 
 class StatePlay(StateGame):
@@ -45,7 +45,7 @@ class StatePlay(StateGame):
             if not self.game.homes[home_col]['occupied']:
                 event_dispatcher.dispatch('play_sound', 'landing_safe')
                 self.game.homes[home_col]['occupied'] = True
-                self.game.scoring.reset()
+                self.game.scoring.reset_rows()
                 self.game.reset_level()
                 frog_reset(self.game.frog)
             else:
@@ -53,15 +53,18 @@ class StatePlay(StateGame):
                 frog_dies(self.game.frog)
 
         if not self.game.frog.alive and frog_dying_animation(self.game.frog):
-            self.game.scoring.reset()
+            self.game.scoring.reset_rows()
             frog_reset(self.game.frog)
 
         if all(home['occupied'] for home in self.game.homes):
-            self.game.state_machine.change_state(StateClear(self.game, dt))
+            self.game.state_machine.change_state(StateClear(self.game))
+
+        if self.game.frog.lives == 0:
+            self.game.state_machine.change_state(StateGameOver(self.game))
 
         self.game.countdown.update(dt)
 
-    def handle_input(self, dt, events):
+    def handle_input(self, dt = None, events = None):
         for event in events:
             if event.type == pygame.QUIT:
                     self.game.frog.lives = 0
@@ -77,7 +80,7 @@ class StatePlay(StateGame):
             if home['occupied']:
                 self.game.screen.surface.blit(self.game.frog.image_home, (col * 150 + 75 - 20, 104))
 
-        draw_grid(self.game.screen)
+        #draw_grid(self.game.screen)
 
     def exit(self):
         event_dispatcher.dispatch('stop_sound', 'main_theme')

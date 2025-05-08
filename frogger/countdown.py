@@ -3,15 +3,19 @@ from config import SCREEN_WIDTH, SCREEN_HEIGHT
 
 class Countdown:
     def __init__(self):
-        self.countdown_width = 360
-        self.countdown_tracker = 0
+        self.total = 360
+        self.width = self.total
+        self.tracker = 0
 
     def update(self, dt):
-        self.countdown_tracker += dt 
-        if self.countdown_tracker > 1:
-            self.countdown_width -= 6
-            self.countdown_tracker = 0
+        self.tracker += dt 
+        if self.tracker > 1:
+            self.width -= 0.1 // dt
+            self.tracker = 0
 
     def draw(self, screen):
         # draw countdown bar on screen
-        pygame.draw.rect(screen.surface, (63, 232, 71), (SCREEN_WIDTH - self.countdown_width - 100, SCREEN_HEIGHT - 40, self.countdown_width, 30))
+        pygame.draw.rect(screen.surface, (63, 232, 71), (SCREEN_WIDTH - self.width - 100, SCREEN_HEIGHT - 40, self.width, 30))
+    
+    def reset(self):
+        self.total = 360

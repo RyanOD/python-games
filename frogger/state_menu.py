@@ -13,12 +13,11 @@ class StateMenu(StateGame):
         self.play_buttons_adv = pygame.Rect(475, 540, 218, 70)
         self.rc_link = pygame.Rect(255, 710, 245, 15)
         self.gh_link = pygame.Rect(260, 745, 234, 15)
-        self.coin_drop_timer = 0
-        self.coin_dropped = False
         self.frog_img_1 = pygame.image.load('assets/frog_home_1.png')
 
     def enter(self):
-        pass
+        self.coin_dropped = False
+        self.coin_drop_timer = 0
 
     def update(self, dt = None, events = None):
         if self.coin_dropped:
@@ -28,10 +27,11 @@ class StateMenu(StateGame):
                 self.game.state_machine.change_state(StatePlay(self.game))
 
     def draw(self):
+        self.game.screen.surface.fill((255, 255, 255))
         self.game.screen.draw(self.bg_image)
         self.game.screen.surface.blit(self.frog_img_1, (SCREEN_WIDTH // 2 - 30, 545))
 
-    def handle_input(self, dt, events):
+    def handle_input(self, dt = None, events = None):
         for event in events: #look at all events
             if event.type == pygame.QUIT:
                 self.frog.lives = 0

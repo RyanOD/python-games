@@ -63,3 +63,10 @@ class Frog:
                 self.rect.x += self.speed * self.orientations[direction]["dx"]
                 self.rect.y += self.speed * self.orientations[direction]["dy"]
                 self.play_sound('hop')
+    
+    def reset(self):
+        self.alive = True
+        self.lives = 3
+        self.image = self.image_original
+        self.rect.x = FROG_START_X - self.width * 0.5
+        self.rect.y = FROG_START_Y

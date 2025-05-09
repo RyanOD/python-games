@@ -1,5 +1,4 @@
 import pygame
-from state_menu import StateMenu
 from state_game import StateGame
 from utils import get_bg_image
 from events import event_dispatcher
@@ -27,7 +26,7 @@ class StateTitle(StateGame):
             self.game.screen.draw(self.bg_image)
             self.timer -= 1
         else:
-            self.game.state_machine.change_state(StateMenu(self.game))
+            self.game.state_machine.change_state("menu")
 
     def exit(self):
         pass

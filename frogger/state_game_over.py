@@ -25,7 +25,7 @@ class StateGameOver:
                 if self.play_button.collidepoint(pygame.mouse.get_pos()):
                     from state_menu import StateMenu
                     self.game.reset()
-                    self.game.state_machine.change_state(StateMenu(self.game))
+                    self.game.state_machine.change_state("menu")
 
     def draw(self):
         # clear the screen

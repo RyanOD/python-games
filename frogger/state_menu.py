@@ -1,5 +1,4 @@
 import pygame
-from state_play import StatePlay
 from state_game import StateGame
 from utils import get_bg_image, get_image
 from events import event_dispatcher
@@ -24,7 +23,7 @@ class StateMenu(StateGame):
             if 0 < self.coin_drop_timer < 200:
                 self.coin_drop_timer += 1
             else:
-                self.game.state_machine.change_state(StatePlay(self.game))
+                self.game.state_machine.change_state("play")
 
     def draw(self):
         self.game.screen.surface.fill((255, 255, 255))

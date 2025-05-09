@@ -8,7 +8,7 @@ class StateGame:
     def update(self, dt = None, events = None):
         pass
 
-    def handle_input(self, dt, events):
+    def handle_input(self, dt = None, events = None):
         pass
 
     def draw(self):

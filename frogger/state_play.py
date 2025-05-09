@@ -1,7 +1,5 @@
 import pygame
 from state_game import StateGame
-from state_clear import StateClear
-from state_game_over import StateGameOver
 from events import event_dispatcher
 from frog_manager import *
 from debug import draw_grid
@@ -57,10 +55,10 @@ class StatePlay(StateGame):
             frog_reset(self.game.frog)
 
         if all(home['occupied'] for home in self.game.homes):
-            self.game.state_machine.change_state(StateClear(self.game))
+            self.game.state_machine.change_state("clear")
 
         if self.game.frog.lives == 0:
-            self.game.state_machine.change_state(StateGameOver(self.game))
+            self.game.state_machine.change_state("game_over")
 
         self.game.countdown.update(dt)
 

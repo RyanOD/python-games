@@ -8,7 +8,8 @@ class Screen:
         self.height = SCREEN_HEIGHT
         self.surface = pygame.display.set_mode((self.width, self.height))
 
-        pygame.display.set_caption("Frogger Clone by Retro Clone")
+        # set screen window caption
+        pygame.display.set_caption("Frogger Clone by Retro Clones")
 
     def draw(self, background=None, objects=None, frog=None, scoring=None, countdown=None):
         # clear screen
@@ -33,4 +34,4 @@ class Screen:
 
         # render scoring
         if scoring:
-            self.game.scoring.draw(self)
+            scoring.draw(self)

@@ -6,9 +6,6 @@ class Screen:
         self.game = game
         self.width = SCREEN_WIDTH
         self.height = SCREEN_HEIGHT
-        self.lane_padding = 6
-        self.lane_height = 50
-        self.lane_width = 50
         self.surface = pygame.display.set_mode((self.width, self.height))
 
         pygame.display.set_caption("Frogger Clone by Retro Clone")

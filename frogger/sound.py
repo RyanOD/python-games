@@ -18,10 +18,6 @@ class SoundHandler:
                 'game_over': {'mixer': pygame.mixer.Sound('assets/game_over.mp3'), 'repeat': 0},
             }
 
-        # set sound volumes
-        for key, value in self.sounds.items():
-            value['mixer'].set_volume(0.5)
-
         # pass trigger word and method for playing sound to event_dispatcher which allows other modules to trigger sounds
         event_dispatcher.register("play_sound", self.play_sound)
         event_dispatcher.register("stop_sound", self.stop_sound)

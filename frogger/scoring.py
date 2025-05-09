@@ -24,18 +24,12 @@ class Scoring:
             {"visited": False, "value": 0},
             {"visited": False, "value": 0},
         ]
-        self.timer_width = 360
-        self.time_tracker = 0
     
     def update(self, dt):
         row = self.rows[self.game.frog.rect.y // 50 - 1]
         if not row["visited"]:
             self.score += row["value"]
             row["visited"] = True
-        self.time_tracker += dt 
-        if self.time_tracker > 1:
-            self.timer_width -= 6
-            self.time_tracker = 0
 
     def draw(self, screen):
         font = pygame.font.Font("assets/upheavtt.ttf", 34)

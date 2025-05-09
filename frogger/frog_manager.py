@@ -33,7 +33,10 @@ def frog_hits_boundary(frog, screen):
 # the Frog class owns the frog behavior if the frog dies, but not the triggers that kill the frog
 def frog_dies(frog):
     frog.carried_speed = 0
-    frog.play_sound('die')
+    if frog_in_water(frog):
+        frog.play_sound('drown')
+    else:
+        frog.play_sound('die')
     frog.alive = False
     frog.lives -= 1
 

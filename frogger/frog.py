@@ -47,7 +47,7 @@ class Frog:
     def draw(self, screen):
         screen.surface.blit(self.image, (self.rect.x, self.rect.y))
         for f in range(0, self.lives):
-            screen.surface.blit(self.image_lives, (f * 30 + 5, 850 + screen.lane_padding))
+            screen.surface.blit(self.image_lives, (f * 30 + 5, 856))
 
     # if frog is alive, first manage carried movement then, if a direction has been passed, call handle_movement() method
     def move(self, dt, direction='none'):

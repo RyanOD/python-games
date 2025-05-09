@@ -5,20 +5,22 @@ from config import FROG_START_X, FROG_START_Y
 def frog_in_home_row(frog):
     return frog.rect.top < 150
 
+# check x position of frog as compared to that of frog homes and return Boolean
 def frog_in_home_col(frog):
     if (frog.rect.left >= 43 and frog.rect.right <= 107) or (frog.rect.left >= 193 and frog.rect.right <= 257) or (frog.rect.left >= 343 and frog.rect.right <= 407) or (frog.rect.left >= 493 and frog.rect.right <= 557) or (frog.rect.left >= 643 and frog.rect.right <= 707):
         return True
     return False
 
-# check if frog is in water zone
+# check if frog is in water zone and return Boolean
 def frog_in_water(frog):
     return WATER_TOP < frog.rect.top < WATER_BOTTOM
 
-# check if frog is in on an object (log or turtle)
+# check if frog is in on an object (log or turtle) and return True / False based on overlap
 def frog_on_object(frog, object):
     overlap = max(0, min(frog.rect.right, object.rect.right) - max(frog.rect.left, object.rect.left))
     return overlap >= frog.rect.width / 2
 
+# should frog go off screen left or right, reset position to on screen and return True
 def frog_hits_boundary(frog, screen):
     if frog.rect.bottom > screen.height - 50:
         frog.rect.bottom = screen.height - 50
@@ -40,7 +42,7 @@ def frog_dies(frog):
     frog.alive = False
     frog.lives -= 1
 
-# when frog dies, begin death_timer countdown and cylce through frog dying images based on time
+# when frog dies, begin death_timer countdown and cylce through frog dying images based on time and return Boolean
 def frog_dying_animation(frog):
     if frog.death_timer > 0:
         frog.death_timer -= 1
@@ -48,7 +50,7 @@ def frog_dying_animation(frog):
         return False
     return True
 
-# reset the frog based on specified x, y screen positions
+# reset the frog to game start position and image. Reset death timer.
 def frog_reset(frog):
     frog.image = frog.image_original
     frog.rect.x = FROG_START_X - frog.width * 0.5

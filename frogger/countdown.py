@@ -14,7 +14,6 @@ class Countdown:
             self.tracker = 0
 
     def draw(self, screen):
-        # draw countdown bar on screen
         pygame.draw.rect(screen.surface, (63, 232, 71), (SCREEN_WIDTH - self.width - 100, SCREEN_HEIGHT - 40, self.width, 30))
     
     def reset(self):

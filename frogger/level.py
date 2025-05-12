@@ -7,9 +7,8 @@ class Level:
         self.level = level
         self.timer = 30
         self.level_map = load_data_file('level_data.json')
-
         self.images = images
-        self.objects = load_objects(self.level_map, self.images, Object)
+        self.objects = load_objects(self.level_map, self.images, self.level, Object)
     
     def update(self, dt):
         for object in self.objects:

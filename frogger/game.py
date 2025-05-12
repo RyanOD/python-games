@@ -22,7 +22,7 @@ from state_game_over import StateGameOver
 from debug import draw_grid
 
 class Game:
-    def __init__(self):
+    def __init__(self, level):
         # initialize Pygame
         pygame.init()
 
@@ -42,7 +42,7 @@ class Game:
         self.images = load_images(self.image_data)
 
         # pass images to level builder to create level objects (vehicles, logs, turtles)
-        self.level = Level(self, self.images, 1)
+        self.level = Level(self, self.images, level)
 
         # create instance of Frog class
         self.frog = Frog(

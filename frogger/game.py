@@ -13,12 +13,6 @@ from scoring import Scoring
 from utils import *
 from events import event_dispatcher
 from state_machine import StateMachine
-from state_title import StateTitle
-from state_menu import StateMenu
-from state_play import StatePlay
-from state_play import StatePlay
-from state_clear import StateClear
-from state_game_over import StateGameOver
 from debug import draw_grid
 
 class Game:
@@ -69,12 +63,6 @@ class Game:
         ]
         # initialize state machine
         self.state_machine = StateMachine(self)
-        self.state_machine.register("title", StateTitle)
-        self.state_machine.register("play", StatePlay)
-        self.state_machine.register("menu", StateMenu)
-        self.state_machine.register("menu", StateMenu)
-        self.state_machine.register("clear", StateClear)
-        self.state_machine.register("game_over", StateGameOver)
 
         self.state_machine.change_state("title")
 
@@ -94,7 +82,12 @@ class Game:
         self.countdown.reset()
         for home in self.homes:
             home['occupied'] = False
-        
+    
+    def load_level(self, level):
+        print('loading level: ', level)
+        self.level.load_level(level)
+        self.reset()
+
     # reset visited state of all rows to False then reset frog
     def reset_level(self):
         for row in self.scoring.rows:

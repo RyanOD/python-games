@@ -41,6 +41,24 @@
         "width": 40,
         "image": "assets/frog_dead_4.png"
     },
+    "FDR1": {
+        "type": "frog",
+        "height": 40,
+        "width": 40,
+        "image": "assets/frog_drown_1.png"
+    },
+    "FDR2": {
+        "type": "frog",
+        "height": 40,
+        "width": 40,
+        "image": "assets/frog_drown_2.png"
+    },
+    "FDR3": {
+        "type": "frog",
+        "height": 40,
+        "width": 40,
+        "image": "assets/frog_drown_3.png"
+    },
     "T": {
         "type": "turtle",
         "height": 50,

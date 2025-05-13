@@ -8,15 +8,19 @@ class StateClear(StateGame):
         self.bg_image = pygame.image.load("assets/bg.png").convert()
 
     def enter(self):
-        self.timer = 400
+        self.timer = 600
         event_dispatcher.dispatch('play_sound', 'level_clear')
 
     def update(self, dt = None, events = None):
         if self.timer > 0:
             self.game.level.update(dt)
-            self.timer -= 1
+            self.timer -= dt * 100
         else:
-            self.game.frog.lives = -dt * 100
+            self.game.level.level += 1
+            self.game.reset()
+            self.game.level.objects.clear()
+            self.game.level.load_level(self.game.level.level)
+            self.game.state_machine.change_state("play")
 
     def handle_input(self, dt = None, events = None):
         pass
@@ -31,4 +35,4 @@ class StateClear(StateGame):
                 self.game.screen.surface.blit(self.game.frog.image_home, (col * 150 + 75 - 20, 104))
 
     def exit(self):
-        self.time = 300
+        event_dispatcher.dispatch('stop_sound', 'level_clear')

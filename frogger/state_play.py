@@ -36,6 +36,10 @@ class StatePlay(StateGame):
         if frog_hits_boundary(self.game.frog, self.game.screen):
             frog_dies(self.game.frog)
         
+        if self.game.countdown.is_expired():
+            frog_dies(self.game.frog)
+            self.game.countdown.reset()
+
         # check to see if frog makes it to home goal location
         home_col = self.game.frog.rect.centerx // 150
 

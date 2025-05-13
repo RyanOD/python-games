@@ -17,8 +17,8 @@ class Object(Observable):
         self.rect.x += round(self.movement * dt, 2)
         self.position_handler()
     
-    def draw(self, object, screen):
-        screen.surface.blit(object.image, (object.rect.x, object.rect.y))
+    def draw(self, screen):
+        screen.surface.blit(self.image, self.rect)
 
     def position_handler(self):
         if self.rect.left > SCREEN_WIDTH:

@@ -1,3 +1,5 @@
+# Class acts as a template for all other State classes which inherit StateGame
+
 class StateGame:
     def __init__(self, game):
         self.game = game

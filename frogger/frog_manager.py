@@ -1,5 +1,5 @@
 from config import *
-from config import FROG_START_X, FROG_START_Y
+from events import event_dispatcher
 
 # check if frog y position is within home (goal) row
 def frog_in_home_row(frog):
@@ -36,9 +36,9 @@ def frog_hits_boundary(frog, screen):
 def frog_dies(frog):
     frog.carried_speed = 0
     if frog_in_water(frog):
-        frog.play_sound('drown')
+        event_dispatcher.dispatch('play_sound', 'drown')
     else:
-        frog.play_sound('die')
+        event_dispatcher.dispatch('play_sound', 'die')
     frog.alive = False
     frog.lives -= 1
 
@@ -53,7 +53,7 @@ def frog_dying_animation(frog):
 # reset the frog to game start position and image. Reset death timer.
 def frog_reset(frog):
     frog.image = frog.image_original
-    frog.rect.x = FROG_START_X - frog.width * 0.5
+    frog.rect.x = FROG_START_X
     frog.rect.y = FROG_START_Y
     frog.alive = True
     frog.death_timer = frog.death_frame_duration * len(frog.image_dying)

@@ -1,17 +1,5 @@
 {
-    "F1": {
-        "type": "frog",
-        "height": 40,
-        "width": 40,
-        "image": "assets/frog_1.png"
-    },
-    "F2": {
-        "type": "frog",
-        "height": 40,
-        "width": 40,
-        "image": "assets/frog_2.png"
-    },
-    "F3": {
+    "F": {
         "type": "frog",
         "height": 40,
         "width": 40,

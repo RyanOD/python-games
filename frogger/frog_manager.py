@@ -46,7 +46,10 @@ def frog_dies(frog):
 def frog_dying_animation(frog):
     if frog.death_timer > 0:
         frog.death_timer -= 1
-        frog.image = frog.image_dying[min(len(frog.image_dying) - 1, frog.death_timer // frog.death_frame_duration)]
+        if frog_in_water(frog):
+            frog.image = frog.image_drowning[min(len(frog.image_drowning) - 1, frog.death_timer // frog.death_frame_duration)]
+        else:
+            frog.image = frog.image_dying[min(len(frog.image_dying) - 1, frog.death_timer // frog.death_frame_duration)]
         return False
     return True
 

@@ -14,7 +14,6 @@ class StateMachine():
         self.register("title", StateTitle)
         self.register("play", StatePlay)
         self.register("menu", StateMenu)
-        self.register("menu", StateMenu)
         self.register("clear", StateClear)
         self.register("game_over", StateGameOver)
     
@@ -22,6 +21,8 @@ class StateMachine():
         self.state_registry[key] = state_class
         
     def change_state(self, key):
+        if key not in self.state_registry:
+            raise ValueError(f"State '{key}' not registered in state machine.")
         if self.current_state:
             self.current_state.exit()
         self.current_state = self.state_registry[key](self.game)

@@ -1,27 +1,24 @@
 import pygame
+from events import event_dispatcher
 from frog_manager import *
 from config import *
 
 class Frog:
-    def __init__(self, images, play_sound):
+    def __init__(self, images):
         self.lives = 3
-        self.width = images["F1"].get_width()
-        self.height = images["F1"].get_height()
         self.carried_speed = 0
         self.alive = True
-        self.play_sound = play_sound
 
         # load and scale frog sprites
-        self.image_original = images["F3"]
+        self.image_original = images["F"]
         self.image = self.image_original
         self.image_lives = images["FL"]
-        self.image_moving = [images["F3"], images["F1"]]
         self.image_dying = [images["FD4"], images["FD3"], images["FD2"], images["FD1"]]
         self.image_home = images["FH"]
 
         # create rect for frog sprite (frog sprite location follows rect position)
         self.rect = self.image.get_rect()
-        self.rect.x = FROG_START_X - self.width * 0.5
+        self.rect.x = FROG_START_X
         self.rect.y = FROG_START_Y
         
         # set up dying from image cycling timer data
@@ -62,11 +59,11 @@ class Frog:
                 self.image = pygame.transform.rotate(self.image_original, self.orientations[direction]["angle"])
                 self.rect.x += self.speed * self.orientations[direction]["dx"]
                 self.rect.y += self.speed * self.orientations[direction]["dy"]
-                self.play_sound('hop')
+                event_dispatcher.dispatch('play_sound', 'hop')
     
     def reset(self):
         self.alive = True
         self.lives = 3
         self.image = self.image_original
-        self.rect.x = FROG_START_X - self.width * 0.5
+        self.rect.x = FROG_START_X
         self.rect.y = FROG_START_Y

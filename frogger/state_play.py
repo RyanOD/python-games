@@ -7,13 +7,13 @@ from debug import draw_grid
 class StatePlay(StateGame):
     def __init__(self, game):
         super().__init__(game)
-        self.level_cleared = False
         self.bg_image = pygame.image.load("assets/bg.png").convert()
 
-        event_dispatcher.dispatch('play_sound', 'main_theme')
+        # state specific attributes beyond background
+        self.level_cleared = False
 
     def enter(self):
-        pass
+        event_dispatcher.dispatch('play_sound', 'main_theme')
 
     def update(self, dt = None, events = None):
         # delegate frog/object collision management to CollisionHandler class
@@ -71,7 +71,10 @@ class StatePlay(StateGame):
 
     def draw(self):
         # clear the screen
-        self.game.screen.draw(self.bg_image, self.game.level.objects, self.game.frog, self.game.scoring, self.game.countdown)
+        self.game.screen.surface.fill((255, 255, 255))
+
+        # draw game assets
+        self.game.screen.draw(self.bg_image, self.game.level.objects, self.game.frog, self.game.scoring, self.game.countdown, self.game.level)
 
         # draw happy frog image in every home position that player has successfully reached
         for col, home in enumerate(self.game.homes):

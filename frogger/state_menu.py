@@ -8,6 +8,8 @@ class StateMenu(StateGame):
     def __init__(self, game):
         super().__init__(game)
         self.bg_image = get_bg_image("assets/menu_bg.png")
+
+        # state specific attributes beyond background
         self.play_buttons_beg = pygame.Rect(60, 540, 218, 70)
         self.play_buttons_adv = pygame.Rect(475, 540, 218, 70)
         self.rc_link = pygame.Rect(255, 710, 245, 15)
@@ -44,4 +46,4 @@ class StateMenu(StateGame):
                     print("clicked - advanced")
 
     def exit(self):
-        pass
+        event_dispatcher.dispatch('stop_sound', 'insert_coin')

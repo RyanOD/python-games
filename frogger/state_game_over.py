@@ -4,8 +4,10 @@ from config import SCREEN_WIDTH
 
 class StateGameOver:
     def __init__(self, game):
-        self.game = game
+        super().__init__(game)
         self.bg_image = pygame.image.load("assets/bg.png").convert()
+
+        # state specific attributes beyond background
         self.play_button = pygame.Rect(SCREEN_WIDTH // 2 - 120, 805, 218, 70)
         self.coin_drop_timer = 0
         self.coin_dropped = False
@@ -46,4 +48,4 @@ class StateGameOver:
         self.game.screen.surface.blit(game_over_text, (SCREEN_WIDTH // 2 - 99, 807))
 
     def exit(self):
-        pass
+        event_dispatcher.dispatch('stop_sound', 'game_over')

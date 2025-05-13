@@ -22,7 +22,7 @@ class Screen:
         if objects:
             for object in objects:
                 if object.image:
-                    object.draw(object, self)
+                    object.draw(self)
 
         # render frog
         if frog:
@@ -38,4 +38,4 @@ class Screen:
 
         # render level details
         if level:
-            level.draw(self, self.game.level.level)
+            level.draw(self)

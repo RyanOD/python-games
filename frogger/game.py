@@ -39,10 +39,7 @@ class Game:
         self.level = Level(self, self.images, level)
 
         # create instance of Frog class
-        self.frog = Frog(
-            self.images,
-            lambda sound_name: event_dispatcher.dispatch('play_sound', sound_name)
-        )
+        self.frog = Frog(self.images)
 
         # delegate input management to InputHandler class
         self.input_handler = InputHandler(self.frog)
@@ -84,7 +81,7 @@ class Game:
             home['occupied'] = False
     
     def load_level(self, level):
-        print('loading level: ', level)
+        self.level.objects.clear()
         self.level.load_level(level)
         self.reset()
 

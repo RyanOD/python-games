@@ -14,13 +14,13 @@ class Level:
         for object in self.objects:
             object.update(dt)
     
-    def draw(self, screen, level):
+    def draw(self, screen):
         font = pygame.font.Font("assets/upheavtt.ttf", 34)
         level_title = pygame.font.Font.render(font, "Level", True, (255, 255, 255))
-        level = pygame.font.Font.render(font, str(level), False, (255, 255, 255))
+        level = pygame.font.Font.render(font, str(self.num), False, (255, 255, 255))
         screen.surface.blit(level_title, (300, 5))
         screen.surface.blit(level, (300, 33))
     
     def load_level(self, level):
-        self.level = level
-        self.objects = load_objects(self.level_map, self.images, self.level, Object)
+        self.num = level
+        self.objects = load_objects(self.level_map, self.images, self.num, Object)

@@ -16,7 +16,7 @@ class StateClear(StateGame):
             self.game.level.update(dt)
             self.timer -= dt * 100
         else:
-            self.game.level.level += 1
+            self.game.level.num += 1
             self.game.reset()
             self.game.level.objects.clear()
             self.game.level.load_level(self.game.level.level)

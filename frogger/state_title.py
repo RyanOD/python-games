@@ -7,11 +7,12 @@ class StateTitle(StateGame):
     def __init__(self, game):
         super().__init__(game)
         self.bg_image = get_bg_image("assets/title_bg.png")
-        self.timer = 350
-        event_dispatcher.dispatch('play_sound', 'title_theme')
+        
+        # state specific attributes beyond background
+        self.timer = 400
 
     def enter(self):
-        pass
+        event_dispatcher.dispatch('play_sound', 'title_theme')
 
     def update(self, dt = None, events = None):
         pass
@@ -29,5 +30,4 @@ class StateTitle(StateGame):
             self.game.state_machine.change_state("menu")
 
     def exit(self):
-        pass
-        # end menu music
+        event_dispatcher.dispatch('stop_sound', 'title_theme')

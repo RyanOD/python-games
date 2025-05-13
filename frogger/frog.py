@@ -14,6 +14,7 @@ class Frog:
         self.image = self.image_original
         self.image_lives = images["FL"]
         self.image_dying = [images["FD4"], images["FD3"], images["FD2"], images["FD1"]]
+        self.image_drowning = [images["FDR3"], images["FDR2"], images["FDR1"]]
         self.image_home = images["FH"]
 
         # create rect for frog sprite (frog sprite location follows rect position)
@@ -22,7 +23,7 @@ class Frog:
         self.rect.y = FROG_START_Y
         
         # set up dying from image cycling timer data
-        self.death_frame_duration = 40
+        self.death_frame_duration = 20
         self.death_timer = self.death_frame_duration * len(self.image_dying)
 
         # frog sprite orientations options depending on player movement

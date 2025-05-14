@@ -1,16 +1,15 @@
 import pygame
 from events import event_dispatcher
 from config import SCREEN_WIDTH
+from state_game import StateGame
 
-class StateGameOver:
+class StateGameOver(StateGame):
     def __init__(self, game):
         super().__init__(game)
         self.bg_image = pygame.image.load("assets/bg.png").convert()
 
         # state specific attributes beyond background
         self.play_button = pygame.Rect(SCREEN_WIDTH // 2 - 120, 805, 218, 70)
-        self.coin_drop_timer = 0
-        self.coin_dropped = False
         
     def enter(self):
         event_dispatcher.dispatch('play_sound', 'game_over')

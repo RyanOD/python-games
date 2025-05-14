@@ -25,7 +25,7 @@ class StateMenu(StateGame):
             if 0 < self.coin_drop_timer < 200:
                 self.coin_drop_timer += 1
             else:
-                self.game.state_machine.change_state("play")
+                self.game.state_machine.change_state("welcome")
 
     def draw(self):
         self.game.screen.surface.fill((255, 255, 255))

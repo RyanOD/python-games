@@ -5,7 +5,7 @@ from config import *
 
 class Frog:
     def __init__(self, images):
-        self.lives = 3
+        self.lives = FROG_LIVES
         self.carried_speed = 0
         self.alive = True
 
@@ -64,7 +64,7 @@ class Frog:
     
     def reset(self):
         self.alive = True
-        self.lives = 3
+        self.lives = FROG_LIVES
         self.image = self.image_original
         self.rect.x = FROG_START_X
         self.rect.y = FROG_START_Y

@@ -19,8 +19,8 @@ class StateClear(StateGame):
             self.game.level.num += 1
             self.game.reset()
             self.game.level.objects.clear()
-            self.game.level.load_level(self.game.level.level)
-            self.game.state_machine.change_state("play")
+            self.game.level.load_level(self.game.level.num)
+            self.game.state_machine.change_state("welcome")
 
     def handle_input(self, dt = None, events = None):
         pass

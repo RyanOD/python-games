@@ -3,7 +3,7 @@ from config import SCREEN_WIDTH, SCREEN_HEIGHT
 
 class Countdown:
     def __init__(self):
-        self.initial_width = 60
+        self.initial_width = 360
         self.pixels_per_second = 6
         self.width = self.initial_width
         self.tracker = 0

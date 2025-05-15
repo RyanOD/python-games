@@ -3,6 +3,7 @@ from state_title import StateTitle
 from state_menu import StateMenu
 from state_welcome import StateWelcome
 from state_play import StatePlay
+from state_pause import StatePause
 from state_clear import StateClear
 from state_game_over import StateGameOver
 
@@ -13,8 +14,9 @@ class StateMachine():
         self.state_registry = {}
         self.register("title", StateTitle)
         self.register("welcome", StateWelcome)
-        self.register("play", StatePlay)
         self.register("menu", StateMenu)
+        self.register("play", StatePlay)
+        self.register("pause", StatePause)
         self.register("clear", StateClear)
         self.register("game_over", StateGameOver)
     

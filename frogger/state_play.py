@@ -47,8 +47,6 @@ class StatePlay(StateGame):
             if not self.game.homes[home_col]['occupied']:
                 event_dispatcher.dispatch('play_sound', 'landing_safe')
                 self.game.homes[home_col]['occupied'] = True
-                if not all(home['occupied'] for home in self.game.homes):
-                    self.game.frog.lives -= 1
                 self.game.scoring.reset_rows()
                 self.game.reset_level()
                 frog_reset(self.game.frog)
@@ -73,7 +71,7 @@ class StatePlay(StateGame):
             if event.type == pygame.QUIT:
                     self.game.frog.lives = 0
             elif self.game.frog.alive:
-                    self.game.input_handler.handle_event(event, dt)
+                    self.game.input_handler.handle_event(event, self.game, dt)
 
     def draw(self):
         # clear the screen

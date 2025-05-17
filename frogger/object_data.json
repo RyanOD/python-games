@@ -77,6 +77,30 @@
         "width": 50,
         "image": "assets/log_md.png"
     },
+    "GRO": {
+        "type": "gator",
+        "height": 50,
+        "width": 50,
+        "image": "assets/gator_rt_op.png"
+    },
+    "GRC": {
+        "type": "gator",
+        "height": 50,
+        "width": 50,
+        "image": "assets/gator_rt_cl.png"
+    },
+    "GM": {
+        "type": "gator",
+        "height": 50,
+        "width": 50,
+        "image": "assets/gator_md.png"
+    },
+    "GL": {
+        "type": "gator",
+        "height": 50,
+        "width": 50,
+        "image": "assets/gator_lt.png"
+    },
     "LR": {
         "type": "log",
         "height": 50,

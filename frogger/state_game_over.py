@@ -1,6 +1,6 @@
 import pygame
 from events import event_dispatcher
-from config import SCREEN_WIDTH
+from config import SCREEN_WIDTH, SCREEN_HEIGHT
 from state_game import StateGame
 
 class StateGameOver(StateGame):
@@ -9,7 +9,7 @@ class StateGameOver(StateGame):
         self.bg_image = pygame.image.load("assets/bg.png").convert()
 
         # state specific attributes beyond background
-        self.play_button = pygame.Rect(SCREEN_WIDTH // 2 - 120, 805, 218, 70)
+        self.play_button = pygame.Rect(SCREEN_WIDTH // 2 - 120, 455, 218, 70)
         
     def enter(self):
         event_dispatcher.dispatch('play_sound', 'game_over')
@@ -19,32 +19,51 @@ class StateGameOver(StateGame):
         self.game.level.update(dt)
 
     def handle_input(self, dt = None, events = None):
-        for event in events: #look at all events
-            if event.type == pygame.QUIT:
-                self.game.frog.lives = 0
-            elif pygame.mouse.get_pressed()[0] == 1:
+        for event in events:
+            if pygame.mouse.get_pressed()[0] == 1:
                 if self.play_button.collidepoint(pygame.mouse.get_pos()):
-                    from state_menu import StateMenu
                     self.game.reset()
-                    self.game.state_machine.change_state("menu")
+                    self.game.state_machine.change_state("play")
 
     def draw(self):
         # clear the screen
-        self.game.screen.draw(self.bg_image, self.game.level.objects, self.game.frog, self.game.scoring, self.game.countdown)
+        self.game.screen.draw(self.bg_image, self.game.level.objects, self.game.frog, self.game.countdown)
 
         # draw happy frog image in every home position that player has successfully reached
         for col, home in enumerate(self.game.homes):
             if home['occupied']:
                 self.game.screen.surface.blit(self.game.frog.image_home, (col * 150 + 75 - 20, 104))
 
+        s = pygame.Surface((500, 500))
+        s.set_alpha(190)
+        s.fill((40, 40, 40))
+        self.game.screen.surface.blit(s, (SCREEN_WIDTH // 2 - 250, SCREEN_HEIGHT // 2 - 250))
+
+        string = "GAME OVER"
+        string_width = self.game.screen.font_md_sm.size(string)[0]
+        string_height = self.game.screen.font_md_sm.size(string)[1]
+        text = pygame.font.Font.render(self.game.screen.font_md_sm, string, True, (255, 255, 255))
+        self.game.screen.surface.blit(text, (SCREEN_WIDTH // 2 - string_width // 2, SCREEN_HEIGHT // 2 - string_height // 2 - 100))
+
+        string = "SCORE = " + str(self.game.scoring.score)
+        string_width = self.game.screen.font_sm.size(string)[0]
+        string_height = self.game.screen.font_sm.size(string)[1]
+        text = pygame.font.Font.render(self.game.screen.font_sm, string, True, (255, 255, 255))
+        self.game.screen.surface.blit(text, (SCREEN_WIDTH // 2 - string_width // 2, SCREEN_HEIGHT // 2 - string_height // 2 - 50))
+
+        string = "PLAY AGAIN"
+        string_width = self.game.screen.font_sm.size(string)[0]
+        string_height = self.game.screen.font_sm.size(string)[1]
+        text = pygame.font.Font.render(self.game.screen.font_sm, string, True, (255, 255, 255))
+        self.game.screen.surface.blit(text, (SCREEN_WIDTH // 2 - string_width // 2, SCREEN_HEIGHT // 2 - string_height // 2 + 50))
+        '''
         pygame.draw.rect(self.game.screen.surface, (10, 10, 10), (SCREEN_WIDTH // 2 - 150, 405, 300, 40))
-        font = pygame.font.Font("assets/upheavtt.ttf", 34)
-        game_over_text = pygame.font.Font.render(font, "Game Over", True, (255, 255, 255))
-        self.game.screen.surface.blit(game_over_text, (SCREEN_WIDTH // 2 - 84, 407))
+        text = pygame.font.Font.render(self.game.screen.font_sm, "Game Over", True, (255, 255, 255))
+        self.game.screen.surface.blit(text, (SCREEN_WIDTH // 2 - 84, 407))
 
         pygame.draw.rect(self.game.screen.surface, (10, 10, 10), (SCREEN_WIDTH // 2 - 130, 805, 260, 40))
-        game_over_text = pygame.font.Font.render(font, "Play Again", True, (255, 255, 255))
+        game_over_text = pygame.font.Font.render(self.game.screen.font_sm, "Play Again", True, (255, 255, 255))
         self.game.screen.surface.blit(game_over_text, (SCREEN_WIDTH // 2 - 99, 807))
-
+        '''
     def exit(self):
         event_dispatcher.dispatch('stop_sound', 'game_over')

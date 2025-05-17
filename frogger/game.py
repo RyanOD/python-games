@@ -42,7 +42,7 @@ class Game:
         self.frog = Frog(self.images)
 
         # delegate input management to InputHandler class
-        self.input_handler = InputHandler(self.frog)
+        self.input_handler = InputHandler(self)
 
         # delegate object collision management to CollisionHandler class
         self.collision_handler = CollisionHandler()
@@ -63,11 +63,14 @@ class Game:
 
         self.state_machine.change_state("title")
 
-    def update(self, dt):        
+    def update(self, dt):
         self.state_machine.update(dt)
 
     def handle_input(self, dt):
         events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                self.active = False
         self.state_machine.handle_input(dt, events)
 
     def draw(self):
@@ -75,8 +78,8 @@ class Game:
 
     def reset(self):
         self.frog.reset()
-        self.scoring.reset()
         self.countdown.reset()
+        self.scoring.score = 0
         for home in self.homes:
             home['occupied'] = False
     

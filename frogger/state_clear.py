@@ -27,7 +27,7 @@ class StateClear(StateGame):
 
     def draw(self):
         # clear the screen
-        self.game.screen.draw(self.bg_image, self.game.level.objects, self.game.frog, self.game.scoring, self.game.countdown)
+        self.game.screen.draw(self.bg_image, self.game.level.objects, self.game.frog, self.game.scoring, self.game.countdown, self.game.level)
 
         # draw happy frog image in every home position that player has successfully reached
         for col, home in enumerate(self.game.homes):

@@ -68,10 +68,8 @@ class StatePlay(StateGame):
 
     def handle_input(self, dt = None, events = None):
         for event in events:
-            if event.type == pygame.QUIT:
-                    self.game.frog.lives = 0
-            elif self.game.frog.alive:
-                    self.game.input_handler.handle_event(event, self.game, dt)
+            if self.game.frog.alive:
+                self.game.input_handler.handle_event(event, self.game, dt)
 
     def draw(self):
         # clear the screen

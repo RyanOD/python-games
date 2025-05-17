@@ -7,10 +7,10 @@ from time_manager import TimeManager
 clock = pygame.time.Clock()
 
 def main():
-    game = Game()
+    game = Game(1)
 
     # create game loop and run as long as player has frog lives remaining
-    while game.frog.lives > 0:
+    while game.active:
         TimeManager.update(clock)
         
         dt = TimeManager.get_delta_time()

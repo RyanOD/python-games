@@ -18,9 +18,7 @@ class StateTitle(StateGame):
         pass
 
     def handle_input(self, dt = None, events = None):
-        for event in events:
-            if event.type == pygame.QUIT:
-                    self.frog.lives = 0
+        pass
 
     def draw(self):
         if self.timer:

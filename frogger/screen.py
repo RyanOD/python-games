@@ -7,6 +7,10 @@ class Screen:
         self.width = SCREEN_WIDTH
         self.height = SCREEN_HEIGHT
         self.surface = pygame.display.set_mode((self.width, self.height))
+        self.font_sm = pygame.font.Font("assets/upheavtt.ttf", 34)
+        self.font_md_sm = pygame.font.Font("assets/upheavtt.ttf", 60)
+        self.font_md = pygame.font.Font("assets/upheavtt.ttf", 100)
+        self.font_lg = pygame.font.Font("assets/upheavtt.ttf", 200)
 
         # set screen window caption
         pygame.display.set_caption("Frogger Clone by Retro Clones")

@@ -32,9 +32,8 @@ class Scoring:
             row["visited"] = True
 
     def draw(self, screen):
-        font = pygame.font.Font("assets/upheavtt.ttf", 34)
-        score_title = pygame.font.Font.render(font, "1-Up", True, (255, 255, 255))
-        score = pygame.font.Font.render(font, str(self.score), False, (255, 255, 255))
+        score_title = pygame.font.Font.render(self.game.screen.font_sm, "1-Up", True, (255, 255, 255))
+        score = pygame.font.Font.render(self.game.screen.font_sm, str(self.score), False, (255, 255, 255))
         screen.surface.blit(score_title, (100, 5))
         screen.surface.blit(score, (100, 33))
 

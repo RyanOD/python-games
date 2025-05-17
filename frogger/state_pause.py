@@ -16,9 +16,6 @@ class StatePause(StateGame):
 
     def handle_input(self, dt = None, events = None):
         for event in events:
-            if event.type == pygame.QUIT:
-                self.game.frog.lives = 0
-        
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 self.game.input_handler.handle_event(event, self.game, dt)
 

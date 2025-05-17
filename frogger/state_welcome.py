@@ -1,7 +1,7 @@
 import pygame
 from events import event_dispatcher
 from state_game import StateGame
-from config import SCREEN_WIDTH
+from config import SCREEN_WIDTH, SCREEN_HEIGHT
 
 class StateWelcome(StateGame):
     def __init__(self, game):
@@ -9,7 +9,7 @@ class StateWelcome(StateGame):
         self.bg_image = pygame.image.load("assets/bg.png").convert()
 
     def enter(self):
-        self.timer = 300
+        self.timer = 400
 
     def update(self, dt = None, events = None):
         if self.timer > 0:
@@ -22,13 +22,23 @@ class StateWelcome(StateGame):
         pass
 
     def draw(self):
-        # clear the screen
         self.game.screen.draw(self.bg_image, self.game.level.objects, self.game.frog, self.game.scoring, self.game.countdown, self.game.level)
-        if self.timer > 50:
-            pygame.draw.rect(self.game.screen.surface, (10, 10, 10), (SCREEN_WIDTH // 2 - 50, 405, 100, 40))
-            font = pygame.font.Font("assets/upheavtt.ttf", 34)
-            game_over_text = pygame.font.Font.render(font, str(int(self.timer // 100) + 1), True, (255, 255, 255))
-            self.game.screen.surface.blit(game_over_text, (SCREEN_WIDTH // 2 - 2, 407))
-        
+        s = pygame.Surface((500, 500))
+        s.set_alpha(190)
+        s.fill((40, 40, 40))
+        self.game.screen.surface.blit(s, (SCREEN_WIDTH // 2 - 250, SCREEN_HEIGHT // 2 - 250))
+        if self.timer > 300:
+            string = "READY?"
+            string_width = self.game.screen.font_md.size(string)[0]
+            string_height = self.game.screen.font_md.size(string)[1]
+            text = pygame.font.Font.render(self.game.screen.font_md, string, True, (255, 255, 255))
+            self.game.screen.surface.blit(text, (SCREEN_WIDTH // 2 - string_width // 2, SCREEN_HEIGHT // 2 - string_height // 2))
+        elif self.timer < 300 and self.timer > 0:
+            string = str(int(self.timer // 100) + 1)
+            string_width = self.game.screen.font_lg.size(string)[0]
+            string_height = self.game.screen.font_lg.size(string)[1]
+            text = pygame.font.Font.render(self.game.screen.font_lg, string, True, (255, 255, 255))
+            self.game.screen.surface.blit(text, (SCREEN_WIDTH // 2 - string_width // 2, SCREEN_HEIGHT // 2 - string_height // 2))
+
     def exit(self):
         pass

@@ -79,7 +79,7 @@ class Game:
 
     def reset(self):
         self.frog.reset()
-        self.lives = FROG_LIVES
+        self.lives.num = FROG_LIVES
         self.scoring.reset()
         self.countdown.reset()
         self.level.num = 1
@@ -96,5 +96,5 @@ class Game:
     # reset visited state of all rows to False then reset frog
     def reset_level(self):
         self.countdown.reset()
-        for row in self.level.row_value:
+        for row in self.level.row_values:
             row['visited'] = False

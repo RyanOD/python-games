@@ -8,7 +8,7 @@ class Level:
         self.level_map = load_data_file('level_data.json')
         self.images = images
         self.load_level(level)
-        self.row_value = [
+        self.row_values = [
             {"visited": False, "value": 0},
             {"visited": False, "value": 100},
             {"visited": False, "value": 10},
@@ -44,5 +44,5 @@ class Level:
         self.objects = load_objects(self.level_map, self.images, self.num, Object)
 
     def reset_rows(self):
-        for row in self.row_value:
+        for row in self.row_values:
             row['visited'] = False

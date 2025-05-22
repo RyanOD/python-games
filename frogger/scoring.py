@@ -6,7 +6,7 @@ class Scoring:
         self.score = 0
     
     def update(self):
-        row = self.game.level.row_value[self.game.frog.rect.y // 50 - 1]
+        row = self.game.level.row_values[self.game.frog.rect.y // 50 - 1]
         if not row["visited"]:
             self.score += row["value"]
             row["visited"] = True

@@ -8,6 +8,7 @@ class StateMenu(StateGame):
     def __init__(self, game):
         super().__init__(game)
         self.bg_image = get_bg_image("assets/menu_bg.png")
+        self.draw_flags = ['background']
 
         # state specific attributes beyond background
         self.play_button = pygame.Rect(268, 600, 218, 59)
@@ -25,8 +26,7 @@ class StateMenu(StateGame):
                 self.game.state_machine.change_state("welcome")
 
     def draw(self):
-        self.game.screen.surface.fill((255, 255, 255))
-        self.game.screen.draw(self.bg_image)
+        self.game.screen.draw(self.bg_image, self.draw_flags)
         self.game.screen.surface.blit(self.frog_img_1, (SCREEN_WIDTH // 2 - 30, 500))
 
     def handle_input(self, dt=None, events=None):

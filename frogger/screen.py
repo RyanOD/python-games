@@ -15,35 +15,19 @@ class Screen:
         # set screen window caption
         pygame.display.set_caption("Frogger Clone by Retro Clones")
 
-    def draw(self, background=None, objects=None, frog=None, scoring=None, countdown=None, level=None, lives=None):
+    def draw(self, bg_image, draw_flags):
         # clear screen
         self.surface.fill((0, 0, 0))
 
         # render background
-        self.surface.blit(background, (0, 0))
+        self.surface.blit(bg_image, (0, 0))
 
-        # render objects
-        if objects:
-            for object in objects:
-                if object.image:
-                    object.draw(self)
-
-        # render frog
-        if frog:
-            frog.draw(self)
-
-        # render timer
-        if countdown:
-            countdown.draw(self)
-
-        # render scoring
-        if scoring:
-            scoring.draw(self)
-
-        # render level details
-        if level:
-            level.draw(self)
-
-        # render frog lives icons
-        if lives:
-            lives.draw(self)
+        for asset in draw_flags:
+            if asset == 'objects':
+                for object in self.game.level.objects:
+                    if object.image:
+                        object.draw(self)
+            else:
+                attr = getattr(self.game, asset, None)
+                if attr:
+                    attr.draw(self)

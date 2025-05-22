@@ -7,6 +7,7 @@ class StatePlay(StateGame):
     def __init__(self, game):
         super().__init__(game)
         self.bg_image = pygame.image.load("assets/bg.png").convert()
+        self.draw_flags = ['background', 'objects', 'frog', 'scoring', 'countdown', 'level', 'lives']
 
         # state specific attributes beyond background
         self.level_cleared = False
@@ -71,11 +72,8 @@ class StatePlay(StateGame):
                 self.game.input_handler.handle_event(event, self.game, dt)
 
     def draw(self):
-        # clear the screen
-        self.game.screen.surface.fill((255, 255, 255))
-
         # draw game assets
-        self.game.screen.draw(self.bg_image, self.game.level.objects, self.game.frog, self.game.scoring, self.game.countdown, self.game.level, self.game.lives)
+        self.game.screen.draw(self.bg_image, self.draw_flags)
 
         # draw happy frog image in every home position that player has successfully reached
         for col, home in enumerate(self.game.homes):

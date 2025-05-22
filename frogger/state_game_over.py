@@ -7,6 +7,7 @@ class StateGameOver(StateGame):
     def __init__(self, game):
         super().__init__(game)
         self.bg_image = pygame.image.load("assets/bg.png").convert()
+        self.draw_flags = ['background', 'objects', 'frog', 'countdown']
 
         # state specific attributes beyond background
         self.play_button = pygame.Rect(SCREEN_WIDTH // 2 - 120, 455, 218, 70)
@@ -26,8 +27,7 @@ class StateGameOver(StateGame):
                     self.game.state_machine.change_state("play")
 
     def draw(self):
-        # clear the screen
-        self.game.screen.draw(self.bg_image, self.game.level.objects, self.game.frog, self.game.countdown)
+        self.game.screen.draw(self.bg_image, self.draw_flags)
 
         # draw happy frog image in every home position that player has successfully reached
         for col, home in enumerate(self.game.homes):
@@ -62,7 +62,7 @@ class StateGameOver(StateGame):
         self.game.frog.reset() # resets frog image, position, alive state, and death timer
         self.game.reset() # 
         self.game.scoring.score = 0
-        for row in self.game.scoring.rows:
+        for row in self.game.level.row_values:
             row['visited'] = False
         for home in self.game.homes:
             home['occupied'] = False

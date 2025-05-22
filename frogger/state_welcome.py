@@ -6,6 +6,7 @@ class StateWelcome(StateGame):
     def __init__(self, game):
         super().__init__(game)
         self.bg_image = pygame.image.load("assets/bg.png").convert()
+        self.draw_flags = ['background', 'objects', 'frog', 'scoring', 'countdown', 'level', 'lives']
 
     def enter(self):
         self.timer = 350
@@ -21,7 +22,7 @@ class StateWelcome(StateGame):
         pass
 
     def draw(self):
-        self.game.screen.draw(self.bg_image, self.game.level.objects, self.game.frog, self.game.scoring, self.game.countdown, self.game.level)
+        self.game.screen.draw(self.bg_image, self.draw_flags)
         s = pygame.Surface((500, 500))
         s.set_alpha(190)
         s.fill((40, 40, 40))

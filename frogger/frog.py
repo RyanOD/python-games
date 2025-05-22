@@ -1,6 +1,5 @@
 import pygame
 from events import event_dispatcher
-from frog_manager import *
 from config import *
 
 class Frog:
@@ -38,7 +37,7 @@ class Frog:
 
     # check if frog is in water zone and if so, set carry speed to zero then pass direction to move() method
     def update(self):
-        if not frog_in_water(self):
+        if not self.in_water():
             self.carried_speed = 0
     
     def draw(self, screen):

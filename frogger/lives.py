@@ -1,9 +1,8 @@
-import pygame
-from utils import get_image
+from config import FROG_LIVES
 
 class Lives():
-    def __init__(self, num, images):
-        self.num = num
+    def __init__(self, images):
+        self.num = FROG_LIVES
         self.image = images["FL"]
 
     def increment(self):

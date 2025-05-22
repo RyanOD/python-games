@@ -14,7 +14,7 @@ class StatePlay(StateGame):
     def enter(self):
         event_dispatcher.dispatch('play_sound', 'main_theme')
 
-    def update(self, dt = None, events = None):
+    def update(self, dt=None, events=None):
         # delegate frog/object collision management to CollisionHandler class
         if self.game.frog.alive and not self.game.collision_handler.safe_collision(self.game.frog, self.game.level.objects):
             self.game.frog.dies()
@@ -29,7 +29,7 @@ class StatePlay(StateGame):
         self.game.frog.move(dt)
 
         # delegate scoring display management to Scoring class
-        self.game.scoring.update(dt)
+        self.game.scoring.update()
 
         # update frog life status based on screen boundary collision (managed here because it involves Frog and Screen classes)
         if self.game.frog.hits_boundary(self.game.screen):
@@ -65,7 +65,7 @@ class StatePlay(StateGame):
 
         self.game.countdown.update(dt)
 
-    def handle_input(self, dt = None, events = None):
+    def handle_input(self, dt=None, events=None):
         for event in events:
             if self.game.frog.alive:
                 self.game.input_handler.handle_event(event, self.game, dt)

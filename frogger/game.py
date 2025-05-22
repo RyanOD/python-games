@@ -12,9 +12,7 @@ from collision import CollisionHandler
 from frog_manager import *
 from scoring import Scoring
 from utils import *
-from events import event_dispatcher
 from state_machine import StateMachine
-from debug import draw_grid
 from config import FROG_LIVES
 
 class Game:
@@ -38,14 +36,14 @@ class Game:
         self.images = load_images(self.image_data)
 
         # pass images to level builder to create level objects (vehicles, logs, turtles)
-        self.level = Level(self, self.images, level)
+        self.level = Level(self.images, level)
 
         # create instance of Frog class
-        self.lives = Lives(FROG_LIVES, self.images)
+        self.lives = Lives(self.images)
         self.frog = Frog(self.lives, self.images)
 
         # delegate input management to InputHandler class
-        self.input_handler = InputHandler(self)
+        self.input_handler = InputHandler()
 
         # delegate object collision management to CollisionHandler class
         self.collision_handler = CollisionHandler()

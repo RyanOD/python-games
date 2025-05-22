@@ -1,4 +1,3 @@
-import pygame
 from state_game import StateGame
 from utils import get_bg_image
 from events import event_dispatcher
@@ -14,10 +13,10 @@ class StateTitle(StateGame):
     def enter(self):
         event_dispatcher.dispatch('play_sound', 'title_theme')
 
-    def update(self, dt = None, events = None):
+    def update(self, dt=None, events=None):
         pass
 
-    def handle_input(self, dt = None, events = None):
+    def handle_input(self, dt=None, events=None):
         pass
 
     def draw(self):

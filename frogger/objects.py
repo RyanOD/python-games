@@ -1,7 +1,5 @@
-import pygame
 from observer import Observable
-from time_manager import TimeManager
-from config import SCREEN_WIDTH, SCREEN_HEIGHT
+from config import SCREEN_WIDTH
 
 class Object(Observable):
     def __init__(self, type, images, x, y, movement):

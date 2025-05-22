@@ -3,8 +3,7 @@ from utils import load_data_file, load_objects
 import pygame
 
 class Level:
-    def __init__(self, game, images, level):
-        self.game = game
+    def __init__(self, images, level):
         self.timer = 30
         self.level_map = load_data_file('level_data.json')
         self.images = images

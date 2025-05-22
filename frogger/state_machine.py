@@ -31,11 +31,11 @@ class StateMachine():
         self.current_state = self.state_registry[key](self.game)
         self.current_state.enter()
 
-    def update(self, dt = None, events = None):
+    def update(self, dt=None, events=None):
         if self.current_state:
             self.current_state.update(dt)
 
-    def handle_input(self, dt = None, events = None):
+    def handle_input(self, dt=None, events=None):
         if self.current_state:
             self.current_state.handle_input(dt, events)
 

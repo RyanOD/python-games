@@ -1,5 +1,4 @@
 import pygame
-from events import event_dispatcher
 from state_game import StateGame
 from config import SCREEN_WIDTH, SCREEN_HEIGHT
 
@@ -11,14 +10,14 @@ class StateWelcome(StateGame):
     def enter(self):
         self.timer = 350
 
-    def update(self, dt = None, events = None):
+    def update(self, dt=None, events=None):
         if self.timer > 0:
             self.game.level.update(dt)
             self.timer -= dt * 100
         else:
             self.game.state_machine.change_state("play")
 
-    def handle_input(self, dt = None, events = None):
+    def handle_input(self, dt=None, events=None):
         pass
 
     def draw(self):

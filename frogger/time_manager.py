@@ -1,5 +1,3 @@
-import pygame
-
 class TimeManager:
     delta_time = 0.0
 

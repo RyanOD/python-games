@@ -11,14 +11,14 @@ class StateClear(StateGame):
         self.timer = 600
         event_dispatcher.dispatch('play_sound', 'level_clear')
 
-    def update(self, dt = None, events = None):
+    def update(self, dt=None, events=None):
         if self.timer > 0:
             self.game.level.update(dt)
             self.timer -= dt * 100
         else:
             self.game.state_machine.change_state("welcome")
 
-    def handle_input(self, dt = None, events = None):
+    def handle_input(self, dt=None, events=None):
         pass
 
     def draw(self):

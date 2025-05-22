@@ -1,5 +1,4 @@
 import pygame
-from events import event_dispatcher
 from state_game import StateGame
 from config import SCREEN_WIDTH
 
@@ -11,10 +10,10 @@ class StatePause(StateGame):
     def enter(self):
         pass
 
-    def update(self, dt = None, events = None):
+    def update(self, dt=None, events=None):
         pass
 
-    def handle_input(self, dt = None, events = None):
+    def handle_input(self, dt=None, events=None):
         for event in events:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 self.game.input_handler.handle_event(event, self.game, dt)

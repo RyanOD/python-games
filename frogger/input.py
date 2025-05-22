@@ -4,7 +4,7 @@ import pygame
 from commands import *
 
 class InputHandler:
-    def __init__(self, game, dt=0):
+    def __init__(self):
         self.commands = {
             pygame.K_UP: MoveUpCommand(),
             pygame.K_RIGHT: MoveRightCommand(),

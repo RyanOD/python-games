@@ -1,12 +1,11 @@
 import pygame
-from config import FROG_START_Y, SCREEN_WIDTH, SCREEN_HEIGHT
 
 class Scoring:
     def __init__(self, game):
         self.game = game
         self.score = 0
     
-    def update(self, dt):
+    def update(self):
         row = self.game.level.row_value[self.game.frog.rect.y // 50 - 1]
         if not row["visited"]:
             self.score += row["value"]

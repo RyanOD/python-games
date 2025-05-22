@@ -56,14 +56,15 @@ class StateGameOver(StateGame):
         string_height = self.game.screen.font_sm.size(string)[1]
         text = pygame.font.Font.render(self.game.screen.font_sm, string, True, (255, 255, 255))
         self.game.screen.surface.blit(text, (SCREEN_WIDTH // 2 - string_width // 2, SCREEN_HEIGHT // 2 - string_height // 2 + 50))
-        '''
-        pygame.draw.rect(self.game.screen.surface, (10, 10, 10), (SCREEN_WIDTH // 2 - 150, 405, 300, 40))
-        text = pygame.font.Font.render(self.game.screen.font_sm, "Game Over", True, (255, 255, 255))
-        self.game.screen.surface.blit(text, (SCREEN_WIDTH // 2 - 84, 407))
 
-        pygame.draw.rect(self.game.screen.surface, (10, 10, 10), (SCREEN_WIDTH // 2 - 130, 805, 260, 40))
-        game_over_text = pygame.font.Font.render(self.game.screen.font_sm, "Play Again", True, (255, 255, 255))
-        self.game.screen.surface.blit(game_over_text, (SCREEN_WIDTH // 2 - 99, 807))
-        '''
     def exit(self):
+        self.game.countdown.reset()
+        self.game.frog.reset() # resets frog image, position, alive state, and death timer
+        self.game.reset() # 
+        self.game.scoring.score = 0
+        for row in self.game.scoring.rows:
+            row['visited'] = False
+        for home in self.game.homes:
+            home['occupied'] = False
+        
         event_dispatcher.dispatch('stop_sound', 'game_over')

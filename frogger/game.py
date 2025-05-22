@@ -2,10 +2,11 @@
 
 import pygame
 from frog import Frog
+from lives import Lives
 from level import Level
 from input import InputHandler
 from screen import Screen
-from sound import SoundHandler
+from sound_handler import SoundHandler
 from countdown import Countdown
 from collision import CollisionHandler
 from frog_manager import *
@@ -14,6 +15,7 @@ from utils import *
 from events import event_dispatcher
 from state_machine import StateMachine
 from debug import draw_grid
+from config import FROG_LIVES
 
 class Game:
     def __init__(self, level):
@@ -39,7 +41,8 @@ class Game:
         self.level = Level(self, self.images, level)
 
         # create instance of Frog class
-        self.frog = Frog(self.images)
+        self.lives = Lives(FROG_LIVES, self.images)
+        self.frog = Frog(self.lives, self.images)
 
         # delegate input management to InputHandler class
         self.input_handler = InputHandler(self)
@@ -78,10 +81,14 @@ class Game:
 
     def reset(self):
         self.frog.reset()
+        self.lives = FROG_LIVES
+        self.scoring.reset()
         self.countdown.reset()
-        self.scoring.score = 0
+        self.level.num = 1
         for home in self.homes:
             home['occupied'] = False
+        if self.level.num == 1:
+            self.scoring.score = 0
     
     def load_level(self, level):
         self.level.objects.clear()
@@ -90,5 +97,6 @@ class Game:
 
     # reset visited state of all rows to False then reset frog
     def reset_level(self):
-        for row in self.scoring.rows:
+        self.countdown.reset()
+        for row in self.level.row_value:
             row['visited'] = False

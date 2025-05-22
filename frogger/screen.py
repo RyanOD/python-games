@@ -15,7 +15,7 @@ class Screen:
         # set screen window caption
         pygame.display.set_caption("Frogger Clone by Retro Clones")
 
-    def draw(self, background=None, objects=None, frog=None, scoring=None, countdown=None, level=None):
+    def draw(self, background=None, objects=None, frog=None, scoring=None, countdown=None, level=None, lives=None):
         # clear screen
         self.surface.fill((0, 0, 0))
 
@@ -43,3 +43,7 @@ class Screen:
         # render level details
         if level:
             level.draw(self)
+
+        # render frog lives icons
+        if lives:
+            lives.draw(self)

@@ -16,10 +16,6 @@ class StateClear(StateGame):
             self.game.level.update(dt)
             self.timer -= dt * 100
         else:
-            self.game.level.num += 1
-            self.game.reset()
-            self.game.level.objects.clear()
-            self.game.level.load_level(self.game.level.num)
             self.game.state_machine.change_state("welcome")
 
     def handle_input(self, dt = None, events = None):
@@ -35,4 +31,11 @@ class StateClear(StateGame):
                 self.game.screen.surface.blit(self.game.frog.image_home, (col * 150 + 75 - 20, 104))
 
     def exit(self):
+        self.game.level.num += 1
+        self.game.frog.reset()
+        self.game.countdown.reset()
+        for home in self.game.homes:
+            home['occupied'] = False
+        self.game.level.objects.clear()
+        self.game.level.load_level(self.game.level.num)
         event_dispatcher.dispatch('stop_sound', 'level_clear')

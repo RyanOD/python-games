@@ -24,7 +24,7 @@
                     "height": 50,
                     "width": 50,
                     "movement": 100,
-                    "objects": ["LL", "LM", "LM", "LM", "LR", "", "", "LL", "LM", "LM", "LM", "LR", "", "", ""]
+                    "objects": ["LL", "LM", "LR", "", "", "LL", "LM", "LR", "", "", "GL", "GM", "GRC", "", ""]
                 },
                 {
                     "height": 50,
@@ -124,7 +124,7 @@
                     "height": 50,
                     "width": 50,
                     "movement": 100,
-                    "objects": ["LL", "LM", "LM", "LR", "", "", "", "LL", "LM", "LM", "LM", "LR", "", "", ""]
+                    "objects": ["LL", "LM", "LR", "", "", "LL", "LM", "LR", "", "", "GL", "GM", "GRC", "", ""]
                 },
                 {
                     "height": 50,

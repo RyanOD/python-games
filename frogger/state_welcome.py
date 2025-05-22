@@ -9,7 +9,7 @@ class StateWelcome(StateGame):
         self.bg_image = pygame.image.load("assets/bg.png").convert()
 
     def enter(self):
-        self.timer = 400
+        self.timer = 350
 
     def update(self, dt = None, events = None):
         if self.timer > 0:

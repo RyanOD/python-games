@@ -1,7 +1,6 @@
 import pygame
 from state_game import StateGame
 from events import event_dispatcher
-from frog_manager import *
 from debug import draw_grid
 
 class StatePlay(StateGame):
@@ -18,7 +17,7 @@ class StatePlay(StateGame):
     def update(self, dt = None, events = None):
         # delegate frog/object collision management to CollisionHandler class
         if self.game.frog.alive and not self.game.collision_handler.safe_collision(self.game.frog, self.game.level.objects):
-            frog_dies(self.game.frog)
+            self.game.frog.dies()
 
         # delegate frog passive management to Frog class
         self.game.level.update(dt)
@@ -33,35 +32,35 @@ class StatePlay(StateGame):
         self.game.scoring.update(dt)
 
         # update frog life status based on screen boundary collision (managed here because it involves Frog and Screen classes)
-        if frog_hits_boundary(self.game.frog, self.game.screen):
-            frog_dies(self.game.frog)
+        if self.game.frog.hits_boundary(self.game.screen):
+            self.game.frog.dies()
         
         if self.game.countdown.is_expired():
-            frog_dies(self.game.frog)
+            self.game.frog.dies()
             self.game.countdown.reset()
 
         # check to see if frog makes it to home goal location
         home_col = self.game.frog.rect.centerx // 150
 
-        if frog_in_home_row(self.game.frog) and self.game.frog.alive:
+        if self.game.frog.in_home_row() and self.game.frog.alive:
             if not self.game.homes[home_col]['occupied']:
                 event_dispatcher.dispatch('play_sound', 'landing_safe')
                 self.game.homes[home_col]['occupied'] = True
-                self.game.scoring.reset_rows()
+                self.game.level.reset_rows()
                 self.game.reset_level()
-                frog_reset(self.game.frog)
+                self.game.frog.reset()
             else:
                 self.game.frog.rect.top = 150 # prevent Frog from moving into occupied home slot
-                frog_dies(self.game.frog)
+                self.game.frog.dies()
 
-        if not self.game.frog.alive and frog_dying_animation(self.game.frog):
-            self.game.scoring.reset_rows()
-            frog_reset(self.game.frog)
+        if not self.game.frog.alive and self.game.frog.dying_animation():
+            self.game.level.reset_rows()
+            self.game.frog.reset()
 
         if all(home['occupied'] for home in self.game.homes):
             self.game.state_machine.change_state("clear")
 
-        if self.game.frog.lives == 0:
+        if self.game.lives.num == 0:
             self.game.state_machine.change_state("game_over")
 
         self.game.countdown.update(dt)
@@ -76,7 +75,7 @@ class StatePlay(StateGame):
         self.game.screen.surface.fill((255, 255, 255))
 
         # draw game assets
-        self.game.screen.draw(self.bg_image, self.game.level.objects, self.game.frog, self.game.scoring, self.game.countdown, self.game.level)
+        self.game.screen.draw(self.bg_image, self.game.level.objects, self.game.frog, self.game.scoring, self.game.countdown, self.game.level, self.game.lives)
 
         # draw happy frog image in every home position that player has successfully reached
         for col, home in enumerate(self.game.homes):
@@ -90,4 +89,4 @@ class StatePlay(StateGame):
 
     # end game if all frog lives lost
     def game_over(self):
-        return self.game.lives == 0
+        return self.game.lives.num == 0

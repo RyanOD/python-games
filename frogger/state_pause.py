@@ -1,6 +1,6 @@
 import pygame
 from state_game import StateGame
-from config import SCREEN_WIDTH
+from config import SCREEN_WIDTH, SCREEN_HEIGHT
 
 class StatePause(StateGame):
     def __init__(self, game):
@@ -20,17 +20,22 @@ class StatePause(StateGame):
                 self.game.input_handler.handle_event(event, self.game, dt)
 
     def draw(self):
-        self.game.screen.draw(self.bg_image, self.draw_flags)
-
         # draw happy frog image in every home position that player has successfully reached
         for col, home in enumerate(self.game.homes):
             if home['occupied']:
                 self.game.screen.surface.blit(self.game.frog.image_home, (col * 150 + 75 - 20, 104))
-        
-        pygame.draw.rect(self.game.screen.surface, (10, 10, 10), (SCREEN_WIDTH // 2 - 100, 405, 200, 40))
-        font = pygame.font.Font("assets/upheavtt.ttf", 34)
-        text = pygame.font.Font.render(font, "GAME PAUSED", True, (255, 255, 255))
-        self.game.screen.surface.blit(text, (SCREEN_WIDTH // 2 - 100, 407))
+
+        self.game.screen.draw(self.bg_image, self.draw_flags)
+        s = pygame.Surface((500, 500))
+        s.set_alpha(190)
+        s.fill((40, 40, 40))
+        self.game.screen.surface.blit(s, (SCREEN_WIDTH // 2 - 250, SCREEN_HEIGHT // 2 - 250))
+
+        string = "PAUSED"
+        string_width = self.game.screen.font_md.size(string)[0]
+        string_height = self.game.screen.font_md.size(string)[1]
+        text = pygame.font.Font.render(self.game.screen.font_md, string, True, (255, 255, 255))
+        self.game.screen.surface.blit(text, (SCREEN_WIDTH // 2 - string_width // 2, SCREEN_HEIGHT // 2 - string_height // 2))
 
     def exit(self):
-        print('exiting paused state')
+        pass

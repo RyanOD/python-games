@@ -16,7 +16,7 @@ class StatePlay:
 
     def draw(self):
         self.game.screen.draw_stars()
-        self.game.screen.surface.blit(self.game.ship.image, (self.game.ship.x, self.game.ship.y))
+        self.game.screen.surface.blit(self.game.ship.rotated_image, self.game.ship.rotated_rect)
         # draw terrain polygon with no border and filled with black to cover starfield background
         pygame.draw.polygon(self.game.screen.surface, (0, 0, 0), self.game.landscape.vertices, 0)
         # draw terrain polygon with white border and no fill

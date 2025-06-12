@@ -12,10 +12,11 @@ from landscape import Landscape
 
 class Game:
     def __init__(self):
-        pygame.init()  # Initialize Pygame
-        self.ship = Ship()
+        # initialize pygame
+        pygame.init()
         self.landscape = Landscape()
         self.screen = Screen()
+        self.ship = Ship()
         self.input_handler = InputHandler(self.ship)
         self.start_x = 10
         self.start_y = 10
